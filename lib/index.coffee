@@ -1,5 +1,6 @@
 path = require 'path'
 fs = require 'fs'
+util = require 'util'
 { spawn, exec } = require 'child_process'
 
 printLine = (line) -> process.stdout.write line + '\n'
@@ -30,6 +31,28 @@ runAndWatch = (spawnChild) ->
 
   console.log "Watching #{restartFile} for timestamp changes."
 
+copyTiappIfNeeded = (callback) ->
+
+  buildPath = 'build/iphone'
+  appPath = path.join buildPath, 'tiapp.xml'
+
+  path.exists appPath, (exists) ->
+    if exists
+      callback()
+    else
+      fs.mkdir 'build', (err) ->
+
+        throw err if err
+
+        fs.mkdir buildPath, (err) ->
+
+          throw err if err
+
+          input = fs.createReadStream 'tiapp.xml'
+          output = fs.createWriteStream appPath
+
+          util.pump input, output, callback
+
 module.exports =
 
   command: require './command'
@@ -40,17 +63,19 @@ module.exports =
 
     "iphone:run": ->
 
-      runAndWatch ->
+      copyTiappIfNeeded ->
 
-        simulator = spawn titaniumPath(), [
-          'run'
-          '--platform=iphone'
-        ]
+        runAndWatch ->
 
-        simulator.stdout.on 'data', printIt
-        simulator.stderr.on 'data', printIt
+          simulator = spawn titaniumPath(), [
+            'run'
+            '--platform=iphone'
+          ]
 
-        simulator.on 'exit', (code, signal) ->
-          simulator.stdin.end()
+          simulator.stdout.on 'data', printIt
+          simulator.stderr.on 'data', printIt
 
-        simulator
+          simulator.on 'exit', (code, signal) ->
+            simulator.stdin.end()
+
+          simulator
