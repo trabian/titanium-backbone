@@ -1,0 +1,41 @@
+- orientations = ['PORTRAIT', 'UPSIDE_PORTRAIT', 'LANDSCAPE_LEFT', 'LANDSCAPE_RIGHT']
+
+doctype xml
+ti:app(xmlns:ti="http://ti.appcelerator.org")
+  deployment-targets
+    target(device="mobileweb") false
+    target(device="blackberry") false
+    target(device="iphone") true
+    target(device="ipad") true
+    target(device="android") true
+  id [app id]
+  name [app name]
+  version 0.0.1
+  publisher [publisher]
+  url [url]
+  description [description]
+  copyright [copyright]
+  icon appicon.png
+  persistent-wifi false
+  prerendered-icon valse
+  statusbar-style default
+  statusbar-hidden false
+  fullscreen false
+  navbar-hidden false
+  analytics false
+  guid= guid
+  iphone
+    each device in ["iphone", "ipad"]
+      orientations(device=device)
+        each orientation in orientations
+          orientation= orientation
+  android(xmlns:android="http://schemas.android.com/apk/res/android")
+    tool-api-level 8
+    manifest(android:versionCode="1", android:versionName="0.0.1", android:installLocation="auto")
+      uses-sdk(android:minSdkVersion="7")
+      supports-screens(android:anyDensity="false")
+    property(name="ti.android.threadstacksize", type="int") 32768
+    property(name="ti.android.fastdev", type="bool") false
+    property(name="ti.android.debug", type="bool") true
+    property(name="ti.android.runtime", type="string") v8
+    property(name="ti.android.compilejs", type="string") false
