@@ -1,6 +1,6 @@
 {
   "name": "titanium-backbone",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Framework for Titanium apps built with Backbone",
   "private": true,
   "dependencies": {
