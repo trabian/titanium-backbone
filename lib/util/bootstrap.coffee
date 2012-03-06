@@ -4,7 +4,7 @@ pd = require('pretty-data').pd
 fs = require 'fs'
 uuid = require 'node-uuid'
 
-createTiapp = ->
+createTiapp = (options) ->
 
   tiapp = 'tiapp.xml'
 
@@ -17,24 +17,20 @@ createTiapp = ->
 
       options =
         guid: uuid.v4()
+        id: options.id
+        name: options.name
 
       jade.renderFile "#{__dirname}/tiapp.jade", options, (err, str) ->
-
         throw err if err
-
-        str = pd.xml str
-
-        fs.writeFile tiapp, str, (err) ->
-
+        fs.writeFile tiapp, (pd.xml str), (err) ->
           throw err if err
-
           console.log "Successfully created #{tiapp}. Be sure to edit the items in [brackets]."
 
 module.exports =
 
-  bootstrap: ->
+  bootstrap: (package) ->
 
-    createTiapp()
+    createTiapp package.mobile
 
     for resourceDir in ['iphone', 'android']
 

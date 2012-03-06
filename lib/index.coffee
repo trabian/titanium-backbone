@@ -14,7 +14,8 @@ titaniumPath = ->
   if titaniumDir = process.env[envVarName]
     titanium = path.join titaniumDir, 'titanium.py'
   else
-    throw "#{envVarName} environment variable must be set."
+    console.log "#{envVarName} environment variable must be set."
+    process.exit()
 
 runAndWatch = (spawnChild) ->
 

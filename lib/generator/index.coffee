@@ -19,6 +19,9 @@ buildPackage = (options) ->
       app: "Resources/app-impl.js"
       vendor: "Resources/lib"
     paths: [ "src" ]
+  mobile:
+    id: options.id
+    name: options.name
   engine:
     node: ">= 0.6"
   scripts:
@@ -85,15 +88,19 @@ module.exports =
 
             (callback) ->
               writeFile 'Cakefile', '''
-                build = require('stitch-up').load __dirname, require './package'
+                package = require './package'
+
+                build = require('stitch-up').load __dirname, package
 
                 titanium = require 'titanium-backbone'
 
                 for _task, func of build.tasks
-                  task "build:#{_task}", func
+                  do (func) ->
+                    task "build:#{_task}", -> func package
 
                 for _task, func of titanium.tasks
-                  task "t:#{_task}", func
+                  do (func) ->
+                    task "t:#{_task}", -> func package
 
                 task "build", ->
                   invoke "build:all"
