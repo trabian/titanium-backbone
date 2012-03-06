@@ -108,9 +108,9 @@ module.exports =
                 $ cd #{options.dir}
                 $ npm install
 
-              Edit the generated tiapp.xml, then:
+              Now you're ready to edit the generated tiapp.xml and run a blank mobile app:
 
+                $ vim tiapp.xml
                 $ cake t:iphone:run
 
             """
-
