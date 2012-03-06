@@ -13,4 +13,10 @@ module.exports =
       command.run args
 
     else
-      console.log "Couldn't find command: #{commandName}"
+
+      commandList = _.map(_.keys(commands), (command) -> "'#{command}'").join ', '
+
+      if _.isEmpty commandName
+        console.log "Need to supply a command. Try one of these: #{commandList}"
+      else
+        console.log "Couldn't find command: #{commandName}. Try one of these: #{commandList}"

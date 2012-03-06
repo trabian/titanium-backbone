@@ -1,6 +1,7 @@
 path = require 'path'
 fs = require 'fs'
 pd = require('pretty-data').pd
+async = require 'async'
 
 dasherize = (str) ->
   str.toLowerCase().replace /[_\s]/g, '-'
@@ -20,6 +21,8 @@ buildPackage = (options) ->
     paths: [ "src" ]
   engine:
     node: ">= 0.6"
+  scripts:
+    install: 'cake build'
 
 module.exports =
 
@@ -31,13 +34,21 @@ module.exports =
 
     path.exists options.dir, (exists) ->
 
-      writeFile = (name, contents) ->
+      writeFile = (name, contents, callback) ->
 
         filePath = path.join options.dir, name
 
         fs.writeFile filePath, contents, (err) ->
           throw err if err
-          console.log "Created #{filePath}"
+          callback()
+
+      mkdir = (name, callback) ->
+
+        filePath = path.join options.dir, name
+
+        fs.mkdir filePath, (err) ->
+          throw err if err
+          callback()
 
       if exists
         console.log "#{options.dir} already exists. Aborting."
@@ -45,28 +56,61 @@ module.exports =
 
       else
 
-        console.log "Creating #{options.dir}"
-
         fs.mkdir options.dir, (err) ->
 
           throw err if err
 
-          writeFile '.gitignore', '''
-            node_modules
+          async.parallel [
 
-          '''
+            (callback) ->
+              writeFile '.gitignore', '''
+                node_modules
+              ''', callback
 
-          writeFile 'package.json', pd.json JSON.stringify buildPackage(options)
+            (callback) ->
+              writeFile 'package.json', (pd.json JSON.stringify buildPackage(options)), callback
 
-          writeFile 'Cakefile', '''
-            build = require('stitch-up').load __dirname, require './package'
+            (callback) ->
+              mkdir 'src', callback
 
-            titanium = require 'titanium-backbone'
+            (callback) ->
+              mkdir 'tmp', ->
+                writeFile 'tmp/restart.txt', '', callback
 
-            for _task, func of build.tasks
-              task "build:#{_task}", func
+            (callback) ->
+              mkdir 'Resources', ->
+                writeFile 'Resources/app.js', '''
+                  Ti.include('app-impl.js');
+                ''', callback
 
-            for _task, func of titanium.tasks
-              task "t:#{_task}", func
+            (callback) ->
+              writeFile 'Cakefile', '''
+                build = require('stitch-up').load __dirname, require './package'
 
-          '''
+                titanium = require 'titanium-backbone'
+
+                for _task, func of build.tasks
+                  task "build:#{_task}", func
+
+                for _task, func of titanium.tasks
+                  task "t:#{_task}", func
+
+                task "build", ->
+                  invoke "build:all"
+                  invoke "t:bootstrap"
+              ''', callback
+
+          ], ->
+
+            console.log """
+              Done generating the app. Change to the new directory and install the packages:
+
+                $ cd #{options.dir}
+                $ npm install
+
+              Edit the generated tiapp.xml, then:
+
+                $ cake t:iphone:run
+
+            """
+

@@ -4,6 +4,7 @@
   "description": "Framework for Titanium apps built with Backbone",
   "private": true,
   "dependencies": {
+    "async": "0.1.x",
     "backbone": "0.9.x",
     "commander": "0.5.x",
     "jade": "0.20.x",
