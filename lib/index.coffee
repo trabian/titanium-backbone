@@ -31,11 +31,13 @@ runAndWatch = (spawnChild) ->
 
 module.exports =
 
-  bootstrap: require('./util/bootstrap').bootstrap
+  command: require './command'
 
-  iPhone:
+  tasks:
 
-    run: ->
+    bootstrap: require('./util/bootstrap').bootstrap
+
+    "iphone:run": ->
 
       runAndWatch ->
 

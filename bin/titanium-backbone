@@ -1,0 +1,2 @@
+#!/usr/bin/env coffee
+require('../lib').command.run process.argv
