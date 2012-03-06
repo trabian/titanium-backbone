@@ -15,6 +15,7 @@ buildPackage = (options) ->
     "titanium-backbone": "git+ssh://git@github.com:trabian/titanium-backbone.git#master"
     "stitch-up": "git+ssh://git@github.com:trabian/stitch-up.git#master"
   stitch:
+    identifier: 'mobileRequire'
     output:
       app: "Resources/app-impl.js"
       vendor: "Resources/lib"
@@ -74,7 +75,21 @@ module.exports =
               writeFile 'package.json', (pd.json JSON.stringify buildPackage(options)), callback
 
             (callback) ->
-              mkdir 'src', callback
+              mkdir 'src', ->
+
+                async.parallel [
+
+                  (childCallback) ->
+                    mkdir 'src/app', ->
+                      writeFile 'src/app/index.coffee', '''
+                        module.exports =
+                          run: ->
+                            alert 'Hello World!'
+                      ''', childCallback
+
+                  (childCallback) -> mkdir 'src/properties', childCallback
+
+                ], callback
 
             (callback) ->
               mkdir 'tmp', ->
@@ -84,6 +99,7 @@ module.exports =
               mkdir 'Resources', ->
                 writeFile 'Resources/app.js', '''
                   Ti.include('app-impl.js');
+                  this.mobileRequire('index').run();
                 ''', callback
 
             (callback) ->
@@ -115,9 +131,8 @@ module.exports =
                 $ cd #{options.dir}
                 $ npm install
 
-              Now you're ready to edit the generated tiapp.xml and run a blank mobile app:
+              Now you're ready to run a blank mobile app:
 
-                $ vim tiapp.xml
                 $ cake t:iphone:run
 
             """
