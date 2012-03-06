@@ -19,7 +19,7 @@ buildPackage = (options) ->
     output:
       app: "Resources/app-impl.js"
       vendor: "Resources/lib"
-    paths: [ "src" ]
+    paths: [ "src/app" ]
   mobile:
     id: options.id
     name: options.name
