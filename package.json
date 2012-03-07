@@ -21,9 +21,9 @@
     "paths": [
       "src"
     ],
-    "vendorDependencies": [
-      "node_modules/backbone/backbone.js",
-      "node_modules/underscore/underscore.js"
+    "dependencies": [
+      "node_modules/underscore/underscore.js",
+      "node_modules/backbone/backbone.js"
     ]
   }
 }
