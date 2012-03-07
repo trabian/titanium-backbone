@@ -89,7 +89,7 @@ module.exports = class View extends Backbone.Events
 
   # Internal: Creates the view if it doesn't already exist.
   #
-  # Returnes the generated view
+  # Returns the generated view
   _ensureView: ->
 
     unless @view
