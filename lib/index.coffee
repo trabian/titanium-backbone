@@ -18,18 +18,21 @@ titaniumPath = ->
     console.log "#{envVarName} environment variable must be set."
     process.exit()
 
-runAndWatch = (spawnChild) ->
+runAndWatch = (onRun) ->
 
-  child = spawnChild()
+  onRun (_child) ->
 
-  restartFile = 'tmp/restart.txt'
+    child = _child
 
-  fs.watch restartFile, (curr, prev) ->
-    console.log "Detected change to #{restartFile}. Restarting..."
-    child.kill()
-    child = spawnChild()
+    restartFile = 'tmp/restart.txt'
 
-  console.log "Watching #{restartFile} for timestamp changes."
+    fs.watch restartFile, (curr, prev) ->
+      console.log "Detected change to #{restartFile}. Restarting..."
+      child.kill()
+      onRun (_child) ->
+        child = _child
+
+    console.log "Watching #{restartFile} for timestamp changes."
 
 copyTiappIfNeeded = (callback) ->
 
@@ -59,29 +62,32 @@ module.exports =
 
   load: (root, package) ->
 
-    build = require('stitch-up').load root, package
+    buildTasks = require('stitch-up').load(root, package).tasks
 
     tasks:
 
       bootstrap: require('./util/bootstrap').bootstrap
 
-      build: -> build.tasks.all()
+      build: ->
+        buildTasks.all()
 
       "iphone:run": ->
 
         copyTiappIfNeeded ->
 
-          runAndWatch ->
+          runAndWatch (callback) ->
 
-            simulator = spawn titaniumPath(), [
-              'run'
-              '--platform=iphone'
-            ]
+            buildTasks.stitch ->
 
-            simulator.stdout.on 'data', printIt
-            simulator.stderr.on 'data', printIt
+              simulator = spawn titaniumPath(), [
+                'run'
+                '--platform=iphone'
+              ]
 
-            simulator.on 'exit', (code, signal) ->
-              simulator.stdin.end()
+              simulator.stdout.on 'data', printIt
+              simulator.stderr.on 'data', printIt
 
-            simulator
+              simulator.on 'exit', (code, signal) ->
+                simulator.stdin.end()
+
+              callback simulator
