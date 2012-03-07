@@ -64,6 +64,21 @@ module.exports =
 
     buildTasks = require('stitch-up').load(root, package).tasks
 
+    runSimulator = (callback) ->
+
+      simulator = spawn titaniumPath(), [
+        'run'
+        '--platform=iphone'
+      ]
+
+      simulator.stdout.on 'data', printIt
+      simulator.stderr.on 'data', printIt
+
+      simulator.on 'exit', (code, signal) ->
+        simulator.stdin.end()
+
+      callback simulator
+
     tasks:
 
       bootstrap: require('./util/bootstrap').bootstrap
@@ -74,20 +89,10 @@ module.exports =
       "iphone:run": ->
 
         copyTiappIfNeeded ->
-
           runAndWatch (callback) ->
+            buildTasks.stitch -> runSimulator callback
 
-            buildTasks.stitch ->
+      "iphone:run:nobuild": ->
 
-              simulator = spawn titaniumPath(), [
-                'run'
-                '--platform=iphone'
-              ]
-
-              simulator.stdout.on 'data', printIt
-              simulator.stderr.on 'data', printIt
-
-              simulator.on 'exit', (code, signal) ->
-                simulator.stdin.end()
-
-              callback simulator
+        copyTiappIfNeeded ->
+          runAndWatch runSimulator
