@@ -18,10 +18,11 @@
   "main": "./lib/index.coffee",
   "stitch": {
     "paths": [
-      "src/app"
+      "src"
     ],
     "vendorDependencies": [
-      "node_modules/backbone/backbone.js"
+      "node_modules/backbone/backbone.js",
+      "node_modules/underscore/underscore.js"
     ]
   }
 }
