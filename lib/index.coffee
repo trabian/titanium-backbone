@@ -57,25 +57,31 @@ module.exports =
 
   command: require './command'
 
-  tasks:
+  load: (root, package) ->
 
-    bootstrap: require('./util/bootstrap').bootstrap
+    build = require('stitch-up').load root, package
 
-    "iphone:run": ->
+    tasks:
 
-      copyTiappIfNeeded ->
+      bootstrap: require('./util/bootstrap').bootstrap
 
-        runAndWatch ->
+      build: -> build.tasks.all()
 
-          simulator = spawn titaniumPath(), [
-            'run'
-            '--platform=iphone'
-          ]
+      "iphone:run": ->
 
-          simulator.stdout.on 'data', printIt
-          simulator.stderr.on 'data', printIt
+        copyTiappIfNeeded ->
 
-          simulator.on 'exit', (code, signal) ->
-            simulator.stdin.end()
+          runAndWatch ->
 
-          simulator
+            simulator = spawn titaniumPath(), [
+              'run'
+              '--platform=iphone'
+            ]
+
+            simulator.stdout.on 'data', printIt
+            simulator.stderr.on 'data', printIt
+
+            simulator.on 'exit', (code, signal) ->
+              simulator.stdin.end()
+
+            simulator

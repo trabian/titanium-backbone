@@ -13,7 +13,6 @@ buildPackage = (options) ->
   description: 'Mobile app'
   dependencies:
     "titanium-backbone": "git+ssh://git@github.com:trabian/titanium-backbone.git#master"
-    "stitch-up": "git+ssh://git@github.com:trabian/stitch-up.git#master"
   stitch:
     identifier: 'mobileRequire'
     output:
@@ -77,19 +76,11 @@ module.exports =
             (callback) ->
               mkdir 'src', ->
 
-                async.parallel [
-
-                  (childCallback) ->
-                    mkdir 'src/app', ->
-                      writeFile 'src/app/index.coffee', '''
-                        module.exports =
-                          run: ->
-                            alert 'Hello World!'
-                      ''', childCallback
-
-                  (childCallback) -> mkdir 'src/properties', childCallback
-
-                ], callback
+                writeFile 'src/index.coffee', '''
+                  module.exports =
+                    run: ->
+                      alert 'Hello World!'
+                ''', callback
 
             (callback) ->
               mkdir 'tmp', ->
@@ -106,21 +97,15 @@ module.exports =
               writeFile 'Cakefile', '''
                 package = require './package'
 
-                build = require('stitch-up').load __dirname, package
-
-                titanium = require 'titanium-backbone'
-
-                for _task, func of build.tasks
-                  do (func) ->
-                    task "build:#{_task}", -> func package
+                titanium = require('titanium-backbone').load __dirname, package
 
                 for _task, func of titanium.tasks
                   do (func) ->
                     task "t:#{_task}", -> func package
 
                 task "build", ->
-                  invoke "build:all"
                   invoke "t:bootstrap"
+                  invoke "t:build"
               ''', callback
 
           ], ->
