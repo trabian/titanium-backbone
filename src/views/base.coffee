@@ -71,6 +71,7 @@ module.exports = class View extends Backbone.Events
     @_configure options
     @_ensureView()
     @initialize.apply @, arguments
+    @delegateEvents()
 
   # Public: Empty by default. Override it with your own initialization logic.
   initialize: ->
@@ -97,6 +98,9 @@ module.exports = class View extends Backbone.Events
 
       attrs = getValue(@, 'attributes') or {}
 
+      if style = @options.style
+        attrs = _.extend {}, attrs, style
+
       attrs.id = @id if @id
       attrs.className = @className if @className 
 
@@ -115,7 +119,7 @@ module.exports = class View extends Backbone.Events
   #   # => Ti.UI.Label (text='Example', color='#ccc')
   #
   #   @make 'iPhone::NavigationGroup', window: sampleWindow
-  #   # => Ti.UI.iPHone.NavigationGroup (window=sampleWindow)
+  #   # => Ti.UI.iPhone.NavigationGroup (window=sampleWindow)
   #
   # Returns the created view
   make: (viewName, attributeHashes...) ->
@@ -147,3 +151,34 @@ module.exports = class View extends Backbone.Events
       , Ti
     else
       property
+
+  delegateEvents: (events) ->
+
+    unless events or events = getValue @, 'events'
+      return
+
+    for name, method of events
+
+      unless _.isFunction method
+        method = @[method]
+
+      unless method
+        throw new Error "Event #{method} does not exist"
+
+      @view.addEventListener name, =>
+
+        do method
+
+        # Returning a value from a Titanium event listener can cause problems,
+        # so we don't by overriding CoffeeScripts default return.
+        return
+
+  listen: (name, callback) =>
+
+    @view.addEventListener name, (e) ->
+
+      @trigger name, e
+
+      callback? e
+
+      return
