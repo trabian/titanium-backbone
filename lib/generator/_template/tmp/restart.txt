@@ -1,0 +1,15 @@
+The content of this file is unimportant other than to explain the
+purpose of it.
+
+This file is here to provide an easy way of rebuilding the app and restarting
+the simulator. If you modify this file (or 'touch' it) while the
+t:iphone:run or t:android:run cake actions are running then the app will
+rebuilt and the simulator will be restarted.
+
+A handy trick is to setup a keyboard command in your IDE of choice to
+'touch' this file.
+
+Here's a Vim command:
+
+map <D-r> :call system('touch ' . 'tmp/restart.txt')<CR>
+imap <D-r> <esc>:call system('touch ' . 'tmp/restart.txt')<CR>

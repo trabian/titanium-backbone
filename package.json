@@ -1,6 +1,6 @@
 {
   "name": "titanium-backbone",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Framework for Titanium apps built with Backbone",
   "private": true,
   "dependencies": {
@@ -11,7 +11,8 @@
     "pretty-data": "0.20.x",
     "underscore": "1.3.x",
     "node-uuid": "1.3.x",
-    "stitch-up":"git+ssh://git@github.com:trabian/stitch-up.git#master"
+    "stitch-up":"git+ssh://git@github.com:trabian/stitch-up.git#master",
+    "wrench": "1.3.x"
   },
   "bin": {
     "titanium-backbone": "./bin/titanium-backbone"

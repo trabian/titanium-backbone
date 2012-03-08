@@ -2,6 +2,7 @@ path = require 'path'
 fs = require 'fs'
 pd = require('pretty-data').pd
 async = require 'async'
+wrench = require 'wrench'
 
 dasherize = (str) ->
   str.toLowerCase().replace /[_\s]/g, '-'
@@ -13,6 +14,7 @@ buildPackage = (options) ->
   description: 'Mobile app'
   dependencies:
     "titanium-backbone": "git+ssh://git@github.com:trabian/titanium-backbone.git#master"
+    "titanium-backbone-ks": "git+ssh://git@github.com:trabian/titanium-backbone-ks.git#master"
   stitch:
     identifier: 'mobileRequire'
     output:
@@ -59,56 +61,9 @@ module.exports =
 
       else
 
-        fs.mkdir options.dir, (err) ->
+        wrench.copyDirRecursive "#{__dirname}/_template", options.dir, ->
 
-          throw err if err
-
-          async.parallel [
-
-            (callback) ->
-              writeFile '.gitignore', '''
-                node_modules
-              ''', callback
-
-            (callback) ->
-              writeFile 'package.json', (pd.json JSON.stringify buildPackage(options)), callback
-
-            (callback) ->
-              mkdir 'src', ->
-
-                writeFile 'src/index.coffee', '''
-                  module.exports =
-                    run: ->
-                      alert 'Hello World!'
-                ''', callback
-
-            (callback) ->
-              mkdir 'tmp', ->
-                writeFile 'tmp/restart.txt', '', callback
-
-            (callback) ->
-              mkdir 'Resources', ->
-                writeFile 'Resources/app.js', '''
-                  Ti.include('app-impl.js');
-                  this.mobileRequire('index').run();
-                ''', callback
-
-            (callback) ->
-              writeFile 'Cakefile', '''
-                package = require './package'
-
-                titanium = require('titanium-backbone').load __dirname, package
-
-                for _task, func of titanium.tasks
-                  do (func) ->
-                    task "t:#{_task}", -> func package
-
-                task "build", ->
-                  invoke "t:bootstrap"
-                  invoke "t:build"
-              ''', callback
-
-          ], ->
+          writeFile 'package.json', (pd.json JSON.stringify buildPackage(options)), ->
 
             console.log """
               Done generating the app. Change to the new directory and install the packages:
