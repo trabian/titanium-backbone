@@ -60,7 +60,8 @@ viewOptions = ['model', 'collection', 'view', 'id', 'attributes', 'className', '
 # instead of a DOM element.
 module.exports = class View extends Backbone.Events
 
-  tagName: 'View'
+  # Public: Default viewName. Override as needed.
+  viewName: 'View'
 
   # Public: Initialize the view
   constructor: (options = {}) ->
