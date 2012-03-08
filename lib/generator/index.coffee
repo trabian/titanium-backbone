@@ -1,7 +1,6 @@
 path = require 'path'
 fs = require 'fs'
 pd = require('pretty-data').pd
-async = require 'async'
 wrench = require 'wrench'
 
 dasherize = (str) ->
