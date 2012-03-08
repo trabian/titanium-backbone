@@ -52,6 +52,13 @@ log = (level, statements) ->
 
 _oldAlert = @alert
 
-# Public: alert stringified statements
+# Public: Override existing global alert method to handle
+# stringification of statements
+#
+# statements - Array of statements to be included in alert,
+#   including strings, objects, and arrays
+#
+# Returns nothing
 @alert = (statements...) ->
   _oldAlert stringify statements
+  return

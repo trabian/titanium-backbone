@@ -57,7 +57,7 @@
   this.alert = function() {
     var statements;
     statements = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-    return _oldAlert(stringify(statements));
+    _oldAlert(stringify(statements));
   };
 
 }).call(this);
