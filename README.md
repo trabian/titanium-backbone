@@ -14,8 +14,6 @@ be even cleaner.
 
 ### Installation
 
-To install:
-
 #### Clone the project to your development machine:
 
 ```console
