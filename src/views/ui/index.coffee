@@ -1,6 +1,6 @@
 module.exports =
 
-  ContentBlock: require './content_block'
   Button: require './button'
+  ContentBlock: require './content_block'
   Tabs: require './tabs'
   Window: require './window'
