@@ -5,8 +5,8 @@ apps using Titanium and Backbone.
 
 ### Current status
 
-This project is in very early stages of extraction from a [production
-mobile
+This project is in very early stages of extraction from a production
+[mobile banking
 application](http://itunes.apple.com/us/app/sf-fire-credit-union-mobile/id492113880?mt=8),
 but the ideas and patterns extracted have worked very well within this
 large app. We're taking the time to refactor as we extract so it should
