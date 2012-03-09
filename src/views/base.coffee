@@ -54,7 +54,7 @@ createTitaniumView = (viewName, attributes) ->
 
 # Internal: The name of options to be attached directly to the view should they be
 # incountered in the 'options' hash.
-viewOptions = ['model', 'collection', 'view', 'id', 'attributes', 'className', 'viewName']
+viewOptions = ['model', 'collection', 'view', 'id', 'attributes', 'className', 'viewName', 'presenter']
 
 # Public: The View class is very similar to Backbone.View but represents a Titanium view
 # instead of a DOM element.
@@ -72,6 +72,9 @@ module.exports = class View extends Backbone.Events
     @_ensureView()
     @initialize.apply @, arguments
     @delegateEvents()
+
+  # Public: Provide public access to the internal getValue method
+  getValue: (prop) => getValue @, prop
 
   # Public: Empty by default. Override it with your own initialization logic.
   initialize: ->
@@ -131,6 +134,9 @@ module.exports = class View extends Backbone.Events
 
     createTitaniumView viewName, attributes
 
+  # Public: Empty by default. Override it with your own render logic.
+  render: => @
+
   # Converts string properties to Titanium properties.
   #
   # property - The String to be converted to a Titanium property.
@@ -182,3 +188,18 @@ module.exports = class View extends Backbone.Events
       callback? e
 
       return
+
+  bindTo: (model, eventName, callback) =>
+
+    @bindings or= []
+
+    model.on eventName, callback, @
+
+    @bindings.push { model, eventName, callback }
+
+  unbindFromAll: =>
+
+    if @bindings
+      for binding in @bindings
+        do (binding) =>
+          binding.model.off binding.eventName, binding.callback
