@@ -37,6 +37,6 @@ $ ./bin/titanium-backbone new [app name]
 _Optional:_ Install and run the app generator globally by running:
 
 ```console
-$ npm install
+$ npm install -g
 $ titanium-backbone new --help
 ```
