@@ -1,6 +1,6 @@
 {
   "name": "titanium-backbone",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "Framework for Titanium apps built with Backbone",
   "private": true,
   "dependencies": {
@@ -24,7 +24,7 @@
     "dependencies": [
       "node_modules/underscore/underscore.js",
       "node_modules/backbone/backbone.js",
-      "deps/console.js"
+      "deps/console.coffee"
     ]
   }
 }
