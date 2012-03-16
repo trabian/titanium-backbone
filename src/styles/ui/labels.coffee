@@ -28,3 +28,23 @@ module.exports =
   h6: heading 10
 
   p: label 14
+
+  combined:
+
+    view:
+      height: 0
+      #layout: 'vertical'
+
+    primary:
+      top: 0
+      height: 'auto'
+      color: '#333'
+      font:
+        fontSize: 15
+
+    meta:
+      bottom: 0
+      height: 'auto'
+      color: '#999'
+      font:
+        fontSize: 11

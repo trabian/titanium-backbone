@@ -8,6 +8,9 @@ module.exports = class Window extends View
 
   attributes: styles.view
 
+  events:
+    close: 'destroy'
+
   layout: (options, callback) =>
 
     # If only one parameter is included in method call, treat it as the
@@ -23,3 +26,5 @@ module.exports = class Window extends View
   open: => @view.open()
 
   close: => @view.close()
+
+  destroy: => @trigger 'destroy'

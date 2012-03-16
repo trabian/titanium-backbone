@@ -6,5 +6,8 @@ module.exports =
   button:
     default: '#3A7CE5'
 
+  table:
+    border: '#ccc'
+
   window:
     background: '#eee'

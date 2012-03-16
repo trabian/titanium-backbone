@@ -6,4 +6,6 @@ module.exports =
 
   labels: require './labels'
 
+  table: require './table'
+
   window: require './window'

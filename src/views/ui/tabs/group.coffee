@@ -1,34 +1,19 @@
 styles = require('styles').ui
 
-ViewList = require 'presenters/view_list'
-
-View = require 'views/base'
+CollectionView = require 'views/base/collection'
 
 Tab = require './tab'
 
-module.exports = class TabGroup extends View
+module.exports = class TabGroup extends CollectionView
 
   viewName: 'TabGroup'
 
-  initialize: ->
+  # Internal: Add the tab for the provided presenter.
+  addOne: (presenter) =>
 
-    @bindTo @tabs, 'reset', @render
+    tabView = new Tab { presenter }
 
-  buildTabs: (tabs) =>
-
-    @tabs = new ViewList tabs
-
-  render: =>
-
-    @tabs.each (tab) =>
-
-      tabView = new Tab
-        presenter: tab
-        model: @model
-
-      @view.addTab tabView.render().view
-
-    @
+    @view.addTab tabView.render().view
 
   open: => @view.open()
 
