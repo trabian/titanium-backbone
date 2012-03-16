@@ -54,11 +54,13 @@ createTitaniumView = (viewName, attributes) ->
 
 # Internal: The name of options to be attached directly to the view should they be
 # incountered in the 'options' hash.
-viewOptions = ['model', 'collection', 'view', 'id', 'attributes', 'className', 'viewName', 'presenter']
+viewOptions = ['model', 'collection', 'view', 'id', 'attributes', 'className', 'viewName', 'presenter', 'controller']
 
 # Public: The View class is very similar to Backbone.View but represents a Titanium view
 # instead of a DOM element.
-module.exports = class View extends Backbone.Events
+module.exports = class View
+
+  _(View.prototype).extend Backbone.Events
 
   # Public: Default viewName. Override as needed.
   viewName: 'View'
@@ -69,6 +71,7 @@ module.exports = class View extends Backbone.Events
     @cid = _.uniqueId 'view'
 
     @_configure options
+    @_bindControllerEvents()
     @_ensureView()
     @initialize.apply @, arguments
     @delegateEvents()
@@ -91,6 +94,18 @@ module.exports = class View extends Backbone.Events
       if options[attr] then @[attr] = options[attr]
 
     @options = options
+
+  _bindControllerEvents: ->
+
+    if context = @controller?.context
+      context.on 'destroy', @destroy
+    else
+      console.warn '''
+        This view has not been provided with an associated context
+        (usually the Window within which the view is displayed).
+        This means we won't be able to automatically destroy the
+        view when the context is destroyed.
+      '''
 
   # Internal: Creates the view if it doesn't already exist.
   #
@@ -168,16 +183,15 @@ module.exports = class View extends Backbone.Events
       unless _.isFunction method
         method = @[method]
 
-      unless method
-        throw new Error "Event #{method} does not exist"
+      if method
 
-      @view.addEventListener name, =>
+        @view.addEventListener name, =>
 
-        do method
+          method()
 
-        # Returning a value from a Titanium event listener can cause problems,
-        # so we don't by overriding CoffeeScripts default return.
-        return
+          # Returning a value from a Titanium event listener can cause problems,
+          # so we don't by overriding CoffeeScripts default return.
+          return
 
   listen: (name, callback) =>
 
@@ -197,9 +211,44 @@ module.exports = class View extends Backbone.Events
 
     @bindings.push { model, eventName, callback }
 
-  unbindFromAll: =>
+  destroy: =>
 
     if @bindings
       for binding in @bindings
         do (binding) =>
           binding.model.off binding.eventName, binding.callback
+
+  # Public: Titanium doesn't provide a method for completely clearing a view and
+  # replacing it with a new view (similar to @$el.html('replace everything') which
+  # is available via jQuery on the DOM). We mimic that functionality here by creating
+  # a wrapper view which will be removed and readded on subsequent calls.
+  #
+  # This makes it much easier to call the 'render' method for a view multiple times.
+  #
+  # Example:
+  #
+  #   class NameView extends View
+  #
+  #     initialize: ->
+  #       @bindTo @model, 'change:name', @render
+  #
+  #     @render: =>
+  #
+  #       @wrap (view) =>
+  #
+  #         view.add @make 'Label', labelStyles,
+  #           text: @model.get 'name'
+  #
+  #       @
+  #
+  wrap: (callback) =>
+
+    @view.remove @wrapper if @wrapper?
+
+    @wrapper = @make 'View',
+      height: @view.height or 'auto'
+      layout: @view.layout
+
+    callback @wrapper
+
+    @view.add @wrapper
