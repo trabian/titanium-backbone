@@ -1,6 +1,6 @@
 styles = require('styles').ui
 
-View = require '../base'
+View = require 'views/base'
 
 module.exports = class Button extends View
 

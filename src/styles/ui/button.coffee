@@ -8,3 +8,5 @@ module.exports =
     right: 0
     backgroundColor: colors.button.default
     style: 'Ti.UI.iPhone.SystemButtonStyle.BAR'
+
+  nav: null
