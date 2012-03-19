@@ -96,16 +96,7 @@ module.exports = class View
     @options = options
 
   _bindControllerEvents: ->
-
-    if context = @controller?.context
-      context.on 'destroy', @destroy
-    else
-      console.warn '''
-        This view has not been provided with an associated context
-        (usually the Window within which the view is displayed).
-        This means we won't be able to automatically destroy the
-        view when the context is destroyed.
-      '''
+    @controller?.context?.on 'destroy', @destroy
 
   # Internal: Creates the view if it doesn't already exist.
   #
@@ -204,6 +195,17 @@ module.exports = class View
       return
 
   bindTo: (model, eventName, callback) =>
+
+    unless @bindings
+
+      unless @controller?.context
+
+        console.warn """ 
+          This view (#{@viewName}) has not been provided with an associated context
+          (usually the Window within which the view is displayed).  This means we
+          won't be able to automatically destroy the view when the context is destroyed,
+          and the events being bound will likely cause a memory leak.
+        """
 
     @bindings or= []
 
