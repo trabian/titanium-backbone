@@ -11,12 +11,12 @@ module.exports = class Tab extends View
     icon: "images/#{@presenter.get 'icon'}"
 
   initialize: ->
-    @_initializeController()
+    @initializeController()
 
   # Public: Render and return the Tab view.
   render: =>
 
-    @view.window = @_renderWindow()
+    @view.window = @renderWindow()
 
     @
 
@@ -32,26 +32,34 @@ module.exports = class Tab extends View
   #
   #   @controller.show 'theViewName', windowView
   #
-  _initializeController: =>
+  initializeController: =>
 
-    @controller = new Controller
+    @childController = new Controller
 
-    @bindTo @controller, 'show', (name, window) =>
+    @bindTo @childController, 'show', (name, window, options) =>
 
-      @controller.context = window
+      @childController.context = window
 
-      # Open the window in the current tab.
-      @view.open window.render().view
+      if options?.modal or window.view.modal
+
+        # Open the window
+        window.render().open
+          modal: true
+
+      else
+
+        # Open the window in the current tab.
+        @view.open window.render().view
 
   # Internal: Create a window using the presenter's
   # 'viewClass' attribute with the presenter's 'title'
   # attribute as the title.
   #
   # Returns the rendered window.
-  _renderWindow: =>
+  renderWindow: =>
 
     window = new (@presenter.get 'viewClass')
-      controller: @controller
+      controller: @childController
       style:
         title: @presenter.get 'title'
 

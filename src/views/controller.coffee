@@ -1,5 +1,8 @@
 module.exports = class Controller extends Backbone.Model
 
+  initialize: (attributes) ->
+    @context = attributes?.context
+
   show: (name, window, options) =>
     @trigger 'show', name, window, options
 
