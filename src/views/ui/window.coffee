@@ -28,3 +28,7 @@ module.exports = class Window extends View
   close: (options) => @view.close options
 
   destroy: => @trigger 'destroy'
+
+  _bindControllerEvents: =>
+    @controller?.context ?= @
+    super
