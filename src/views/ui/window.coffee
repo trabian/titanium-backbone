@@ -23,8 +23,8 @@ module.exports = class Window extends View
 
     callback wrapper
 
-  open: => @view.open()
+  open: (options) => @view.open options
 
-  close: => @view.close()
+  close: (options) => @view.close options
 
   destroy: => @trigger 'destroy'
