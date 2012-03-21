@@ -1,22 +1,4 @@
-# Internal: If a value is a function, call that function. Otherwise, return the value.
-#
-# Examples
-#
-#   class Label extends View
-#
-#     # Attributes as a function:
-#     attributes: ->
-#       text: "This label has an id of #{@id}."
-#
-#     # Attributes an object:
-#     attributes:
-#       text: 'This is a static label'
-#
-getValue = (object, prop) ->
-  if val = object?[prop]
-    if _.isFunction(val) then val() else val
-  else
-    null
+util = require 'lib/util'
 
 # Internal: Create a Titanium View given a viewName.
 #
@@ -77,7 +59,7 @@ module.exports = class View
     @delegateEvents()
 
   # Public: Provide public access to the internal getValue method
-  getValue: (prop) => getValue @, prop
+  getValue: (prop) => util.getValue @, prop
 
   # Public: Empty by default. Override it with your own initialization logic.
   initialize: ->
@@ -105,7 +87,7 @@ module.exports = class View
 
     unless @view
 
-      attrs = getValue(@, 'attributes') or {}
+      attrs = @getValue('attributes') or {}
 
       if style = @options.style
         attrs = _.extend {}, attrs, style
@@ -166,7 +148,7 @@ module.exports = class View
 
   delegateEvents: (events) ->
 
-    unless events or events = getValue @, 'events'
+    unless events or events = @getValue 'events'
       return
 
     for name, method of events
