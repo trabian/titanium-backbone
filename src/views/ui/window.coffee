@@ -6,7 +6,11 @@ module.exports = class Window extends View
 
   viewName: 'Window'
 
-  attributes: styles.view
+  attributes: (extensions) ->
+    if extensions
+      _.extend {}, styles.view, extensions
+    else
+      styles.view
 
   events:
     close: 'destroy'
