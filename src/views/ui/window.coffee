@@ -23,9 +23,11 @@ module.exports = class Window extends View
       callback = options
       options = {}
 
-    @view.add wrapper = @make 'View', options.style or styles.layouts.default
+    @wrap (view) =>
 
-    callback wrapper
+      view.add layout = @make 'View', options.style or styles.layouts.default
+
+      callback layout
 
   open: (options) => @view.open options
 
