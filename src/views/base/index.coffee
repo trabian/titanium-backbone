@@ -233,9 +233,9 @@ module.exports = class View
 
     @view.remove @wrapper if @wrapper?
 
-    @wrapper = @make 'View',
-      height: @view.height or 'auto'
-      layout: @view.layout
+    @wrapper = @make 'View', @view.attributes
+      #height: @view.height or 'auto'
+      #layout: @view.layout
 
     callback @wrapper
 
