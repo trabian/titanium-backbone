@@ -213,6 +213,10 @@ module.exports = class View
 
     @bindings.push { model, eventName, callback }
 
+  bindToAndTrigger: (model, eventName, callback) =>
+    @bindTo model, eventName, callback
+    callback?()
+
   destroy: =>
 
     if @bindings
