@@ -12,8 +12,8 @@ buildPackage = (options) ->
   private: true
   description: 'Mobile app'
   dependencies:
-    "titanium-backbone": "git+ssh://git@github.com:trabian/titanium-backbone.git#master"
-    "titanium-backbone-ks": "git+ssh://git@github.com:trabian/titanium-backbone-ks.git#master"
+    "titanium-backbone": "0.0.x"
+    "titanium-backbone-ks": "0.0.x"
   stitch:
     identifier: 'mobileRequire'
     output:
