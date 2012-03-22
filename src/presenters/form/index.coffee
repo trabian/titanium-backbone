@@ -4,6 +4,7 @@ module.exports = class Form extends Backbone.Model
 
   defaults:
     saveable: false
+    updateOnly: false
     sections: [
       { key: 'default', group: true }
       { key: 'none', group: false }
@@ -43,4 +44,8 @@ module.exports = class Form extends Backbone.Model
       @clone.change()
 
   save: =>
-    @original.save @fields.attributes()
+
+    if @get 'updateOnly'
+      @original.set @fields.attributes()
+    else
+      @original.save @fields.attributes()
