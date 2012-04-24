@@ -1,5 +1,5 @@
 _ = require 'underscore'
-package = require '../../package'
+pkg = require '../../package'
 generator = require '../generator'
 
 examples = '''
@@ -18,7 +18,7 @@ module.exports =
     program = require 'commander'
 
     program
-      .version(package.version)
+      .version(pkg.version)
       .usage('new <app-name>')
       .option('-i, --id <id>', 'App ID (defaults to dasherized version of <app-name>)')
       .option('-d, --dir <dir>', 'Directory (defaults to ./<id>)')

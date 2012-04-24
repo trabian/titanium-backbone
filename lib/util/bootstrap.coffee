@@ -28,9 +28,9 @@ createTiapp = (options) ->
 
 module.exports =
 
-  bootstrap: (package) ->
+  bootstrap: (pkg) ->
 
-    createTiapp package.mobile
+    createTiapp pkg.mobile
 
     for resourceDir in ['iphone', 'android']
 
