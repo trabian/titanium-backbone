@@ -60,9 +60,9 @@ module.exports =
 
   command: require './command'
 
-  load: (root, package) ->
+  load: (root, pkg) ->
 
-    buildTasks = require('stitch-up').load(root, package).tasks
+    buildTasks = require('stitch-up').load(root, pkg).tasks
 
     runSimulator = (callback) ->
 
