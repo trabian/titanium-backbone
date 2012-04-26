@@ -12,7 +12,7 @@ buildPackage = (options) ->
   private: true
   description: 'Mobile app'
   dependencies:
-    "titanium-backbone": "0.0.x"
+    "titanium-backbone": "0.1.x"
     "titanium-backbone-ks": "0.0.x"
   stitch:
     identifier: 'mobileRequire'
