@@ -10,7 +10,9 @@ module.exports = class TabGroup extends CollectionView
 
   viewName: 'TabGroup'
 
-  attributes: styles.window.view
+  attributes: ->
+    _.extend {}, styles.window.view,
+      activeTab: 0
 
   events:
     close: 'destroy'
