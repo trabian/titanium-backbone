@@ -16,7 +16,7 @@ module.exports = class TabGroup extends CollectionView
     close: 'destroy'
 
   # Internal: Add the tab for the provided presenter.
-  addOne: (presenter) =>
+  addOne: (presenter, options) =>
 
     tabView = new Tab
       presenter: presenter

@@ -20,4 +20,6 @@ module.exports = class CollectionView extends View
       @collection.fetch()
 
   addAll: =>
-    @collection.each @addOne
+
+    @collection.each (model, index) =>
+      @addOne model, { index }
