@@ -17,19 +17,24 @@ util = require 'lib/util'
 #   # Equivalent to: Ti.UI.iPhone.createNavigationGroup { window: sampleWindow }
 #
 # Returns the created view
-createTitaniumView = (viewName, attributes) ->
+createTitaniumView = (viewNameOrCreator, attributes) ->
 
-  # Extract module name
-  viewCreator = if match = viewName.match(/(.*)::(.*)/)
-    module = match[1]
-    viewName = match[2]
+  viewCreator = if _.isString viewNameOrCreator
 
-  creator = "create#{viewName}"
+    viewName = viewNameOrCreator
 
-  viewCreator = if module
-    Ti.UI[module][creator]
+    # Extract module name
+    if match = viewName.match(/(.*)::(.*)/)
+      module = match[1]
+      viewName = match[2]
+
+    creator = "create#{viewName}"
+
+    if module then Ti.UI[module][creator] else Ti.UI[creator]
+
   else
-    Ti.UI[creator]
+
+    viewNameOrCreator
 
   # Equivalent to, for example, Ti.UI.createLabel attributes
   viewCreator attributes
