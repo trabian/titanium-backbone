@@ -5,7 +5,7 @@ layout = (padding) ->
   left: padding
   right: padding
   layout: 'vertical'
-  height: 'auto'
+  height: Ti.UI.SIZE
 
 module.exports =
 
@@ -19,3 +19,8 @@ module.exports =
     noPadding: layout 0
 
     padded: layout
+
+    fill:
+      height: Ti.UI.FILL
+      width: Ti.UI.FILL
+      layout: 'vertical'

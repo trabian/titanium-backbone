@@ -4,7 +4,8 @@ label = (fontSize, options = {}) ->
     fontSize: fontSize
 
   _.extend {}, options,
-    height: 'auto'
+    height: Ti.UI.SIZE
+    width: Ti.UI.FILL
     color: '#333'
     bottom: options.font.fontSize * 0.5 # Similar to bottom margin of 0.5em
 
@@ -37,14 +38,16 @@ module.exports =
 
     primary:
       top: 0
-      height: 'auto'
+      height: Ti.UI.SIZE
+      width: Ti.UI.FILL
       color: '#333'
       font:
         fontSize: 15
 
     meta:
       bottom: 0
-      height: 'auto'
+      height: Ti.UI.SIZE
+      width: Ti.UI.FILL
       color: '#999'
       font:
         fontSize: 11
