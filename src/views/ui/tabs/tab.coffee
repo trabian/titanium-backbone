@@ -58,7 +58,9 @@ module.exports = class Tab extends View
   # Returns the rendered window.
   renderWindow: =>
 
-    window = new (@presenter.get 'viewClass')
+    viewClass = @presenter.get 'viewClass'
+
+    window = new viewClass _.extend {}, @presenter.get('options') or {},
       controller: @childController
       style:
         title: @presenter.get 'title'
