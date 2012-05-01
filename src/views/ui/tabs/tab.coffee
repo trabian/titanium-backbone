@@ -62,6 +62,7 @@ module.exports = class Tab extends View
 
     window = new viewClass _.extend {}, @presenter.get('options') or {},
       controller: @childController
+      model: @model
       style:
         title: @presenter.get 'title'
 

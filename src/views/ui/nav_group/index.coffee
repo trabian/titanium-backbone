@@ -38,6 +38,7 @@ module.exports = class NavGroup extends View
 
     window = new viewClass _.extend {}, @presenter.get('options') or {},
       controller: @controller
+      model: @model
 
     @view.window = window.render().view
 

@@ -22,6 +22,7 @@ module.exports = class TabGroup extends CollectionView
 
     tabView = new Tab
       presenter: presenter
+      model: @model
       controller: @controller
 
     @view.addTab tabView.render().view
