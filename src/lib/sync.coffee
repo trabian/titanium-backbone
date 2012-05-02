@@ -1,4 +1,5 @@
 util = require 'lib/util'
+network = require 'lib/network'
 
 methodMap =
   create: 'POST'
@@ -12,38 +13,43 @@ getValue = (object, prop) ->
   else
     null
 
-module.exports = (method, model, options) ->
+module.exports = class Sync
 
-  type = methodMap[method]
+  constructor: (@options) ->
 
-  url = options.url ? getValue model, 'url'
+    @options.parse ?= (response) ->
+      response
 
-  if not options.data and model and method in ['create', 'update']
+  buildUrl: (url) =>
 
-    data = JSON.stringify model.toJSON()
+    if urlRoot = @options.urlRoot
 
-  xhr = Ti.Network.createHTTPClient
+      divider = if urlRoot.match(/\/$/) then '' else '/'
 
-    timeout: options.timeout or 1000000
+      url = url.replace /^\//, ''
 
-    onload: ->
+      url = [urlRoot, url].join divider
 
-      data = JSON.parse @responseText
+    url
 
-      console.log 'data', data
+  sync: (method, model, options) =>
 
-      options.success data, @status, xhr
+    url = @buildUrl options.url ? getValue model, 'url'
 
-    onerror: (e) ->
+    if not options.data and model and method in ['create', 'update']
 
-      console.log 'error', e
+      data = JSON.stringify model.toJSON()
 
-  xhr.open type, url, true
+    network.request url,
 
-  if auth = options.auth
+      type: methodMap[method]
 
-    authString = Ti.Utils.base64encode [auth.login, auth.password].join ':'
+      data: data
 
-    xhr.setRequestHeader 'Authorization', "Basic #{authString}"
+      timeout: options.timeout
 
-  xhr.send data
+      success: (data, status, client) =>
+
+        data = @options.parse data
+
+        options.success? data, status, client
