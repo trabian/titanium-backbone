@@ -15,3 +15,5 @@ module.exports =
 
   window:
     background: '#eee'
+
+  bar: '#333'

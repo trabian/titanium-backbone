@@ -11,6 +11,7 @@ module.exports =
 
   view:
     backgroundColor: colors.window.background
+    barColor: colors.bar
 
   layouts:
 
