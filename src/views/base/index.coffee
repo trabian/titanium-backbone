@@ -158,18 +158,20 @@ module.exports = class View
 
     for name, method of events
 
-      unless _.isFunction method
-        method = @[method]
+      do (name, method) =>
 
-      if method
+        unless _.isFunction method
+          method = @[method]
 
-        @view.addEventListener name, =>
+        if method
 
-          method()
+          @view.addEventListener name, =>
 
-          # Returning a value from a Titanium event listener can cause problems,
-          # so we don't by overriding CoffeeScripts default return.
-          return
+            method()
+
+            # Returning a value from a Titanium event listener can cause problems,
+            # so we don't by overriding CoffeeScripts default return.
+            return
 
   listen: (name, callback) =>
 
