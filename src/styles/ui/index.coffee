@@ -8,6 +8,8 @@ module.exports =
 
   labels: require './labels'
 
+  search: require './search'
+
   table: require './table'
 
   window: require './window'
