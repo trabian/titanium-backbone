@@ -30,9 +30,10 @@
       "src"
     ],
     "dependencies": [
-      "node_modules/underscore/underscore.js",
-      "node_modules/backbone/backbone.js",
-      "deps/console.coffee"
+      "underscore:underscore.js",
+      "backbone:backbone.js",
+      "deps/console.coffee",
+      "vendor/backbone-relational.js"
     ]
   }
 }
