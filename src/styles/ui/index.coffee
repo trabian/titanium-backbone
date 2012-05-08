@@ -1,15 +1,17 @@
 module.exports =
 
-  contentBlock: require './content_block'
+	contentBlock: require './content_block'
 
-  button: require './button'
+	button: require './button'
 
-  form: require './form'
+	form: require './form'
 
-  labels: require './labels'
+	labels: require './labels'
 
-  search: require './search'
+	search: require './search'
 
-  table: require './table'
+	table: require './table'
 
-  window: require './window'
+	window: require './window'
+
+	tabbedBar: require './tabbed_bar'
