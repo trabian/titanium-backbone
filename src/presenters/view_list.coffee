@@ -9,3 +9,11 @@ module.exports = class ViewPresenterList extends Backbone.Collection
   fetch: (options = {}) =>
     @trigger 'reset'
     options.success? @
+
+  selectOne: (selected) =>
+
+    @each (presenter) ->
+      presenter.set
+        selected: presenter is selected
+
+    @trigger 'select', selected
