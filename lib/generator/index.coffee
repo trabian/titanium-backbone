@@ -26,8 +26,6 @@ buildPackage = (options) ->
     name: options.name
   engine:
     node: ">= 0.6"
-  scripts:
-    install: 'cake build'
 
 module.exports =
 
@@ -66,10 +64,11 @@ module.exports =
           writeFile 'package.json', (pd.json JSON.stringify buildPackage(options)), ->
 
             console.log """
-              Done generating the app. Change to the new directory and install the packages:
+              Done generating the app. Change to the new directory, install the packages, and build the .js files:
 
                 $ cd #{options.dir}
                 $ npm install
+                $ cake build
 
               Now you're ready to run a blank mobile app:
 
