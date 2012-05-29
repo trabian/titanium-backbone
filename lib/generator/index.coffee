@@ -6,6 +6,17 @@ wrench = require 'wrench'
 dasherize = (str) ->
   str.toLowerCase().replace /[_\s]/g, '-'
 
+urlToPackage = (url) ->
+  url
+    .replace(/http[s]?:\/\/(www\.)?/, '')
+    .replace(/(www\.)?/, '')
+    .split('.')
+    .reverse()
+    .join '.'
+
+generateAppId = (options) ->
+  urlToPackage(options.puburl) + '.' + dasherize options.name
+
 buildPackage = (options) ->
   name: options.id
   version: '0.0.1'
@@ -24,6 +35,7 @@ buildPackage = (options) ->
   mobile:
     id: options.id
     name: options.name
+    puburl: options.puburl
   engine:
     node: ">= 0.6"
 
@@ -31,9 +43,14 @@ module.exports =
 
   app: (options) ->
 
-    options.id or= dasherize options.name
+    options.puburl or= "http://www.example.com"
 
-    options.dir or= "./#{options.id}"
+    options.id or= generateAppId options
+
+    options.dir or= "./#{dasherize options.name}"
+
+    if options.puburl.substr(0,4) != 'http'
+      options.puburl = 'http://' + options.puburl
 
     path.exists options.dir, (exists) ->
 
@@ -60,7 +77,7 @@ module.exports =
       else
 
         wrench.copyDirRecursive "#{__dirname}/_template", options.dir, ->
-
+          
           writeFile 'package.json', (pd.json JSON.stringify buildPackage(options)), ->
 
             console.log """
