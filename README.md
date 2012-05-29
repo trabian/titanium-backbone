@@ -12,6 +12,8 @@ but the ideas and patterns extracted have worked very well within this
 large app. We're taking the time to refactor as we extract so it should
 be even cleaner.
 
+We have a Google Group at http://groups.google.com/group/titanium-backbone if you'd like to participate.
+
 ### Installation
 
 #### Install Titanium SDK
