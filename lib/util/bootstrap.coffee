@@ -19,6 +19,7 @@ createTiapp = (options) ->
         guid: uuid.v4()
         id: options.id
         name: options.name
+        url: options.puburl
 
       jade.renderFile "#{__dirname}/tiapp.jade", options, (err, str) ->
         throw err if err

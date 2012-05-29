@@ -20,8 +20,9 @@ module.exports =
     program
       .version(pkg.version)
       .usage('new <app-name>')
-      .option('-i, --id <id>', 'App ID (defaults to dasherized version of <app-name>)')
+      .option('-i, --id <id>', 'App ID (defaults to reverse publisher url (-url param) followed by dasherized version of <app-name>. eg: com.example.my-app)')
       .option('-d, --dir <dir>', 'Directory (defaults to ./<id>)')
+      .option('-u, --puburl <puburl>', 'The publisher URL (defaults to http://www.example.com)')
 
     program.on '--help', ->
       console.log examples
@@ -36,3 +37,4 @@ module.exports =
       name: program.args[0]
       id: program.id
       dir: program.dir
+      puburl: program.puburl
