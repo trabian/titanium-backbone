@@ -7,7 +7,8 @@ Label = require 'views/ui/label'
 module.exports = class DetailTableRow extends Row
 
   attributes: =>
-    hasChild: @model.get('click')?
+    _.extend {}, styles.row.view,
+      hasChild: @model.get('click')?
 
   events: =>
     'click': @model.get 'click'

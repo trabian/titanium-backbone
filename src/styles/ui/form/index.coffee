@@ -17,6 +17,7 @@ module.exports =
     row:
       view:
         selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE
+        height: 44
       editor:
         width: '60%'
         right: 0

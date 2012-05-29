@@ -3,7 +3,7 @@ colors = require('styles/theme').colors
 module.exports =
 
   view:
-    height: 'auto'
+    height: Ti.UI.SIZE
     borderWidth: 1
     borderColor: colors.border.default
     borderRadius: 11

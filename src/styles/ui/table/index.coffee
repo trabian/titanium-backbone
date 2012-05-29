@@ -9,6 +9,8 @@ module.exports =
       scrollable: false
 
     row:
+      view:
+        height: 44
       title:
         view:
           left: 11
