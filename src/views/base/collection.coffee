@@ -24,3 +24,5 @@ module.exports = class CollectionView extends View
 
     @collection.each (model, index) =>
       @addOne model, { index }
+
+  addOne: ->
