@@ -9,6 +9,8 @@ module.exports = class Label extends View
 
   render: =>
 
+    @options.label ?= @options.text
+
     { primary, meta } = @extractLabels @options.label
 
     @view.add @primary = @make 'Label', styles.primary, @options.labelStyle?.primary,
