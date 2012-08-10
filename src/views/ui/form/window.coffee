@@ -1,56 +1,92 @@
-styles = require('styles').ui.form.window
+styles = require('styles').ui
+
+Presenter = require 'presenters/view'
 
 { Window } = require 'views/ui'
 
-NavButton = require 'views/ui/button/nav'
+{ Button, NavButton } = require 'views/ui'
+
 FormView = require 'views/ui/form'
 
 module.exports = class FormWindow extends Window
 
   initialize: ->
 
-    @options.saveButton ?= 'Save'
+    @configureButtons()
+    @presenter ?= @buildForm?()
 
-    @view.leftNavButton = @renderCloseButton()
-    @view.rightNavButton = @renderSaveButton()
     super
 
   render: =>
 
-    @layout (view) =>
+    @layout { style: @options.layout }, (view) =>
 
       @prepend? view
 
-      formView = new FormView
+      @add (new FormView
         controller: @controller
         presenter: @presenter
+        style: @options.formLayout
         fieldStyles: @options.fieldStyles
+      ), view
 
-      view.add formView.render().view
+      @add(@buildSaveButton(), view) if @options.saveButtonStyle is 'bottom'
 
       @append? view
 
     @
 
-  renderCloseButton: =>
+  configureButtons: =>
 
-    button = new NavButton
+    @options.saveButton ?= 'Save'
+    @options.saveButtonStyle ?= 'nav'
+    @options.cancelButtonStyle ?= 'nav'
+
+    if @options.saveButtonStyle is 'nav'
+      @view.rightNavButton = @buildSaveButton().render().view
+      @options.layout = styles.window.layouts.default
+      @options.formLayout = {}
+    else
+      @options.layout = styles.window.layouts.noPadding
+      @options.formLayout = styles.window.layouts.default
+
+    if @options.cancelButtonStyle is 'nav'
+      @view.leftNavButton = @buildCancelButton().render().view
+
+  buildCancelButton: =>
+
+    buttonClass = if @options.cancelButtonStyle is 'nav'
+      NavButton
+    else
+      Button
+
+    new buttonClass
+      name: 'cancel-button'
       text: 'Cancel'
+      controller: @controller
       click: @close
 
-    button.render().view
+  buildSaveButton: =>
 
-  renderSaveButton: =>
+    buttonClass = if @options.saveButtonStyle is 'nav'
+      NavButton
+    else
+      Button
 
-    button = new NavButton
-      click: @save
+    buttonPresenter = new Presenter
       text: @options.saveButton
-      style: styles.button
+      enabled: false
 
-    @bindToAndTrigger @presenter, 'change:saveable', =>
-      button.view.enabled = @presenter.get 'saveable'
+    @presenterBind 'change:saveable', =>
 
-    button.render().view
+      buttonPresenter.set
+        enabled: @presenter.get 'saveable'
+
+    new buttonClass
+      name: 'save-button'
+      controller: @controller
+      presenter: buttonPresenter
+      click: @save
 
   save: =>
     @presenter.save()
