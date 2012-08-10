@@ -21,10 +21,8 @@ module.exports = class FormView extends View
 
         listViewClass = if section.group then FormTable else FieldListView
 
-        listView = new listViewClass
+        @add new listViewClass
           controller: @controller
           collection: new FieldList fields
-
-        @view.add listView.render().view
 
     @
