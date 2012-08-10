@@ -6,19 +6,41 @@ module.exports = class StringEditor extends View
 
   viewName: 'TextField'
 
-  attributes: -> styles.view
+  attributes: =>
+
+    viewStyles = if @presenter.inGroup()
+      styles.inline.view
+    else
+      styles.standalone.view
+
+    _.extend {}, viewStyles, @options.fieldStyle or {}
 
   events:
     change: 'change'
 
   initialize: ->
+
     @view.value = @presenter.get 'value'
-    @view.hintText = @presenter.hint()
+
+    @view.hintText = if @presenter.inGroup()
+      @presenter.hint()
+    else
+      @presenter.get 'label'
+
+    @listen 'return'
+
+    @initReturnKey()
+
+    super
 
   change: =>
 
     @presenter.set
       value: @view.value
+
+  save: =>
+    @presenter.trigger 'save'
+
   initReturnKey: =>
 
     @defaultReturnKey = @view.returnKeyType
