@@ -4,7 +4,12 @@ module.exports =
 
   view:
     layout: 'vertical'
-    height: 'auto'
+    height: Ti.UI.SIZE
+
+  fieldList:
+    view:
+      height: Ti.UI.SIZE
+      layout: 'vertical'
 
   table:
 

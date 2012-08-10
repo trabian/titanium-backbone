@@ -1,12 +1,12 @@
+styles = require('styles').ui.form
+
 FieldFactory = require 'views/ui/form/editors/factory'
 
 CollectionView = require 'views/base/collection'
 
 module.exports = class FieldListView extends CollectionView
 
-  attributes:
-    height: 'auto'
-    layout: 'vertical'
+  attributes: styles.fieldList.view
 
   addOne: (model) =>
 
