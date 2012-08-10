@@ -10,8 +10,10 @@ module.exports = class FieldListView extends CollectionView
 
   addOne: (model) =>
 
-    editor = FieldFactory.build
+    key = "#{model.get 'key'}"
+
+    # console.log @options.fieldStyles, @options.fieldStyles[key]
+
+    @add FieldFactory.build
       field: model
       controller: @controller
-
-    @view.add editor.render().view
