@@ -15,7 +15,7 @@ module.exports = class DetailTableRow extends Row
 
   initialize: ->
 
-    @bindTo @model, "change", =>
+    @modelBind "change", =>
       @render()
 
   render: =>

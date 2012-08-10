@@ -183,18 +183,37 @@ module.exports = class View
 
       return
 
+  presenterBind: (eventName, callback) =>
+    @modelBind eventName, callback, @presenter
+
+  presenterUnbind: (eventName, callback) =>
+    @modelUnbind eventName, callback, @presenter
+
+  collectionBind: (eventName, callback) =>
+    @modelBind eventName, callback, @collection
+
+  collectionUnbind: (eventName, callback) =>
+    @modelUnbind eventName, callback, @collection
+
+  modelBind: (eventName, callback) =>
+    @bindTo (@model or @collection or @presenter), eventName, callback
+
+  modelBindAndTrigger: (eventName, callback) =>
+    @modelBind eventName, callback
+    callback?()
+
   bindTo: (model, eventName, callback) =>
 
-    unless @bindings
+    # unless @bindings
 
-      unless @controller?.context
+      # unless @controller?.context
 
-        console.warn """ 
-          This view (#{@viewName}) has not been provided with an associated context
-          (usually the Window within which the view is displayed).  This means we
-          won't be able to automatically destroy the view when the context is destroyed,
-          and the events being bound will likely cause a memory leak.
-        """
+        # console.warn """
+        #   This view (#{@viewName}) has not been provided with an associated context
+        #   (usually the Window within which the view is displayed).  This means we
+        #   won't be able to automatically destroy the view when the context is destroyed,
+        #   and the events being bound will likely cause a memory leak.
+        # """
 
     @bindings or= []
 

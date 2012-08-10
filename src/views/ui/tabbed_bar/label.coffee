@@ -12,7 +12,7 @@ module.exports = class TabbedBarLabel extends View
 
   initialize: ->
 
-    @bindToAndTrigger @presenter, 'change:selected', =>
+    @modelBindAndTrigger 'change:selected', =>
       @updateState @presenter.get 'selected'
 
   updateState: (selected) =>

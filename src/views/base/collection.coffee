@@ -12,9 +12,8 @@ module.exports = class CollectionView extends View
     _(@options).defaults
       fetchOnInit: true
 
-    @bindTo @collection, 'reset', @addAll
-
-    @bindTo @collection, 'add', @addOne
+    @modelBind 'reset', @addAll
+    @modelBind 'add', @addOne
 
     if @options.fetchOnInit
       @collection.fetch()
