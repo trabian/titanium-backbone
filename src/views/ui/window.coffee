@@ -12,8 +12,8 @@ module.exports = class Window extends View
     else
       styles.view
 
-  events:
-    close: 'destroy'
+  # events:
+  #   close: 'destroy'
 
   layout: (options, callback) =>
 
@@ -33,13 +33,16 @@ module.exports = class Window extends View
 
   close: (options, callback) =>
 
-  destroy: => @trigger 'destroy'
     if callback
       @view.addEventListener 'close', ->
         callback()
         return
 
     @view.close options
+
+  # destroy: ->
+    # @trigger 'destroy'
+
   _bindControllerEvents: =>
     @controller?.context ?= @
     super
