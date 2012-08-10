@@ -19,8 +19,6 @@ module.exports = class Label extends View
       @view.add @meta = @make 'Label', styles.meta, @options.labelStyle?.meta,
         text: meta
 
-    @view.height = @primary.height + (@meta?.height or 0)
-
     @
 
   extractLabels: (label) ->
