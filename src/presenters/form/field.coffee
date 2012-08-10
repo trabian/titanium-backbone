@@ -21,3 +21,11 @@ module.exports = class Field extends Backbone.Model
 
   hint: =>
     (@get 'hint') or ('Required' if @get 'required')
+
+  getSection: =>
+
+    if sections = @collection.form.get 'sections'
+      sectionKey = @get 'section'
+      _.find sections, (section) -> section.key is sectionKey
+
+  inGroup: => @getSection()?.group
