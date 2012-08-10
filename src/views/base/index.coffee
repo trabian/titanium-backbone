@@ -127,6 +127,9 @@ module.exports = class View
 
     createTitaniumView viewName, attributes
 
+  add: (view, parent) ->
+    (parent ? @view).add view.render().view
+
   # Public: Empty by default. Override it with your own render logic.
   render: => @
 
