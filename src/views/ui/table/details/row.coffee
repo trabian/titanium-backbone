@@ -18,6 +18,8 @@ module.exports = class DetailTableRow extends Row
     @modelBind "change", =>
       @render()
 
+    super
+
   render: =>
 
     @wrap (view) =>

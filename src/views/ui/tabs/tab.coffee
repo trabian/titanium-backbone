@@ -12,6 +12,7 @@ module.exports = class Tab extends View
 
   initialize: ->
     @initializeController()
+    super
 
   # Public: Render and return the Tab view.
   render: =>

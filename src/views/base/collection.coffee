@@ -6,6 +6,8 @@ module.exports = class CollectionView extends View
 
   initialize: ->
 
+    super
+
     if @options.items
       @collection ?= new ViewList @options.items
 

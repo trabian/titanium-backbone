@@ -13,6 +13,7 @@ module.exports = class FormWindow extends Window
 
     @view.leftNavButton = @renderCloseButton()
     @view.rightNavButton = @renderSaveButton()
+    super
 
   render: =>
 

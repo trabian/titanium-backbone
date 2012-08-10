@@ -12,6 +12,7 @@ module.exports = class NavGroup extends View
 
   initialize: ->
     @initializeController()
+    super
 
   initializeController: ->
 

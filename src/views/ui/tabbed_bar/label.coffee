@@ -15,6 +15,8 @@ module.exports = class TabbedBarLabel extends View
     @modelBindAndTrigger 'change:selected', =>
       @updateState @presenter.get 'selected'
 
+    super
+
   updateState: (selected) =>
 
     gradientStyle = if selected then 'active' else 'inactive'

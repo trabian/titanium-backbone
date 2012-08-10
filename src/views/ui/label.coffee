@@ -7,8 +7,6 @@ module.exports = class Label extends View
 
   attributes: styles.view
 
-  initialize: ->
-
   render: =>
 
     { primary, meta } = @extractLabels @options.label
