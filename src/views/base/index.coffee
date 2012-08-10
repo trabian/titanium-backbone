@@ -175,7 +175,7 @@ module.exports = class View
 
   listen: (name, callback) =>
 
-    @view.addEventListener name, (e) ->
+    @view.addEventListener name, (e) =>
 
       @trigger name, e
 
