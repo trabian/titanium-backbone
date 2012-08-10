@@ -31,10 +31,15 @@ module.exports = class Window extends View
 
   open: (options) => @view.open options
 
-  close: (options) => @view.close options
+  close: (options, callback) =>
 
   destroy: => @trigger 'destroy'
+    if callback
+      @view.addEventListener 'close', ->
+        callback()
+        return
 
+    @view.close options
   _bindControllerEvents: =>
     @controller?.context ?= @
     super
