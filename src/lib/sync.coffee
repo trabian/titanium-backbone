@@ -15,7 +15,7 @@ getValue = (object, prop) ->
 
 module.exports = class Sync
 
-  constructor: (@options) ->
+  constructor: (@options = {}) ->
 
     @options.parse ?= (response) ->
       response
@@ -40,11 +40,16 @@ module.exports = class Sync
 
       data = JSON.stringify model.toJSON()
 
+    if data
+      contentType = 'application/json'
+
     network.request url,
 
       type: methodMap[method]
 
       data: data
+
+      contentType: contentType
 
       timeout: options.timeout
 
