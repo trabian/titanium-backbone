@@ -16,7 +16,10 @@ module.exports = class Form extends Backbone.Model
 
     @buildClone()
 
-    @buildFields attributes
+    if fields = attributes.fields
+      @set { fields }
+
+    @buildFields()
 
   buildClone: =>
 
@@ -28,13 +31,15 @@ module.exports = class Form extends Backbone.Model
       @set
         saveable: (! @clone.validate?) or @clone.isValid _.keys @fields.attributes()
 
-  buildFields: (attributes) =>
+  buildFields: =>
 
     @fields = new FieldList
 
+    @fields.form = @
+
     @fields.currentModel = @clone
 
-    @fields.add attributes?.fields
+    @fields.add @get 'fields'
 
     @fields.on 'change', (field) =>
 
@@ -43,6 +48,11 @@ module.exports = class Form extends Backbone.Model
 
       # Trigger the change event since we were silent
       @clone.change()
+
+    @fields.on 'save', =>
+
+      if @clone.isValid(true)
+        @save()
 
   save: =>
 
