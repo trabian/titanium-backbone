@@ -24,8 +24,9 @@ module.exports = class Form extends Backbone.Model
 
     @clone.on 'change', =>
 
+      # Check the fields handled by this form to determine if they are valid
       @set
-        saveable: ! @clone.validate @fields.attributes()
+        saveable: (! @clone.validate?) or @clone.isValid _.keys @fields.attributes()
 
   buildFields: (attributes) =>
 
