@@ -19,3 +19,17 @@ module.exports = class StringEditor extends View
 
     @presenter.set
       value: @view.value
+  initReturnKey: =>
+
+    @defaultReturnKey = @view.returnKeyType
+
+    @modelBind 'change:lastInvalid', =>
+
+      if @presenter.get 'lastInvalid'
+        @view.enableReturnKey = true
+        @view.returnKeyType = Ti.UI.RETURNKEY_DONE
+        @on 'return', @save
+      else
+        @view.enableReturnKey = true
+        @view.returnKeyType = @defaultReturnKey
+        @off 'return', @save
