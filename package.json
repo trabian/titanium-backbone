@@ -33,6 +33,7 @@
       "underscore:underscore.js",
       "backbone:backbone.js",
       "deps/console.coffee",
+      "vendor/Deferred.js",
       "vendor/backbone-relational.js"
     ]
   }
