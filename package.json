@@ -1,6 +1,6 @@
 {
   "name": "titanium-backbone",
-  "version": "0.2.4",
+  "version": "0.3.0",
   "homepage": "https://github.com/trabian/titanium-backbone",
   "description": "Framework for Titanium apps built with Backbone",
   "dependencies": {
@@ -30,9 +30,9 @@
       "src"
     ],
     "dependencies": [
-      "underscore:underscore.js",
-      "backbone:backbone.js",
       "deps/console.coffee",
+      "vendor/underscore.js",
+      "vendor/backbone.js",
       "vendor/Deferred.js",
       "vendor/backbone-relational.js"
     ]
