@@ -17,3 +17,4 @@ module.exports = class FieldListView extends CollectionView
     @add FieldFactory.build
       field: model
       controller: @controller
+      fieldStyle: @options.fieldStyles?[key]

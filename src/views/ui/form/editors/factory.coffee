@@ -9,3 +9,4 @@ module.exports =
     new fieldClass
       controller: options.controller
       presenter: field
+      fieldStyle: options.fieldStyle

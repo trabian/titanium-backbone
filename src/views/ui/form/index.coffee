@@ -24,5 +24,6 @@ module.exports = class FormView extends View
         @add new listViewClass
           controller: @controller
           collection: new FieldList fields
+          fieldStyles: @options.fieldStyles
 
     @

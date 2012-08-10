@@ -24,6 +24,7 @@ module.exports = class FormWindow extends Window
       formView = new FormView
         controller: @controller
         presenter: @presenter
+        fieldStyles: @options.fieldStyles
 
       view.add formView.render().view
 
