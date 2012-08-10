@@ -37,7 +37,10 @@ createTitaniumView = (viewNameOrCreator, attributes) ->
     viewNameOrCreator
 
   # Equivalent to, for example, Ti.UI.createLabel attributes
-  viewCreator attributes
+  if viewCreator
+    viewCreator attributes
+  else
+    console.log "Could not find viewCreator for #{viewName}"
 
 # Internal: The name of options to be attached directly to the view should they be
 # incountered in the 'options' hash.
