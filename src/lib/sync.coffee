@@ -7,12 +7,6 @@ methodMap =
   delete: 'POST'
   read: 'GET'
 
-getValue = (object, prop) ->
-  if val = object?[prop]
-    if _.isFunction(val) then val() else val
-  else
-    null
-
 module.exports = class Sync
 
   constructor: (@options = {}) ->
@@ -34,7 +28,7 @@ module.exports = class Sync
 
   sync: (method, model, options) =>
 
-    url = @buildUrl options.url ? getValue model, 'url'
+    url = @buildUrl options.url ? _.result model, 'url'
 
     if not options.data and model and method in ['create', 'update']
 
