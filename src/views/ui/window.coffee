@@ -33,6 +33,10 @@ module.exports = class Window extends View
 
   close: (options, callback) =>
 
+    if _.isFunction options
+      callback = options
+      options = {}
+
     if callback
       @view.addEventListener 'close', ->
         callback()
