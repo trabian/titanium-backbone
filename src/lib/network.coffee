@@ -40,6 +40,8 @@ module.exports =
     if options.contentType
       client.setRequestHeader 'Content-Type', options.contentType
 
+    options.beforeSend? client
+
     if auth = options.auth
 
       authString = Ti.Utils.base64encode [auth.login, auth.password].join ':'

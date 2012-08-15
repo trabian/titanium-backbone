@@ -53,6 +53,8 @@ module.exports = class Sync
 
       timeout: options.timeout
 
+      beforeSend: @options.beforeSend
+
       success: (data, status, client) =>
 
         data = @options.parse data
