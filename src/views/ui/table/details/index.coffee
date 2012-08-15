@@ -12,6 +12,5 @@ module.exports = class DetailsTable extends Table
 
     @options = _.defaults {}, @options,
       rowClass: require './row'
-      autoHeight: true
 
     super

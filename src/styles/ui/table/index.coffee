@@ -7,6 +7,7 @@ module.exports =
       borderColor: colors.table.border
       borderRadius: 11
       scrollable: false
+      height: Ti.UI.SIZE
 
     row:
       view:
