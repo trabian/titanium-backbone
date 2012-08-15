@@ -33,8 +33,8 @@ module.exports =
   combined:
 
     view:
-      height: 0
-      #layout: 'vertical'
+      height: Ti.UI.SIZE
+      layout: 'vertical'
 
     primary:
       top: 0
