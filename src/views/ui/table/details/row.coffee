@@ -24,21 +24,19 @@ module.exports = class DetailTableRow extends Row
 
     @wrap (view) =>
 
-      view.add @title = @renderLabel 'title'
+      @add (@title = @buildLabel 'title'), view
 
       if @model.get 'subtitle'
-        view.add @renderLabel 'subtitle'
+        @add (@buildLabel 'subtitle'), view
       else
-        @title.width = '100%'
+        @title.view.width = '100%'
 
     @
 
-  renderLabel: (name) =>
+  buildLabel: (name) =>
 
-    label = new Label
+    new Label
       label: @model.get name
       style: styles.row[name].view
       labelStyle: styles.row[name].label
       controller: @controller
-
-    label.render().view

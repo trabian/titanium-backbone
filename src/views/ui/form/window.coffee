@@ -43,7 +43,7 @@ module.exports = class FormWindow extends Window
     @options.cancelButtonStyle ?= 'nav'
 
     if @options.saveButtonStyle is 'nav'
-      @view.rightNavButton = @buildSaveButton().render().view
+      @add @buildSaveButton(), @view, 'setRightNavButton'
       @options.layout = styles.window.layouts.default
       @options.formLayout = {}
     else
