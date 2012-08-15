@@ -1,4 +1,4 @@
-var Ti, Titanium, TitaniumButton, TitaniumButtonBar, TitaniumNavigationGroup, TitaniumTextField, TitaniumView, TitaniumWindow,
+var Ti, Titanium, TitaniumButton, TitaniumButtonBar, TitaniumLabel, TitaniumNavigationGroup, TitaniumTableView, TitaniumTableViewRow, TitaniumTextField, TitaniumView, TitaniumWindow,
   __hasProp = Object.prototype.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
@@ -103,6 +103,58 @@ TitaniumButtonBar = (function(_super) {
 
 Ti.UI.createButtonBar = function(attributes) {
   return new TitaniumButtonBar(attributes);
+};
+
+TitaniumLabel = (function(_super) {
+
+  __extends(TitaniumLabel, _super);
+
+  function TitaniumLabel() {
+    TitaniumLabel.__super__.constructor.apply(this, arguments);
+  }
+
+  return TitaniumLabel;
+
+})(TitaniumView);
+
+Ti.UI.createLabel = function(attributes) {
+  return new TitaniumLabel(attributes);
+};
+
+TitaniumTableView = (function(_super) {
+
+  __extends(TitaniumTableView, _super);
+
+  function TitaniumTableView() {
+    TitaniumTableView.__super__.constructor.apply(this, arguments);
+  }
+
+  TitaniumTableView.prototype.appendRow = function(row) {
+    return this.add(row);
+  };
+
+  return TitaniumTableView;
+
+})(TitaniumView);
+
+TitaniumTableViewRow = (function(_super) {
+
+  __extends(TitaniumTableViewRow, _super);
+
+  function TitaniumTableViewRow() {
+    TitaniumTableViewRow.__super__.constructor.apply(this, arguments);
+  }
+
+  return TitaniumTableViewRow;
+
+})(TitaniumView);
+
+Ti.UI.createTableView = function(attributes) {
+  return new TitaniumTableView(attributes);
+};
+
+Ti.UI.createTableViewRow = function(attributes) {
+  return new TitaniumTableViewRow(attributes);
 };
 
 TitaniumTextField = (function(_super) {
