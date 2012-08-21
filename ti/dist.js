@@ -1,4 +1,4 @@
-var Ti, Titanium, TitaniumButton, TitaniumButtonBar, TitaniumLabel, TitaniumNavigationGroup, TitaniumTableView, TitaniumTableViewRow, TitaniumTextField, TitaniumView, TitaniumWindow,
+var Ti, Titanium, TitaniumButton, TitaniumButtonBar, TitaniumLabel, TitaniumNavigationGroup, TitaniumTab, TitaniumTabGroup, TitaniumTableView, TitaniumTableViewRow, TitaniumTextField, TitaniumView, TitaniumWindow,
   __hasProp = Object.prototype.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
@@ -49,6 +49,10 @@ TitaniumView = (function() {
 
   TitaniumView.prototype.addEventListener = function(name, event) {
     return this.on(name, event);
+  };
+
+  TitaniumView.prototype.fireEvent = function(name) {
+    return this.trigger(name);
   };
 
   TitaniumView.prototype.add = function(view) {
@@ -119,6 +123,48 @@ TitaniumLabel = (function(_super) {
 
 Ti.UI.createLabel = function(attributes) {
   return new TitaniumLabel(attributes);
+};
+
+TitaniumTabGroup = (function(_super) {
+
+  __extends(TitaniumTabGroup, _super);
+
+  function TitaniumTabGroup() {
+    TitaniumTabGroup.__super__.constructor.apply(this, arguments);
+  }
+
+  TitaniumTabGroup.prototype.addTab = function(tab) {
+    return this.add(tab);
+  };
+
+  TitaniumTabGroup.prototype.getTabs = function() {
+    return this.children;
+  };
+
+  TitaniumTabGroup.prototype.open = function() {};
+
+  return TitaniumTabGroup;
+
+})(TitaniumView);
+
+TitaniumTab = (function(_super) {
+
+  __extends(TitaniumTab, _super);
+
+  function TitaniumTab() {
+    TitaniumTab.__super__.constructor.apply(this, arguments);
+  }
+
+  return TitaniumTab;
+
+})(TitaniumView);
+
+Ti.UI.createTabGroup = function(attributes) {
+  return new TitaniumTabGroup(attributes);
+};
+
+Ti.UI.createTab = function(attributes) {
+  return new TitaniumTab(attributes);
 };
 
 TitaniumTableView = (function(_super) {

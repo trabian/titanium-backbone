@@ -9,6 +9,7 @@ build:
 		src/ui/views/base.coffee \
 		src/ui/views/button.coffee \
 		src/ui/views/label.coffee \
+		src/ui/views/tab_group.coffee \
 		src/ui/views/table.coffee \
 		src/ui/views/text_field.coffee \
 		src/ui/views/window.coffee \
