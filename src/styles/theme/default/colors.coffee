@@ -12,8 +12,14 @@ module.exports =
 
   table:
     border: '#ccc'
+    sectionBackground: 'rgba(50, 50, 50, 0.75)'
+    sectionLabel: '#fff'
 
   window:
     background: '#eee'
 
   bar: '#333'
+
+  text:
+    base: '#333'
+    subtle: '#999'
