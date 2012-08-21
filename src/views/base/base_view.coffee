@@ -261,13 +261,15 @@ module.exports = class View
   #
   #       @
   #
-  wrap: (callback) =>
+  wrap: (style, callback) =>
+
+    unless callback?
+      callback = style
+      style = {}
 
     @view.remove @wrapper if @wrapper?
 
-    @wrapper = @make 'View', @view.attributes
-      #height: @view.height or 'auto'
-      #layout: @view.layout
+    @wrapper = @make 'View', style
 
     callback @wrapper
 
