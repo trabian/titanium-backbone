@@ -35,6 +35,7 @@
       "vendor/backbone.js",
       "vendor/Deferred.js",
       "vendor/backbone-relational.js"
-    ]
+    ],
+    "images": "vendor/images"
   }
 }
