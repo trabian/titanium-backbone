@@ -6,7 +6,12 @@ ViewList = require 'presenters/view_list'
 
 module.exports = class DetailsTable extends Table
 
-  attributes: styles.table.details.view
+  attributes: =>
+
+    if @options.plain
+      styles.table.details.plain
+    else
+      styles.table.details.styled
 
   initialize: ->
 
