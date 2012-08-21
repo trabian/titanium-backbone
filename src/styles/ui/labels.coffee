@@ -18,6 +18,10 @@ heading = (fontSize) ->
 
 module.exports =
 
+  label: label
+
+  heading: heading
+
   h1: heading 20
 
   h2: heading 18
