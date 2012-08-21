@@ -12,6 +12,13 @@ module.exports = class Window extends View
     else
       styles.view
 
+  initialize: ->
+
+    if @title
+      @view.title = _.result @, 'title'
+
+    super
+
   events:
     close: 'destroy'
 
