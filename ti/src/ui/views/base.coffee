@@ -8,6 +8,9 @@ class TitaniumView
   addEventListener: (name, event) ->
     @on name, event
 
+  fireEvent: (name) ->
+    @trigger name
+
   add: (view) ->
     @children.push view
 
