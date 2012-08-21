@@ -171,9 +171,9 @@ module.exports = class View
 
         if method
 
-          @view.addEventListener name, =>
+          @view.addEventListener name, (e) =>
 
-            method()
+            method e
 
             # Returning a value from a Titanium event listener can cause problems,
             # so we don't by overriding CoffeeScripts default return.
