@@ -53,4 +53,6 @@ module.exports = class Sync
 
         data = @options.parse data
 
+        model?.lastUpdated = new Date()
+
         options.success? data, status, client
