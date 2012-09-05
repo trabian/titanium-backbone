@@ -20,6 +20,8 @@ module.exports =
 
   bar: '#333'
 
+  search: '#333'
+
   text:
     base: '#333'
     subtle: '#999'

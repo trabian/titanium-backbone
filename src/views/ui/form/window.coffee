@@ -12,14 +12,14 @@ module.exports = class FormWindow extends Window
 
   initialize: ->
 
+    super
+
     @configureButtons()
     @presenter ?= @buildForm?()
 
-    super
-
   render: =>
 
-    @layout { style: @options.layout }, (view) =>
+    @layout { scroll: true, style: @options.layout }, (view) =>
 
       @prepend? view
 

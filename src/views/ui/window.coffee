@@ -30,9 +30,24 @@ module.exports = class Window extends View
       callback = options
       options = {}
 
-    @wrap (view) =>
+    @wrap { height: Ti.UI.FILL }, (view) =>
 
-      view.add layout = @make 'View', options.style or styles.layouts.default
+      layout = @make 'View', options.style or styles.layouts.default
+
+      if options.scroll
+
+        scroll = @make 'ScrollView',
+          height: Ti.UI.FILL
+          contentHeight: 'auto'
+          scrollType: 'vertical'
+
+        scroll.add layout
+
+        view.add scroll
+
+      else
+
+        view.add layout
 
       callback layout
 

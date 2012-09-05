@@ -15,4 +15,4 @@ module.exports =
       borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
       textAlign: 'left'
       font:
-        fontSize: 20
+        fontSize: 22

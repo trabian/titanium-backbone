@@ -24,7 +24,6 @@ module.exports = class FormTableRow extends Row
       label: @model.get 'label'
       style: styles.label.view
       labelStyle: styles.label.label
-      controller: @controller
 
     label.render().view
 
@@ -34,7 +33,6 @@ module.exports = class FormTableRow extends Row
 
     editor = FieldFactory.build
       field: @model
-      controller: @controller
 
     editorWrapper.add editor.render().view
 

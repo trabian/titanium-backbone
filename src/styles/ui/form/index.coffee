@@ -1,4 +1,9 @@
 colors = require('styles/theme').colors
+labels = require('styles/ui/labels')
+
+title = _.extend labels.label(14, font: { fontWeight: 'bold' }),
+  bottom: 4
+  left: 7
 
 module.exports =
 
@@ -10,6 +15,11 @@ module.exports =
     view:
       height: Ti.UI.SIZE
       layout: 'vertical'
+    field:
+      view:
+        height: Ti.UI.SIZE
+        layout: 'vertical'
+      title: title
 
   table:
 
@@ -18,6 +28,7 @@ module.exports =
       borderRadius: 11
       scrollable: false
       bottom: 11
+      height: Ti.UI.SIZE
 
     row:
       view:
@@ -28,7 +39,7 @@ module.exports =
         right: 0
       label:
         view:
-          left: 11
+          left: 13
           width: '40%'
         label:
           primary:
@@ -36,7 +47,7 @@ module.exports =
             color: colors.form.label
             font:
               fontWeight: 'bold'
-              fontSize: 17
+              fontSize: 16
 
   editors: require './editors'
 
