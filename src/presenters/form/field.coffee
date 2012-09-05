@@ -28,4 +28,10 @@ module.exports = class Field extends Backbone.Model
       sectionKey = @get 'section'
       _.find sections, (section) -> section.key is sectionKey
 
+  hasFormat: => !! @get 'formatter'
+
+  format: =>
+    if value = @get 'value'
+      @get('formatter')? value
+
   inGroup: => @getSection()?.group
