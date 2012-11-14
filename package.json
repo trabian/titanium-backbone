@@ -31,10 +31,10 @@
     ],
     "dependencies": [
       "deps/console.coffee",
+      "node_modules/stitch-up/node_modules/jade/runtime.js",
       "vendor/underscore.js",
       "vendor/backbone.js",
-      "vendor/Deferred.js",
-      "vendor/backbone-relational.js"
+      "vendor/Deferred.js"
     ],
     "images": "vendor/images"
   }
