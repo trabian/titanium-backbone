@@ -6,6 +6,10 @@ Ti.UI.createButton = (attributes) ->
 
 class TitaniumButtonBar extends TitaniumView
 
+  show: -> @visible = true
+
+  hide: -> @visible = false
+
 Ti.UI.createButtonBar = (attributes) ->
 
   new TitaniumButtonBar attributes
