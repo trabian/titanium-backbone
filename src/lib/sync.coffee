@@ -4,7 +4,7 @@ network = require 'lib/network'
 methodMap =
   create: 'POST'
   update: 'POST'
-  delete: 'POST'
+  delete: 'DELETE'
   read: 'GET'
 
 module.exports = class Sync
@@ -29,13 +29,16 @@ module.exports = class Sync
   sync: (method, model, options) =>
 
     url = @buildUrl options.url ? _.result model, 'url'
+    contentType = options.contentType ? _.result model, 'contentType'
+
+    data = options.data
 
     if not options.data and model and method in ['create', 'update']
 
       data = JSON.stringify model.toJSON()
 
     if data
-      contentType = 'application/json'
+      contentType ?= 'application/json'
 
     network.request url,
 
@@ -45,9 +48,15 @@ module.exports = class Sync
 
       contentType: contentType
 
+      headers: options.headers ? {}
+
       timeout: options.timeout
 
       beforeSend: @options.beforeSend
+
+      error: @options.error
+
+      progress: @options.progress
 
       success: (data, status, client) =>
 
