@@ -14,7 +14,9 @@ module.exports = class Window extends View
 
   initialize: ->
 
-    if @title
+    if @options.title
+      @view.title = @options.title
+    else if @title
       @view.title = _.result @, 'title'
 
     super
