@@ -1,4 +1,5 @@
 colors = require('styles/theme').colors
+helpers = require 'styles/helpers'
 
 module.exports =
 
@@ -6,6 +7,8 @@ module.exports =
     view:
       width: Ti.UI.FILL
       color: colors.form.value
+      font:
+        fontSize: 14
   standalone:
     view:
       height: 44
@@ -16,3 +19,12 @@ module.exports =
       textAlign: 'left'
       font:
         fontSize: 22
+    button:
+      helpers.deviceStyles
+        default:
+          right: 7
+          backgroundColor: colors.bar
+          height: 30
+          width: 50
+        ios:
+          style: Ti.UI.iPhone.SystemButtonStyle.BAR

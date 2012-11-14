@@ -1,5 +1,6 @@
 colors = require('styles/theme').colors
 labels = require('styles/ui/labels')
+helpers = require 'styles/helpers'
 
 title = _.extend labels.label(14, font: { fontWeight: 'bold' }),
   bottom: 4
@@ -32,8 +33,11 @@ module.exports =
 
     row:
       view:
-        selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE
-        height: 44
+        helpers.deviceStyles
+          default:
+            height: 44
+          ios:
+            selectionStyle: Ti.UI.iPhone.TableViewCellSelectionStyle.NONE
       editor:
         width: '60%'
         right: 0
@@ -47,7 +51,7 @@ module.exports =
             color: colors.form.label
             font:
               fontWeight: 'bold'
-              fontSize: 16
+              fontSize: 14
 
   editors: require './editors'
 
