@@ -10,8 +10,8 @@ module.exports = class Button extends View
 
   attributes: styles.button.default
 
-  events: =>
-    click: @options.click
+  events:
+    click: 'click'
 
   initialize: ->
 
@@ -26,6 +26,9 @@ module.exports = class Button extends View
   render: =>
 
     @view.title = @presenter.get 'text'
-    @view.enabled = @presenter.get 'enabled'
+    @view.enabled = !! @presenter.get 'enabled'
 
     @
+
+  click: =>
+    @options.click()
