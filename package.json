@@ -1,6 +1,6 @@
 {
   "name": "titanium-backbone",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "homepage": "https://github.com/trabian/titanium-backbone",
   "description": "Framework for Titanium apps built with Backbone",
   "dependencies": {
