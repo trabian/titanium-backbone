@@ -6,6 +6,10 @@ class TitaniumWindow extends TitaniumView
   close: ->
     @trigger 'close'
 
+  setLeftNavButton: (@leftNavButton) ->
+
+  setRightNavButton: (@rightNavButton) ->
+
 Ti.UI.createWindow = (attributes) ->
 
   new TitaniumWindow attributes
