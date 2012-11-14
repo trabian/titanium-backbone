@@ -157,10 +157,16 @@ module.exports = class View
     else
       property
 
-  delegateEvents: (events) ->
+  delegateEvents: (view, events) ->
+
+    events = view
 
     unless events or events = @getValue 'events'
       return
+
+    @delegateEventsForView @view, events
+
+  delegateEventsForView: (view, events) ->
 
     for name, method of events
 
@@ -171,7 +177,9 @@ module.exports = class View
 
         if method
 
-          @view.addEventListener name, (e) =>
+          view.addEventListener name, (e) =>
+
+            return if @disposed
 
             method e
 
@@ -183,9 +191,10 @@ module.exports = class View
 
     @view.addEventListener name, (e) =>
 
-      @trigger name, e
-
-      callback? e
+      if callback?
+        callback e
+      else
+        @trigger name, e
 
       return
 
