@@ -10,6 +10,8 @@ FormView = require 'views/ui/form'
 
 module.exports = class FormWindow extends Window
 
+  title: 'Form Window'
+
   initialize: ->
 
     super
