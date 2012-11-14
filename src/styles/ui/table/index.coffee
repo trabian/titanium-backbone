@@ -75,7 +75,7 @@ module.exports =
             height: 17
             font:
               fontWeight: 'bold'
-              fontSize: 15
+              fontSize: 14
           meta:
             height: 15
       subtitle:
@@ -88,7 +88,7 @@ module.exports =
             textAlign: 'right'
             font:
               fontWeight: 'bold'
-              fontSize: 15
+              fontSize: 14
           meta:
             height: 15
             textAlign: 'right'
