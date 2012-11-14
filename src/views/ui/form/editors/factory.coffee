@@ -10,4 +10,3 @@ module.exports =
       controller: options.controller
       presenter: field
       name: field.get 'key'
-      fieldStyle: options.fieldStyle

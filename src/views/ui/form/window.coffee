@@ -27,7 +27,6 @@ module.exports = class FormWindow extends Window
         controller: @controller
         presenter: @presenter
         style: @options.formLayout
-        fieldStyles: @options.fieldStyles
       ), view
 
       @add(@buildSaveButton(), view) if @options.saveButtonStyle is 'bottom'
