@@ -8,6 +8,8 @@ class TitaniumTabGroup extends TitaniumView
 
 class TitaniumTab extends TitaniumView
 
+  setWindow: (@window) ->
+
 Ti.UI.createTabGroup = (attributes) ->
 
   new TitaniumTabGroup attributes

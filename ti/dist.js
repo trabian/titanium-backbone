@@ -218,6 +218,10 @@ TitaniumTab = (function(_super) {
     return TitaniumTab.__super__.constructor.apply(this, arguments);
   }
 
+  TitaniumTab.prototype.setWindow = function(window) {
+    this.window = window;
+  };
+
   return TitaniumTab;
 
 })(TitaniumView);
