@@ -83,11 +83,16 @@ module.exports = class FormWindow extends Window
       buttonPresenter.set
         enabled: @presenter.get 'saveable'
 
-    new buttonClass
+    buttonOptions =
       name: 'save-button'
       controller: @controller
       presenter: buttonPresenter
       click: @save
+
+    unless @options.saveButtonStyle is 'nav'
+      buttonOptions.style = styles.form.window.submitButton
+
+    new buttonClass buttonOptions
 
   save: =>
     @presenter.save()
