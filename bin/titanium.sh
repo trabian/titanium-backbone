@@ -11,6 +11,7 @@ HOCKEY_ENABLED=${hockey}
 APK_ONLY=${justapk}
 RELEASE_NOTES=${notes}
 IPHONE_DEV_CERT=${cert}
+TEMP_DIR="/Users/mattdean/tmp"
 
 # Look all over for a titanium install
 for d in /Users/*
@@ -76,11 +77,11 @@ TI_IPHONE_BUILD="${TI_IPHONE_DIR}/builder.py"
 
 # Android settings
 if [ "${android}" == "" ]; then
-  android="titanium_2_WVGA854"
+  android="IntelGoogle"
 fi
 TI_ANDROID_DIR="${TI_ASSETS_DIR}/android"
 TI_ANDROID_BUILD="${TI_ANDROID_DIR}/builder.py"
-ANDROID_SDK_PATH='~/Android'
+ANDROID_SDK_PATH='~/dev/tools/android'
 
 # Get APP parameters from current tiapp.xml
 APP_ID=`cat tiapp.xml | grep "<id>" | sed -e "s/<\/*id>//g"`
@@ -110,7 +111,7 @@ if [ ${APP_DEVICE} == "iphone" -o ${APP_DEVICE} == "ipad" ]; then
     bash -c "'${TI_IPHONE_DIR}/prereq.py' package" | \
     while read prov
     do
-      temp_iphone_dev_names=`echo $prov | python -c 'import json,sys;obj=json.loads(sys.stdin.read());print obj["'"iphone_dev_name"'"]'| sed 's/ u//g' | sed 's/\[u//g' | sed 's/\[//g'| sed 's/\]//g'| sed "s/\ '//g"| sed "s/\'//g"`
+      temp_iphone_dev_names=`echo $prov | python -c 'import json,sys;obj=json.loads(sys.stdin.read());print obj["'"iphone_dist_name"'"]'| sed 's/ u//g' | sed 's/\[u//g' | sed 's/\[//g'| sed 's/\]//g'| sed "s/\ '//g"| sed "s/\'//g"`
       IFS=,
       IPHONE_DEV_NAMES=(${temp_iphone_dev_names//,iphone_dev_name:/})
 
@@ -132,7 +133,7 @@ if [ ${APP_DEVICE} == "iphone" -o ${APP_DEVICE} == "ipad" ]; then
       fi
 
       SIGNING_IDENTITY=${IPHONE_DEV_NAMES[$IPHONE_DEV_CERT]}
-      PROVISIONING_PROFILE="${PROJECT_ROOT}/certs/development.mobileprovision"
+      PROVISIONING_PROFILE="${PROJECT_ROOT}/certs/distribution.mobileprovision"
 
             if [ ! -r 'certs/development.mobileprovision' ];then
         echo "You must have a file called ${PROVISIONING_PROFILE} to beild for device..."
@@ -149,22 +150,27 @@ if [ ${APP_DEVICE} == "iphone" -o ${APP_DEVICE} == "ipad" ]; then
         temp_array=(${line//{\"uuid\": \"/})
 
         UUID=${temp_array[0]//\"/}
-                echo "'${TI_IPHONE_BUILD}' install ${iphone} '${PROJECT_ROOT}/' $(echo $APP_ID) '$(echo $APP_NAME)' '$(echo $UUID | sed -e "s/uuid: //g")' '${SIGNING_IDENTITY}' '$(echo ${APP_DEVICE})'"
-        bash -c "'${TI_IPHONE_BUILD}' install ${iphone} '${PROJECT_ROOT}/' $(echo $APP_ID) '$(echo $APP_NAME)' '$(echo $UUID | sed -e "s/uuid: //g")' '${SIGNING_IDENTITY}' '$(echo ${APP_DEVICE})'" | \
+                echo "'${TI_IPHONE_BUILD}' distribute ${iphone} '${PROJECT_ROOT}/' $(echo $APP_ID) '$(echo $APP_NAME)' '$(echo $UUID | sed -e "s/uuid: //g")' '${SIGNING_IDENTITY}' '$(echo ${APP_DEVICE})'"
+        bash -c "'${TI_IPHONE_BUILD}' distribute ${iphone} '${PROJECT_ROOT}/' $(echo $APP_ID) '$(echo $APP_NAME)' '$(echo $UUID | sed -e "s/uuid: //g")' '${SIGNING_IDENTITY}' '$(echo ${APP_DEVICE})'" | \
         while read build_log
         do
 
-          if [ "${build_log}" == '[INFO] iTunes sync initiated' ]; then
+          if [ "${build_log}" == '[INFO] Performing clean build' ]; then
 
             echo "[INFO] Done building app..."\
             | perl -pe 's/^\[DEBUG\].*$/\e[35m$&\e[0m/g;s/^\[INFO\].*$/\e[36m$&\e[0m/g;s/^\[WARN\].*$/\e[33m$&\e[0m/g;s/^\[ERROR\].*$/\e[31m$&\e[0m/g;'
 
             if [ $TESTFLIGHT_ENABLED ]; then
 
-              API_TOKEN=`cat tiapp.xml | grep "<tf_api>" | sed -e "s/<\/*tf_api>//g"`
-              API_TOKEN=$(echo ${API_TOKEN//    /})
-              TEAM_TOKEN=`cat tiapp.xml | grep "<tf_token>" | sed -e "s/<\/*tf_token>//g"`
-              TEAM_TOKEN=$(echo ${TEAM_TOKEN//    /})
+              API_TOKEN="aeefe9dcecff156d543bc9d9fdb72ebb_NzIxMTQ"
+              TEAM_TOKEN="1a2dc5fc12e1aa447a864c11e25946e2_MjM2MDkyMDExLTEwLTI1IDE2OjA5OjUyLjM5MDQ4OA"
+
+              # API_TOKEN=`cat tiapp.xml | grep "<tf_api>" | sed -e "s/<\/*tf_api>//g"`
+              # API_TOKEN=$(echo ${API_TOKEN//    /})
+              # echo "API_token:${API_TOKEN}:"
+              # TEAM_TOKEN=`cat tiapp.xml | grep "<tf_token>" | sed -e "s/<\/*tf_token>//g"`
+              # TEAM_TOKEN=$(echo ${TEAM_TOKEN//    /})
+              # echo "TEAM_token:${TEAM_TOKEN}:"
 
               if [ "${API_TOKEN}" == '' -o "${TEAM_TOKEN}" == '' ]; then
                 echo "[ERROR] Testflight API key (tf_api) and Testflight team token (tf_token) must be defined in your tiapp.xml to upload with testflight"\
@@ -176,13 +182,16 @@ if [ ${APP_DEVICE} == "iphone" -o ${APP_DEVICE} == "ipad" ]; then
               echo "[INFO] Preping to upload to TestFlight..."\
               | perl -pe 's/^\[DEBUG\].*$/\e[35m$&\e[0m/g;s/^\[INFO\].*$/\e[36m$&\e[0m/g;s/^\[WARN\].*$/\e[33m$&\e[0m/g;s/^\[ERROR\].*$/\e[31m$&\e[0m/g;'
 
-              APP="${PROJECT_ROOT}/build/iphone/build/Debug-iphoneos/$(echo $APP_NAME).app"
+              APP="${PROJECT_ROOT}/build/iphone/build/Release-iphoneos/$(echo $APP_NAME).app"
 
               echo "[INFO] Creating .ipa from compiled app"\
               | perl -pe 's/^\[DEBUG\].*$/\e[35m$&\e[0m/g;s/^\[INFO\].*$/\e[36m$&\e[0m/g;s/^\[WARN\].*$/\e[33m$&\e[0m/g;s/^\[ERROR\].*$/\e[31m$&\e[0m/g;'
 
-              /bin/rm "/tmp/$(echo $APP_NAME).ipa"
-              /usr/bin/xcrun -sdk iphoneos PackageApplication -v "${APP}" -o "/tmp/$(echo $APP_NAME).ipa" --sign "${SIGNING_IDENTITY}" --embed "${PROVISIONING_PROFILE}" | \
+              /bin/rm "$(echo $TEMP_DIR)/$(echo $APP_NAME).ipa"
+              echo "[INFO] /usr/bin/xcrun -sdk iphoneos PackageApplication -v \"${APP}\" -o \"$(echo $TEMP_DIR)/$(echo $APP_NAME).ipa\" --sign \"iPhone Distribution: ${SIGNING_IDENTITY}\" --embed \"${PROVISIONING_PROFILE}\" | "\
+              | perl -pe 's/^\[DEBUG\].*$/\e[35m$&\e[0m/g;s/^\[INFO\].*$/\e[36m$&\e[0m/g;s/^\[WARN\].*$/\e[33m$&\e[0m/g;s/^\[ERROR\].*$/\e[31m$&\e[0m/g;'
+
+              /usr/bin/xcrun -sdk iphoneos PackageApplication -v "${APP}" -o "$(echo $TEMP_DIR)/$(echo $APP_NAME).ipa" --sign "iPhone Distribution: ${SIGNING_IDENTITY}" --embed "${PROVISIONING_PROFILE}" | \
               while read package_log
               do
                 DATE=$( /bin/date +"%Y-%m-%d" )
@@ -194,13 +203,16 @@ if [ ${APP_DEVICE} == "iphone" -o ${APP_DEVICE} == "ipad" ]; then
                 RELEASE_NOTES='Build uploaded automatically from MakeTi.'
               fi
 
+              echo "/usr/bin/curl \"http://testflightapp.com/api/builds.json\" -F file=@\"$(echo $TEMP_DIR)/$(echo $APP_NAME).ipa\" -F api_token=${API_TOKEN} -F notify=\"True\" -F replace=\"True\" -F team_token=${TEAM_TOKEN} -F distribution_lists=`cat tiapp.xml | grep \"<tf_dist>\" | sed -e \"s/<\/*tf_dist>//g\"` -F notes=\"${RELEASE_NOTES}\"" \
+              | perl -pe 's/^\[DEBUG\].*$/\e[35m$&\e[0m/g;s/^\[INFO\].*$/\e[36m$&\e[0m/g;s/^\[WARN\].*$/\e[33m$&\e[0m/g;s/^\[ERROR\].*$/\e[31m$&\e[0m/g;'
+
               /usr/bin/curl "http://testflightapp.com/api/builds.json" \
-                -F file=@"/tmp/$(echo $APP_NAME).ipa" \
+                -F file=@"$(echo $TEMP_DIR)/$(echo $APP_NAME).ipa" \
                 -F api_token=${API_TOKEN} \
                 -F notify="True" \
                 -F replace="True" \
                 -F team_token=${TEAM_TOKEN} \
-                -F distribution_lists=`cat tiapp.xml | grep "<tf_dist>" | sed -e "s/<\/*tf_dist>//g"` \
+                -F distribution_lists="`cat tiapp.xml | grep "<tf_dist>" | sed -e "s/<\/*tf_dist>//g"`" \
                 -F notes="${RELEASE_NOTES}" | \
               while read upload_log
               do
@@ -231,8 +243,8 @@ if [ ${APP_DEVICE} == "iphone" -o ${APP_DEVICE} == "ipad" ]; then
                             echo "[INFO] Creating .ipa from compiled app"\
                             | perl -pe 's/^\[DEBUG\].*$/\e[35m$&\e[0m/g;s/^\[INFO\].*$/\e[36m$&\e[0m/g;s/^\[WARN\].*$/\e[33m$&\e[0m/g;s/^\[ERROR\].*$/\e[31m$&\e[0m/g;'
 
-                            /bin/rm "/tmp/$(echo $APP_NAME).ipa"
-                            /usr/bin/xcrun -sdk iphoneos PackageApplication -v "${APP}" -o "/tmp/$(echo $APP_NAME).ipa" --sign "${SIGNING_IDENTITY}" --embed "${PROVISIONING_PROFILE}" | \
+                            /bin/rm "$(echo $TEMP_DIR)/$(echo $APP_NAME).ipa"
+                            /usr/bin/xcrun -sdk iphoneos PackageApplication -v "${APP}" -o "$(echo $TEMP_DIR)/$(echo $APP_NAME).ipa" --sign "${SIGNING_IDENTITY}" --embed "${PROVISIONING_PROFILE}" | \
                             while read package_log
                             do
                                 DATE=$( /bin/date +"%Y-%m-%d" )
@@ -249,7 +261,7 @@ if [ ${APP_DEVICE} == "iphone" -o ${APP_DEVICE} == "ipad" ]; then
                             -F "notify=1" \
                             -F "notes=${RELEASE_NOTES}" \
                             -F "notes_type=0" \
-                            -F "ipa=@/tmp/$(echo $APP_NAME).ipa" \
+                            -F "ipa=@$(echo $TEMP_DIR)/$(echo $APP_NAME).ipa" \
                             -H "X-HockeyAppToken: ${API_TOKEN}" \
                             https://rink.hockeyapp.net/api/2/apps/${APP_ID}/app_versions | \
                             while read upload_log
@@ -276,12 +288,12 @@ elif [ ${APP_DEVICE} == "android" ]; then
   # Run the app in the simulator
   if [ "${BUILD_TYPE}" == "" ]; then
     # Check for Android Virtual Device (AVD)
-    if [ "$(ps -Ac | egrep -i 'emulator-arm' | awk '{print $1}')" ]; then
+    if [ "$(ps -Ac | egrep -i 'emulator' | awk '{print $1}')" ]; then
       bash -c "'${TI_ANDROID_BUILD}' simulator '${APP_NAME}'  '${ANDROID_SDK_PATH}' '${PROJECT_ROOT}/' ${APP_ID} ${android} && adb logcat | grep Ti" \
       | perl -pe 's/^\[DEBUG\].*$/\e[35m$&\e[0m/g;s/^\[INFO\].*$/\e[36m$&\e[0m/g;s/^\[WARN\].*$/\e[33m$&\e[0m/g;s/^\[ERROR\].*$/\e[31m$&\e[0m/g;'
     else
       echo "[ERROR] Could not find a running emulator."
-        echo "[ERROR] Run this command in a separate terminal session: ${ANDROID_SDK_PATH}/tools/emulator-arm -avd ${android}"
+        echo "[ERROR] Run this command in a separate terminal session: ${ANDROID_SDK_PATH}/tools/emulator -avd ${android}"
         exit 0
     fi
   else
