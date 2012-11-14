@@ -25,8 +25,8 @@ module.exports = class Label extends View
 
   extractLabels: (label) ->
 
-    if _.isString(label)
-      primary: label
-    else
+    if _.isObject(label)
       primary: label.primary
       meta: label.meta
+    else
+      primary: label
