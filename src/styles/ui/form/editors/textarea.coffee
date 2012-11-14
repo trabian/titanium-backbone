@@ -11,6 +11,8 @@ module.exports =
   textarea:
     top: 11
     bottom: 11
-    left: 5
-    right: 5
+    left: 7
+    right: 7
     suppressReturn: false
+    font:
+      fontSize: 14
