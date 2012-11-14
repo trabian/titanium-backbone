@@ -1,10 +1,16 @@
 styles = require('styles/ui').window
 
+mediator = require 'chaplin/mediator'
+
 View = require 'views/base'
 
 module.exports = class Window extends View
 
   viewName: 'Window'
+
+  autoResolve: false
+
+  resolveOnOpen: true
 
   attributes: (extensions) ->
     if extensions
@@ -21,8 +27,15 @@ module.exports = class Window extends View
 
     super
 
-  events:
-    close: 'destroy'
+    # This introduces a dependence on the 'trabian-banking-core-mobile',
+    # but we need to combine those anyway
+
+    @delegateEvents
+      click: -> mediator.publish 'activity'
+      open: => @resolve?() if @resolveOnOpen
+      close: =>
+        mediator.publish 'activity'
+        @destroy?()
 
   layout: (options, callback) =>
 
