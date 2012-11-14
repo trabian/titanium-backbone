@@ -14,12 +14,12 @@ module.exports = class Label extends View
     { primary, meta } = @extractLabels @options.label
 
     @view.add @primary = @make 'Label', styles.primary, @options.labelStyle?.primary,
-      text: primary
+      text: "#{primary}"
 
     if meta
 
       @view.add @meta = @make 'Label', styles.meta, @options.labelStyle?.meta,
-        text: meta
+        text: "#{meta}"
 
     @
 
