@@ -28,6 +28,8 @@ module.exports = class Field extends Backbone.Model
       sectionKey = @get 'section'
       _.find sections, (section) -> section.key is sectionKey
 
+  select: => @collection?.selectOne @
+
   hasFormat: => !! @get 'formatter'
 
   format: =>
