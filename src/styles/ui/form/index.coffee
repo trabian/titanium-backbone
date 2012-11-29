@@ -2,10 +2,6 @@ colors = require('styles/theme').colors
 labels = require('styles/ui/labels')
 helpers = require 'styles/helpers'
 
-title = _.extend labels.label(14, font: { fontWeight: 'bold' }),
-  bottom: 4
-  left: 7
-
 module.exports =
 
   view:
@@ -20,7 +16,15 @@ module.exports =
       view:
         height: Ti.UI.SIZE
         layout: 'vertical'
-      title: title
+      title:
+        view:
+          bottom: 4
+          left: 4
+        label:
+          primary:
+            font:
+              fontSize: 14
+              fontWeight: 'bold'
 
   table:
 

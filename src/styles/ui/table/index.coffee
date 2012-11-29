@@ -66,6 +66,7 @@ module.exports =
     row:
       view:
         height: 44
+        top: 0
       title:
         view:
           left: 11

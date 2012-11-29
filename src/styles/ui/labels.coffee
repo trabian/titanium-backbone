@@ -5,16 +5,18 @@ label = (fontSize, options = {}) ->
   options.font = _.extend {}, options.font or {},
     fontSize: fontSize
 
-  _.extend {}, options,
+  _.extend {},
     height: Ti.UI.SIZE
     width: Ti.UI.FILL
     color: colors.base
     bottom: options.font.fontSize * 0.5 # Similar to bottom margin of 0.5em
+  , options
 
-heading = (fontSize) ->
+heading = (fontSize, options = {}) ->
   label fontSize,
-    font:
-      fontWeight: 'bold'
+    _({}).extend options,
+      font:
+        fontWeight: 'bold'
 
 module.exports =
 

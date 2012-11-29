@@ -24,4 +24,5 @@ module.exports =
 
   text:
     base: '#333'
+    positive: '#060'
     subtle: '#999'
