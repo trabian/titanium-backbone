@@ -18,7 +18,7 @@ module.exports =
       xhr.success = xhr.done
 
       xhr.done (data, status, client) ->
-        options.success data, status, client
+        options.success? data, status, client
 
       xhr.fail (e, responseText, status) =>
         options.error? e, responseText, status

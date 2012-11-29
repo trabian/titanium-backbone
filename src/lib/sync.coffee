@@ -16,7 +16,7 @@ module.exports = class Sync
 
   buildUrl: (url) =>
 
-    if urlRoot = @options.urlRoot
+    if (urlRoot = @options.urlRoot) and not url.match /^https?:\/\//
 
       divider = if urlRoot.match(/\/$/) then '' else '/'
 
