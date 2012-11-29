@@ -66,9 +66,24 @@ module.exports = class Window extends View
 
       callback layout
 
-  open: (options) => @view.open options
+  open: (options, callback) =>
 
-  close: (options, callback) =>
+    if _.isFunction options
+      callback = options
+      options = {}
+
+    if callback
+      @view.addEventListener 'open', ->
+        callback()
+        return
+
+    @view.open options
+
+  close: (options = {}, callback) =>
+
+    return if @disposed
+
+    @trigger 'close'
 
     if _.isFunction options
       callback = options
@@ -79,7 +94,7 @@ module.exports = class Window extends View
         callback()
         return
 
-    @view.close options
+    @view?.close options
 
   destroy: ->
     @dispose?()
