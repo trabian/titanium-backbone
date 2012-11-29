@@ -15,7 +15,11 @@ build:
 		src/ui/views/table.coffee \
 		src/ui/views/text_area.coffee \
 		src/ui/views/text_field.coffee \
+		src/ui/views/web_view.coffee \
 		src/ui/views/window.coffee \
-		src/ui/iphone/navigation_group.coffee
+		src/ui/iphone/navigation_group.coffee \
+		src/geolocation/index.coffee \
+		src/map/index.coffee \
+		src/map/view.coffee
 
 .PHONY: build

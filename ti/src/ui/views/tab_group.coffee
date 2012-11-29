@@ -4,6 +4,8 @@ class TitaniumTabGroup extends TitaniumView
 
   getTabs: -> @children
 
+  setTabs: (@children) ->
+
   open: ->
 
 class TitaniumTab extends TitaniumView

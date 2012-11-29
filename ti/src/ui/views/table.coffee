@@ -7,6 +7,8 @@ class TitaniumTableView extends TitaniumView
 
   setData: (@data) ->
 
+  setFooterView: (@footerView) ->
+
 class TitaniumTableViewRow extends TitaniumView
 
 Ti.UI.createTableView = (attributes) ->
