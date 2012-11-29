@@ -1,6 +1,6 @@
 {
   "name": "titanium-backbone",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "homepage": "https://github.com/trabian/titanium-backbone",
   "description": "Framework for Titanium apps built with Backbone",
   "publishConfig": {
@@ -34,7 +34,7 @@
     ],
     "dependencies": [
       "deps/console.coffee",
-      "node_modules/stitch-up/node_modules/jade/runtime.js",
+      "jade:runtime.js",
       "vendor/underscore.js",
       "vendor/backbone.js",
       "vendor/Deferred.js"
