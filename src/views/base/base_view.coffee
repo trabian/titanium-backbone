@@ -23,6 +23,12 @@ createTitaniumView = (viewNameOrCreator, attributes) ->
 
     viewName = viewNameOrCreator
 
+    root = if viewName.match /^::/
+      viewName = viewName.replace(/^::/, '')
+      Ti
+    else
+      Ti.UI
+
     # Extract module name
     if match = viewName.match(/(.*)::(.*)/)
       module = match[1]
@@ -30,7 +36,7 @@ createTitaniumView = (viewNameOrCreator, attributes) ->
 
     creator = "create#{viewName}"
 
-    if module then Ti.UI[module][creator] else Ti.UI[creator]
+    if module then root[module][creator] else root[creator]
 
   else
 
