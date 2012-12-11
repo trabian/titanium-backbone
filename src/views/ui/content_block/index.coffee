@@ -19,6 +19,7 @@ module.exports = class ContentBlock extends View
     else
 
       @view.add @make 'WebView', viewStyles.html,
+        willHandleTouches: false
         html: template
           title: 'Content Block'
           text: @options.html
