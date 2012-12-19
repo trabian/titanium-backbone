@@ -12,6 +12,8 @@ module.exports = class Window extends View
 
   resolveOnOpen: true
 
+  publishActivityOnClick: true
+
   attributes: (extensions) ->
     if extensions
       _.extend {}, styles.view, extensions
@@ -31,11 +33,14 @@ module.exports = class Window extends View
     # but we need to combine those anyway
 
     @delegateEvents
-      click: -> mediator.publish 'activity'
       open: => @resolve?() if @resolveOnOpen
       close: =>
         mediator.publish 'activity'
         @destroy?()
+
+    if @publishActivityOnClick
+      @delegateEvents
+        click: -> mediator.publish 'activity'
 
   layout: (options, callback) =>
 
