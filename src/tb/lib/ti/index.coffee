@@ -1,0 +1,49 @@
+extend = require './extend'
+
+module.exports =
+
+  # Public: Create a Titanium View given a viewName.
+  #
+  # viewName - The String naming the Titanium view to be created.
+  #     If the viewName matches [module]::[name] then the Titanium view will be
+  #     a child of Ti.UI.[module] instead of Ti.UI.
+  #
+  # attributes - The parameters to be passed to the view creator
+  #
+  # Examples
+  #
+  #   createTitaniumView 'Label', { text: 'Example' }, { color: '#ccc' }
+  #   # Equivalent to: Ti.UI.createLabel { text: 'Example', color: '#ccc' }
+  #
+  #   createTitaniumView 'iPhone::NavigationGroup', window: sampleWindow
+  #   # Equivalent to: Ti.UI.iPhone.createNavigationGroup { window: sampleWindow }
+  #
+  # Returns the created view
+  createView: (viewNameOrCreator, attributeHashes...) ->
+
+    attributes = _.extend {}, attributeHashes...
+
+    viewCreator = if _.isString viewNameOrCreator
+
+      viewName = viewNameOrCreator
+
+      # Extract module name
+      if match = viewName.match(/(.*)::(.*)/)
+        module = match[1]
+        viewName = match[2]
+
+      creator = "create#{viewName}"
+
+      if module then Ti.UI[module][creator] else Ti.UI[creator]
+
+    else
+
+      viewNameOrCreator
+
+    # Equivalent to, for example, Ti.UI.createLabel attributes
+    if viewCreator
+      viewCreator attributes
+    else
+      console.log "Could not find viewCreator for #{viewName}"
+
+  $: (element) -> extend element
