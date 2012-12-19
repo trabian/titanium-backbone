@@ -11,6 +11,7 @@ build:
 		src/ui/views/label.coffee \
 		src/ui/views/scroll_view.coffee \
 		src/ui/views/search_bar.coffee \
+		src/ui/views/switch.coffee \
 		src/ui/views/tab_group.coffee \
 		src/ui/views/table.coffee \
 		src/ui/views/text_area.coffee \

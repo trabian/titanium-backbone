@@ -198,6 +198,22 @@ Ti.UI.createSearchBar = function(attributes) {
   return new TitaniumSearchBar(attributes);
 };
 
+TitaniumSwitch = (function(_super) {
+
+  __extends(TitaniumSwitch, _super);
+
+  function TitaniumSwitch() {
+    return TitaniumSwitch.__super__.constructor.apply(this, arguments);
+  }
+
+  return TitaniumSwitch;
+
+})(TitaniumView);
+
+Ti.UI.createSwitch = function(attributes) {
+  return new TitaniumSwitch(attributes);
+};
+
 TitaniumTabGroup = (function(_super) {
 
   __extends(TitaniumTabGroup, _super);
