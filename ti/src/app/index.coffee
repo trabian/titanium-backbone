@@ -1,1 +1,2 @@
-Ti.App = {}
+Ti.App =
+  addEventListener: (event) ->
