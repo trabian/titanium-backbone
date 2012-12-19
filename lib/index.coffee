@@ -86,6 +86,8 @@ module.exports =
       build: ->
         buildTasks.all()
 
+      "build:test": -> buildTasks.test()
+
       "iphone:run": ->
 
         copyTiappIfNeeded ->
