@@ -1,0 +1,17 @@
+{
+  "framework": "mocha",
+  "before_tests": "cake build:test",
+  "src_files": [
+    "src/**/*.coffee",
+    "test/**/*.coffee"
+  ],
+  "launch_in_dev": [
+    "Mocha"
+  ],
+  "launchers": {
+    "Mocha": {
+      "command": "mocha",
+      "protocol": "tap"
+    }
+  }
+}

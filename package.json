@@ -13,6 +13,12 @@
     "stitch-up": "~0.3.4",
     "wrench": "1.3.x"
   },
+  "devDependencies": {
+    "chai": "1.3.0",
+    "coffee-script": "1.2.x",
+    "mocha": "1.3.x",
+    "sinon": "1.5.x"
+  },
   "bin": {
     "titanium-backbone": "./bin/titanium-backbone"
   },
@@ -26,6 +32,10 @@
   },
   "main": "./lib/index.coffee",
   "stitch": {
+    "output":
+    {
+      "test": "test.js"
+    },
     "paths": [
       "src"
     ],
@@ -35,6 +45,9 @@
       "vendor/backbone.js",
       "vendor/Deferred.js",
       "vendor/backbone-relational.js"
+    ],
+    "testDependencies": [
+      "ti/dist.js"
     ],
     "images": "vendor/images"
   }
