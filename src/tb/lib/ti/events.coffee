@@ -48,7 +48,7 @@ add = (element, event, fn) ->
     unless _.isArray e
       e = [e]
 
-    fn.call element, e...
+    fn.apply element, e
 
     return
 
