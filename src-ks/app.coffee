@@ -5,25 +5,8 @@ module.exports =
 
   createWindow: ->
 
-    View = require 'tb/views/base'
+    BasicWindow = require 'views/windows/basic'
 
-    class Window extends View
+    basicWindow = new BasicWindow
 
-      viewName: 'Window'
-
-      attributes:
-        backgroundColor: '#DB0E00'
-
-      events: ->
-        open: ->
-
-          @$el.trigger 'other',
-            message: 'some message'
-
-        other: (e) ->
-
-          alert e.message
-
-    window = new Window
-
-    window.el.open()
+    basicWindow.el.open()
