@@ -8,4 +8,4 @@ module.exports =
   chai: require 'chai'
 
   require: (path) ->
-    app.require path
+    app.stitchRequire path
