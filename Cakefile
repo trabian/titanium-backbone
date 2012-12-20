@@ -1,9 +1,14 @@
 pkg = require './package'
 
-buildTasks = require('stitch-up').load(root, pkg).tasks
+titanium = require('./lib').load __dirname, pkg
+
+for _task, func of titanium.tasks
+  do (func) ->
+    task "t:#{_task}", -> func pkg
 
 task "build", ->
-  buildTasks.all()
+  invoke "t:bootstrap"
+  invoke "t:build"
 
 task "build:test", ->
-  buildTasks.test()
+  invoke "t:build:test"

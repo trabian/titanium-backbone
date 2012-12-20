@@ -1,2 +1,7 @@
 node_modules
 .DS_Store
+Resources/app-impl.js
+tmp
+build
+tb.sublime-*
+tiapp.xml
