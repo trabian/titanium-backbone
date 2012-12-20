@@ -41,10 +41,9 @@ add = (element, event, fn) ->
 
   handler.fn = fn
 
-  # Titanium handles calls to `apply` differently than the node javascript
-  # engine, so we'll use `call` instead.
   handler.proxy = (e) ->
 
+    # Make sure events are passed into an array so they can be passed to 'apply'.
     unless _.isArray e
       e = [e]
 
