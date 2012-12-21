@@ -6,7 +6,3 @@ module.exports = class Window extends View
 
   attributes:
     backgroundColor: '#090'
-
-window = new Window
-
-window.el.open()

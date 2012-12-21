@@ -1,12 +1,12 @@
 module.exports =
 
   run: ->
-    @createWindow()
+    @createWindow 'basic_with_event'
 
-  createWindow: ->
+  createWindow: (name) ->
 
-    BasicWindow = require 'views/windows/basic'
+    Window = require "views/windows/#{name}"
 
-    basicWindow = new BasicWindow
+    window = new Window
 
-    basicWindow.el.open()
+    window.el.open()
