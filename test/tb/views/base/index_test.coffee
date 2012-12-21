@@ -18,7 +18,6 @@ describe 'BaseView', ->
         id: 'test-view'
         className: 'test-view'
         other: 'non-special-option'
-        presenter: 'some-presenter'
 
     it 'should initialize the view correctly', ->
       assert.equal @view.id, 'test-view'
@@ -28,22 +27,17 @@ describe 'BaseView', ->
       assert.equal @view.options.className, 'test-view'
       assert.equal @view.options.other, 'non-special-option'
 
-    it 'should allow a "presenter" as a "viewOption"', ->
-      assert.equal @view.presenter, 'some-presenter'
-
     it 'should support options as a function', ->
 
       class ExtendedView extends View
 
         options: ->
-          presenter: 'some-presenter'
           other: 'other-attribute'
 
       view = new ExtendedView
 
       assert.equal view.options.other, 'other-attribute'
       assert.ok ! view.other
-      assert.equal view.presenter, 'some-presenter'
 
   describe 'make', ->
 

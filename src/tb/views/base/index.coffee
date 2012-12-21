@@ -2,10 +2,6 @@ ti = require 'tb/lib/ti'
 
 Backbone.$ = ti.$
 
-additionalViewOptions = [
-  'presenter' # This is a `model` for defining the presentation of the view
-]
-
 module.exports = class View extends Backbone.View
 
   # The default `viewName` for a View is `"View"`, which serves as
@@ -23,7 +19,3 @@ module.exports = class View extends Backbone.View
     hash, with attributes being overwritten from right to left.
   ###
   make: ti.createView
-
-  _configure: (options) ->
-    super
-    _.extend(@, _.pick(@options, additionalViewOptions));
