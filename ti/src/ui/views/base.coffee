@@ -12,7 +12,7 @@ class TitaniumView
     @off name, event
 
   fireEvent: (name, args...) ->
-    @trigger name, args
+    @trigger name, args...
 
   add: (view) ->
     @children.push view
