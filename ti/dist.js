@@ -60,7 +60,7 @@ TitaniumView = (function() {
   TitaniumView.prototype.fireEvent = function() {
     var args, name;
     name = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-    return this.trigger(name, args);
+    return this.trigger.apply(this, [name].concat(__slice.call(args)));
   };
 
   TitaniumView.prototype.add = function(view) {
