@@ -47,6 +47,7 @@ TitaniumView = (function() {
       this[name] = value;
     }
     this.children = [];
+    this.hidden = false;
   }
 
   TitaniumView.prototype.addEventListener = function(name, event) {
@@ -78,6 +79,14 @@ TitaniumView = (function() {
 
   TitaniumView.prototype.getParent = function() {
     return this.parent;
+  };
+
+  TitaniumView.prototype.hide = function() {
+    return this.hidden = true;
+  };
+
+  TitaniumView.prototype.show = function() {
+    return this.hidden = false;
   };
 
   return TitaniumView;

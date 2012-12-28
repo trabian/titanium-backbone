@@ -4,6 +4,7 @@ class TitaniumView
     for name, value of attributes
       @[name] = value
     @children = []
+    @hidden = false
 
   addEventListener: (name, event) ->
     @on name, event
@@ -24,6 +25,10 @@ class TitaniumView
   getChildren: -> @children
 
   getParent: -> @parent
+
+  hide: -> @hidden = true
+
+  show: -> @hidden = false
 
 Ti.UI.createView = (attributes) ->
   new TitaniumView attributes
