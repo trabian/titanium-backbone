@@ -65,7 +65,7 @@ remove = (element, event, fn) ->
     delete handlers[id][handler.index]
     element.removeEventListener handler.e, handler.proxy
 
-module.exports =
+module.exports = ($) ->
 
   bind: (event, callback) ->
     @each (element) -> add element, event, callback

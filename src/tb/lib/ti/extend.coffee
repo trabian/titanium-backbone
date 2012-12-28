@@ -3,12 +3,13 @@ elementCollection = (collection) ->
   collection.__proto__ = arguments.callee.prototype
   collection
 
-events = require './events'
+$ = (element) -> elementCollection [element]
 
-fn = _({}).extend events,
+events = require('./events') $
+traversal = require('./traversal') $
 
-  each: (callback) -> _.each @, callback
+fn = _({}).extend events, traversal
 
 elementCollection:: = fn
 
-module.exports = (element) -> elementCollection [element]
+module.exports = $
