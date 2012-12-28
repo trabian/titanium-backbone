@@ -156,3 +156,62 @@ describe 'BaseView', ->
 
       assert.isFalse view.clicked
 
+  describe 'child views', ->
+
+    describe 'adding a plain view via "make"', ->
+
+      it 'should save the view to the element\'s "children" array', ->
+
+        class ViewWithChildren extends View
+
+          render: ->
+
+            @$el.add @make 'View',
+              height: 10
+              width: 10
+
+            @
+
+        view = new ViewWithChildren
+
+        view.render()
+
+        assert.equal view.el.children.length, 1
+
+    describe 'adding a View object', ->
+
+      it 'should save the view to the element\'s "children" array', ->
+
+        class ViewWithChildren extends View
+
+          render: ->
+
+            @el.add (new View).el
+
+            @
+
+        view = new ViewWithChildren
+
+        view.render()
+
+        assert.equal view.el.children.length, 1
+
+    describe 'clearing child views', ->
+
+      it 'should be able to empty the child views', ->
+
+        class ViewWithChildren extends View
+
+          render: ->
+
+            @$el.add (new View).el
+
+            @
+
+        view = new ViewWithChildren
+
+        view.render()
+
+        view.$el.empty()
+
+        assert.equal view.el.children.length, 0
