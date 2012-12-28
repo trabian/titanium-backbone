@@ -222,3 +222,19 @@ describe 'extend', ->
       @$el.show()
       assert.isFalse @$el[0].hidden
 
+    it 'should be able to chain manipulation methods', ->
+
+      @$el
+        .add(ti.createView 'View')
+        .hide()
+
+      assert.equal @$el.children().length, 1
+      assert.isTrue @$el[0].hidden
+
+      @$el
+        .empty()
+        .show()
+
+      assert.equal @$el.children().length, 0
+      assert.isFalse @$el[0].hidden
+

@@ -5,6 +5,8 @@ module.exports = ($) ->
     _.each @, (el) ->
       callback.apply el, arguments
 
+    @
+
   children: ->
 
     _.chain(@)
