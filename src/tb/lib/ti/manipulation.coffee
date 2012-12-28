@@ -1,6 +1,6 @@
 module.exports = ($) ->
 
-  add: (child) ->
+  append: (child) ->
     @[0].add child
     @
 

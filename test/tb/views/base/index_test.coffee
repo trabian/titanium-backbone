@@ -185,7 +185,7 @@ describe 'BaseView', ->
 
           render: ->
 
-            @$el.add @make 'View',
+            @$el.append @make 'View',
               height: 10
               width: 10
 
@@ -205,7 +205,7 @@ describe 'BaseView', ->
 
           render: ->
 
-            @el.add (new View).el
+            @$el.append (new View).el
 
             @
 
@@ -223,7 +223,7 @@ describe 'BaseView', ->
 
           render: ->
 
-            @$el.add (new View).el
+            @$el.append (new View).el
 
             @
 

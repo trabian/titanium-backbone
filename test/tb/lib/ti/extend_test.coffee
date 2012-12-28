@@ -166,35 +166,27 @@ describe 'extend', ->
 
   describe 'manipulation', ->
 
-    it 'should be able to add a child view', ->
+    it 'should be able to append a child view', ->
 
-      @$el.add ti.createView 'View'
-      @$el.add ti.createView 'View'
+      @$el.append ti.createView 'View'
+      @$el.append ti.createView 'View'
 
       assert.equal @$el.children().length, 2
 
-    describe 'extended view returned from "add"', ->
+    it 'a view appended to an existing view should have a reference to its parent', ->
 
-      beforeEach ->
-        @newEl = @$el.add ti.createView 'View'
+      @$el.append newEl = ti.createView 'View'
 
-      it 'should be extended', ->
-        assert.ok @newEl.each
+      $newEl = $(newEl)
 
-      it 'should have a reference to its parent', ->
-        assert.equal @newEl.parent()[0], @$el[0]
-
-      it 'should be able to regain a reference to its parent', ->
-
-        $newEl = $ @newEl[0]
-        assert.equal $newEl.parent()[0], @$el[0]
+      assert.equal $newEl.parent()[0], @$el[0]
 
     it 'should be able to remove child views', ->
 
-      $view = @$el.add ti.createView 'View'
-      @$el.add otherView = ti.createView 'View'
+      @$el.append newView = ti.createView 'View'
+      @$el.append otherView = ti.createView 'View'
 
-      $view.remove()
+      $(newView).remove()
 
       assert.equal @$el.children().length, 1
 
@@ -202,8 +194,8 @@ describe 'extend', ->
 
     it 'should be able to empty all views', ->
 
-      @$el.add ti.createView 'View'
-      @$el.add ti.createView 'View'
+      @$el.append ti.createView 'View'
+      @$el.append ti.createView 'View'
 
       @$el.empty()
 
@@ -225,7 +217,7 @@ describe 'extend', ->
     it 'should be able to chain manipulation methods', ->
 
       @$el
-        .add(ti.createView 'View')
+        .append(ti.createView 'View')
         .hide()
 
       assert.equal @$el.children().length, 1
