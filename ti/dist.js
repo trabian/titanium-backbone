@@ -64,6 +64,7 @@ TitaniumView = (function() {
   };
 
   TitaniumView.prototype.add = function(view) {
+    view.parent = this;
     return this.children.push(view);
   };
 
@@ -73,6 +74,10 @@ TitaniumView = (function() {
 
   TitaniumView.prototype.getChildren = function() {
     return this.children;
+  };
+
+  TitaniumView.prototype.getParent = function() {
+    return this.parent;
   };
 
   return TitaniumView;

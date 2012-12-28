@@ -15,12 +15,15 @@ class TitaniumView
     @trigger name, args...
 
   add: (view) ->
+    view.parent = @
     @children.push view
 
   remove: (view) ->
     @children = _.without @children, view
 
   getChildren: -> @children
+
+  getParent: -> @parent
 
 Ti.UI.createView = (attributes) ->
   new TitaniumView attributes
