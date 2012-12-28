@@ -39,6 +39,25 @@ describe 'BaseView', ->
       assert.equal view.options.other, 'other-attribute'
       assert.ok ! view.other
 
+    describe "attributes", ->
+
+      it "should allow attributes"
+
+      it "should merge attributes passed in the constructor", ->
+
+        class ExtendedView extends View
+
+          attributes:
+            color: 'blue'
+            height: 30
+
+        view = new ExtendedView
+          attributes:
+            color: 'red'
+
+        assert.equal view.attributes.color, 'red'
+        assert.equal view.attributes.height, 30
+
   describe 'make', ->
 
     beforeEach ->

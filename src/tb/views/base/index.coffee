@@ -19,3 +19,12 @@ module.exports = class View extends Backbone.View
     hash, with attributes being overwritten from right to left.
   ###
   make: ti.createView
+
+  _configure: (options) ->
+
+    # If attributes are provided in the constructure, merge them with
+    # attributes provided by an 'attributes' attribute or function
+    if options.attributes and attrs = _.extend {}, _.result(this, 'attributes')
+      options.attributes = _.extend attrs, options.attributes
+
+    super
