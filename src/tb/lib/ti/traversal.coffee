@@ -21,6 +21,12 @@ module.exports = ($) ->
       .flatten()
       .value()
 
+  get: (index) ->
+    if index?
+      @[index]
+    else
+      slice.call @
+
   children: ->
     @map ->
       $(@children)
