@@ -65,8 +65,10 @@ describe 'BaseView', ->
 
     it 'should pass attributes on to the view', ->
 
-      el = @view.make 'View',
+      $el = @view.make 'View',
         testAttribute: 'test-attribute'
+
+      el = $el[0]
 
       assert.equal el.testAttribute, 'test-attribute'
 
@@ -80,7 +82,9 @@ describe 'BaseView', ->
         otherAttribute: 'other-attribute'
         overriddenAttribute: 'overwrote'
 
-      el = @view.make 'View', firstAttributesHash, secondAttributesHash
+      $el = @view.make 'View', firstAttributesHash, secondAttributesHash
+
+      el = $el[0]
 
       assert.equal el.testAttribute, 'test-attribute'
       assert.equal el.otherAttribute, 'other-attribute'

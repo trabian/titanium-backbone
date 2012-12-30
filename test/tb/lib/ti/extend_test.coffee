@@ -229,4 +229,9 @@ describe 'extend', ->
 
       assert.equal @$el.children().length, 0
       assert.isFalse @$el[0].hidden
+  it 'should allow creation of a new view by passing a string', ->
+    assert.equal $('<View>')[0].toString(), '[object TiUIView]'
+    assert.equal $('<View/>')[0].toString(), '[object TiUIView]'
+    assert.equal $('<View />')[0].toString(), '[object TiUIView]'
 
+    assert.ok $('<iPhone::NavigationGroup>')[0]

@@ -1,16 +1,35 @@
-elementCollection = (collection) ->
+ElementCollection = (collection) ->
   collection = collection || []
   collection.__proto__ = arguments.callee.prototype
   collection
 
-$ = (element) -> elementCollection [element]
+module.exports = (ti) ->
 
-events = require('./events') $
-manipulation = require('./manipulation') $
-traversal = require('./traversal') $
+  $ = (element) ->
+    if element instanceof ElementCollection
+      element
+    else if _.isString element
 
-fn = _({}).extend events, manipulation, traversal
+      # Matches HTML-style tags, e.g. <View>, <View/>, <View />, and <iPhone::NavigationGroup>
+      TAG = /// ^<
+        ([\w\:]*) # Letters and colons
+        \s? # Optional space before closing />
+        /? # Optional / before closing >
+      >$ ///
 
-elementCollection:: = fn
+      if match = element.match TAG
+        $ ti.createView match[1]
 
-module.exports = $
+    else
+      ElementCollection if _.isArray element then element else [element]
+
+  events = require('./events') $
+  manipulation = require('./manipulation') $
+  traversal = require('./traversal') $
+  attributes = require('./attributes') $
+
+  fn = _({}).extend events, manipulation, traversal, attributes
+
+  ElementCollection:: = fn
+
+  $

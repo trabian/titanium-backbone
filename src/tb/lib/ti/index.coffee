@@ -1,6 +1,4 @@
-extend = require './extend'
-
-module.exports =
+ti =
 
   # Public: Create a Titanium View given a viewName.
   #
@@ -47,3 +45,11 @@ module.exports =
       console.log "Could not find viewCreator for #{viewName}"
 
   $: (element) -> extend element
+
+extend = require('./extend') ti
+
+module.exports =
+
+  createView: ti.createView
+  $: extend
+

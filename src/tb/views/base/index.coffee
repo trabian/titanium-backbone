@@ -18,7 +18,11 @@ module.exports = class View extends Backbone.View
     by multiple hashes which will be combined via `extend` to form a single
     hash, with attributes being overwritten from right to left.
   ###
-  make: ti.createView
+  make: (viewName, attributeHashes...) ->
+
+    attributes = _.extend {}, attributeHashes...
+
+    Backbone.$("<#{viewName}>").attr attributes
 
   _configure: (options) ->
 
