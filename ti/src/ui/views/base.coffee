@@ -6,6 +6,10 @@ class TitaniumView
     @children = []
     @hidden = false
 
+  applyProperties: (properties) ->
+    for key, value of properties
+      @[key] = value
+
   addEventListener: (name, event) ->
     @on name, event
 

@@ -50,6 +50,16 @@ TitaniumView = (function() {
     this.hidden = false;
   }
 
+  TitaniumView.prototype.applyProperties = function(properties) {
+    var key, value, _results;
+    _results = [];
+    for (key in properties) {
+      value = properties[key];
+      _results.push(this[key] = value);
+    }
+    return _results;
+  };
+
   TitaniumView.prototype.addEventListener = function(name, event) {
     return this.on(name, event);
   };
