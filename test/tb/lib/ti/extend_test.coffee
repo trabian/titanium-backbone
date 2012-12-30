@@ -17,7 +17,8 @@ describe 'extend', ->
   it 'should provide array-based access to a collection', ->
     assert.equal @el, @$el[0]
 
-  describe 'events', ->
+  it 'should return the original extended collection if provided', ->
+    assert.equal @$el, $ @$el
 
     it 'should have a "bind" method', ->
       assert.ok @$el.bind
