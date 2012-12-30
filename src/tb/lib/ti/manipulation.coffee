@@ -4,6 +4,10 @@ module.exports = ($) ->
     @[0].add child
     @
 
+  appendTo: (parent) ->
+    $(parent).append @
+    @
+
   remove: ->
 
     if parent = @parent()
