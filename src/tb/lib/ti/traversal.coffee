@@ -1,3 +1,7 @@
+# `slice` provides a mechanism for converting an extended array back into a
+# regular Javascript array.
+slice = [].slice
+
 module.exports = ($) ->
 
   each: (callback) ->
@@ -7,11 +11,18 @@ module.exports = ($) ->
 
     @
 
-  children: ->
+  map: (fn) ->
 
-    _.chain(@)
-      .pluck('children')
+    mapWithExtend = (el, i) ->
+      fn.call el, i, el
+
+    $ _.chain(@)
+      .map(mapWithExtend)
       .flatten()
       .value()
+
+  children: ->
+    @map ->
+      $(@children)
 
   parent: -> $ @[0].parent
