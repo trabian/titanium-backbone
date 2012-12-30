@@ -40,6 +40,8 @@ Ti.UI.iPhone = {
 
 TitaniumView = (function() {
 
+  TitaniumView.prototype.tiClassName = 'TiUIView';
+
   function TitaniumView(attributes) {
     var name, value;
     for (name in attributes) {
@@ -99,6 +101,10 @@ TitaniumView = (function() {
     return this.hidden = false;
   };
 
+  TitaniumView.prototype.toString = function() {
+    return "[object " + this.tiClassName + "]";
+  };
+
   return TitaniumView;
 
 })();
@@ -116,6 +122,8 @@ TitaniumButton = (function(_super) {
   function TitaniumButton() {
     return TitaniumButton.__super__.constructor.apply(this, arguments);
   }
+
+  TitaniumButton.prototype.tiClassName = 'TiUIButton';
 
   return TitaniumButton;
 
@@ -149,6 +157,8 @@ TitaniumLabel = (function(_super) {
     return TitaniumLabel.__super__.constructor.apply(this, arguments);
   }
 
+  TitaniumLabel.prototype.tiClassName = 'TiUILabel';
+
   return TitaniumLabel;
 
 })(TitaniumView);
@@ -164,6 +174,8 @@ TitaniumTabGroup = (function(_super) {
   function TitaniumTabGroup() {
     return TitaniumTabGroup.__super__.constructor.apply(this, arguments);
   }
+
+  TitaniumTabGroup.prototype.tiClassName = 'TiUITabGroup';
 
   TitaniumTabGroup.prototype.addTab = function(tab) {
     return this.add(tab);
@@ -187,6 +199,8 @@ TitaniumTab = (function(_super) {
     return TitaniumTab.__super__.constructor.apply(this, arguments);
   }
 
+  TitaniumTab.prototype.tiClassName = 'TiUITab';
+
   return TitaniumTab;
 
 })(TitaniumView);
@@ -207,6 +221,8 @@ TitaniumTableView = (function(_super) {
     return TitaniumTableView.__super__.constructor.apply(this, arguments);
   }
 
+  TitaniumTableView.prototype.tiClassName = 'TiUITableView';
+
   TitaniumTableView.prototype.appendRow = function(row) {
     return this.add(row);
   };
@@ -222,6 +238,8 @@ TitaniumTableViewRow = (function(_super) {
   function TitaniumTableViewRow() {
     return TitaniumTableViewRow.__super__.constructor.apply(this, arguments);
   }
+
+  TitaniumTableViewRow.prototype.tiClassName = 'TiUITableViewRow';
 
   return TitaniumTableViewRow;
 
@@ -265,6 +283,8 @@ TitaniumWindow = (function(_super) {
   function TitaniumWindow() {
     return TitaniumWindow.__super__.constructor.apply(this, arguments);
   }
+
+  TitaniumWindow.prototype.tiClassName = 'TiUIWindow';
 
   TitaniumWindow.prototype.open = function() {
     return this.trigger('open');

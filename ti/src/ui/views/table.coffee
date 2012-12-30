@@ -1,9 +1,13 @@
 class TitaniumTableView extends TitaniumView
 
+  tiClassName: 'TiUITableView'
+
   appendRow: (row) ->
     @add row
 
 class TitaniumTableViewRow extends TitaniumView
+
+  tiClassName: 'TiUITableViewRow'
 
 Ti.UI.createTableView = (attributes) ->
 

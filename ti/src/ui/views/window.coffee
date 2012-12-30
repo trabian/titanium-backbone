@@ -1,5 +1,7 @@
 class TitaniumWindow extends TitaniumView
 
+  tiClassName: 'TiUIWindow'
+
   open: ->
     @trigger 'open'
 

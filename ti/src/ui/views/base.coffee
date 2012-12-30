@@ -1,5 +1,7 @@
 class TitaniumView
 
+  tiClassName: 'TiUIView'
+
   constructor: (attributes) ->
     for name, value of attributes
       @[name] = value
@@ -33,6 +35,9 @@ class TitaniumView
   hide: -> @hidden = true
 
   show: -> @hidden = false
+
+  toString: ->
+    "[object #{@tiClassName}]"
 
 Ti.UI.createView = (attributes) ->
   new TitaniumView attributes
