@@ -12,18 +12,6 @@ module.exports = class View extends Backbone.View
   # methods which need to be overridden
   tagName: -> _.result @, 'viewName'
 
-  ###
-    This overridden version of `make` will produce a Titanium view based on
-    the provided `viewName` and `attributes`. The `attributes` can be supplied
-    by multiple hashes which will be combined via `extend` to form a single
-    hash, with attributes being overwritten from right to left.
-  ###
-  make: (viewName, attributeHashes...) ->
-
-    attributes = _.extend {}, attributeHashes...
-
-    Backbone.$("<#{viewName}>").attr attributes
-
   _configure: (options) ->
 
     # If attributes are provided in the constructure, merge them with

@@ -58,38 +58,6 @@ describe 'BaseView', ->
         assert.equal view.attributes.color, 'red'
         assert.equal view.attributes.height, 30
 
-  describe 'make', ->
-
-    beforeEach ->
-      @view = new View
-
-    it 'should pass attributes on to the view', ->
-
-      $el = @view.make 'View',
-        testAttribute: 'test-attribute'
-
-      el = $el[0]
-
-      assert.equal el.testAttribute, 'test-attribute'
-
-    it 'should allow attributes to be passed in multiple hashes', ->
-
-      firstAttributesHash =
-        testAttribute: 'test-attribute'
-        overriddenAttribute: 'should-be-overwritten'
-
-      secondAttributesHash =
-        otherAttribute: 'other-attribute'
-        overriddenAttribute: 'overwrote'
-
-      $el = @view.make 'View', firstAttributesHash, secondAttributesHash
-
-      el = $el[0]
-
-      assert.equal el.testAttribute, 'test-attribute'
-      assert.equal el.otherAttribute, 'other-attribute'
-      assert.equal el.overriddenAttribute, 'overwrote'
-
   describe 'events', ->
 
     it 'should allow events to be specified as strings', ->
@@ -210,26 +178,6 @@ describe 'BaseView', ->
       assert.isFalse view.clicked
 
   describe 'child views', ->
-
-    describe 'adding a plain view via "make"', ->
-
-      it 'should save the view to the element\'s "children" array', ->
-
-        class ViewWithChildren extends View
-
-          render: ->
-
-            @$el.append @make 'View',
-              height: 10
-              width: 10
-
-            @
-
-        view = new ViewWithChildren
-
-        view.render()
-
-        assert.equal view.el.children.length, 1
 
     describe 'adding a View object', ->
 
