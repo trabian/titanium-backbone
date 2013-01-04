@@ -29,7 +29,7 @@ class TitaniumView
     if @bubbleParent
       @parent?.fireEvent name, event
 
-  add: (view) ->
+  add: (view) =>
     view.parent = @
     @children.push view
 
