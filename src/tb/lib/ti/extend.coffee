@@ -21,7 +21,10 @@ module.exports = (ti) ->
         $ ti.createView match[1]
 
     else
-      ElementCollection if _.isArray element then element else [element]
+      if element
+        ElementCollection if _.isArray element then element else [element]
+      else
+        ElementCollection []
 
   events = require('./events') $
   manipulation = require('./manipulation') $

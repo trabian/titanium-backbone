@@ -28,3 +28,6 @@ describe 'extend', ->
     assert.equal $('<View>')[0]._viewName, 'View'
 
     assert.ok $('<iPhone::NavigationGroup>')[0]
+
+  it 'should return an empty array if the argument is undefined', ->
+    assert.equal $(undefined).length, 0
