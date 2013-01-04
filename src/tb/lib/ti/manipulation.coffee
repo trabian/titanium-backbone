@@ -1,11 +1,11 @@
 module.exports = ($) ->
 
   append: (child) ->
-    @[0].add child
+    @[0].add $(child)[0]
     @
 
   appendTo: (parent) ->
-    $(parent).append @
+    $(parent).append @[0]
     @
 
   remove: ->

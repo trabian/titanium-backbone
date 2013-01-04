@@ -24,6 +24,13 @@ describe '$ manipulation methods', ->
 
     assert.equal @$el.children().length, 1
 
+  it 'should add a reference to the parent after appending', ->
+
+    $child = $('<View>')
+      .appendTo @$el
+
+    assert.ok $child[0].parent, 'Parent reference was not added to appended view'
+
   it 'should be able to remove child views', ->
 
     @$el.append newView = ti.createView 'View'
