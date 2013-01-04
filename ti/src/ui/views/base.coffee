@@ -2,6 +2,8 @@ class TitaniumView
 
   tiClassName: 'TiUIView'
 
+  bubbleParent: true
+
   constructor: (attributes) ->
     for name, value of attributes
       @[name] = value
@@ -18,8 +20,14 @@ class TitaniumView
   removeEventListener: (name, event) ->
     @off name, event
 
-  fireEvent: (name, args...) ->
-    @trigger name, args...
+  fireEvent: (name, event) ->
+
+    event = _({}).extend { source: @ }, event or {}
+
+    @trigger name, event
+
+    if @bubbleParent
+      @parent?.fireEvent name, event
 
   add: (view) ->
     view.parent = @

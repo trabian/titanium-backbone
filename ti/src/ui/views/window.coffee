@@ -2,6 +2,8 @@ class TitaniumWindow extends TitaniumView
 
   tiClassName: 'TiUIWindow'
 
+  bubbleParent: false
+
   open: ->
     @trigger 'open'
 
