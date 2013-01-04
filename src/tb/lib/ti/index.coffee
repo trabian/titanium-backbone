@@ -23,7 +23,7 @@ ti =
 
     viewCreator = if _.isString viewNameOrCreator
 
-      viewName = viewNameOrCreator
+      attributes._viewName = viewName = viewNameOrCreator
 
       # Extract module name
       if match = viewName.match(/(.*)::(.*)/)

@@ -25,4 +25,6 @@ describe 'extend', ->
     assert.equal $('<View/>')[0].toString(), '[object TiUIView]'
     assert.equal $('<View />')[0].toString(), '[object TiUIView]'
 
+    assert.equal $('<View>')[0]._viewName, 'View'
+
     assert.ok $('<iPhone::NavigationGroup>')[0]
