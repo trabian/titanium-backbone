@@ -17,7 +17,7 @@ parse = (event) ->
   e: parts[0]
   ns: parts.slice(1).sort().join ' '
 
-findHandlers = (element, event, fn) ->
+findHandlers = (element, event, fn, selector) ->
 
   event = parse event
 
@@ -29,9 +29,10 @@ findHandlers = (element, event, fn) ->
     handler and
       ((not event.e) or handler.e is event.e) and
       ((not event.ns) or matcher.test handler.ns) and
-      ((not fn) or myId(handler.fn) is myId(fn))
+      ((not fn) or myId(handler.fn) is myId(fn)) and
+      ((not selector) or handler.sel is selector)
 
-add = (element, event, fn) ->
+add = (element, event, fn, selector, getDelegate) ->
 
   id = myId element
 
@@ -40,6 +41,9 @@ add = (element, event, fn) ->
   handler = parse event
 
   handler.fn = fn
+  handler.sel = selector
+  handler.del = getDelegate?(fn, event)
+  callback = handler.del or fn
 
   handler.proxy = (e) ->
 
@@ -55,24 +59,44 @@ add = (element, event, fn) ->
 
   element.addEventListener handler.e, handler.proxy
 
-remove = (element, event, fn) ->
+remove = (element, event, fn, selector) ->
 
   id = myId element
 
-  for handler in findHandlers element, event, fn
+  for handler in findHandlers element, event, fn, selector
     delete handlers[id][handler.index]
     element.removeEventListener handler.e, handler.proxy
 
 module.exports = ($) ->
 
-  bind: (event, callback) ->
-    @each (element) -> add element, event, callback
+  bind: (event, selector, callback) ->
+    if not selector or _.isFunction selector
+      callback ?= selector
+      @each (element) -> add element, event, callback
+    else
+      @delegate selector, event, callback
 
-  on: (event, callback) ->
-    @bind event, callback
+  delegate: (selector, event, callback) ->
+    @each (element) ->
+      add element, event, callback, selector, (fn) ->
+        (e) ->
+          if match = $(e?.source).closest(selector, element).get(0)
 
-  unbind: (event, callback) ->
-    @each (element) -> remove element, event, callback
+            evt = _.extend e,
+              currentTarget: match
+
+            return fn.apply match, [evt].concat([].slice.call(arguments, 1))
+
+  undelegate: (selector, event, callback) ->
+    @each (element) -> remove element, event, callback, selector
+
+  on: (event, selector, callback) ->
+    @bind event, selector, callback
+
+  unbind: (event, selector, callback) ->
+    if not selector or _.isFunction selector
+      callback ?= selector
+      @each (element) -> remove element, event, callback
 
   off: (event, callback) ->
     @unbind event, callback

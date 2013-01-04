@@ -74,6 +74,23 @@ describe '$ event methods', ->
 
     assert.isFalse clicked, 'Event was not unbound'
 
+  it 'should bind events based on selector', ->
+
+    clicked = false
+
+    clickHandler = ->
+      clicked = true
+
+    $child = $('<View>')
+      .appendTo(@$el)
+      .attr('id', 'someChild')
+
+    @$el.on 'click', '#someChild', clickHandler
+
+    $child.trigger 'click'
+
+    assert.isTrue clicked, 'Event did not bubble'
+
   it 'should treat "on" and "off" the same as "bind" and "unbind"', ->
 
     clicked = false
@@ -107,6 +124,38 @@ describe '$ event methods', ->
     @$el.on 'click', clickHandler
 
     @$el.trigger 'click', 'some data'
+
+  describe 'delegate', ->
+
+    it 'should delegate and undelegate event handling', ->
+
+      clicked = false
+
+      $child = $('<View>')
+        .appendTo(@$el)
+        .attr 'id', 'someChild'
+
+      clickHandler = ->
+        clicked = true
+
+      clickAndExpect = (clickedExpectation, prep) =>
+
+        clicked = false
+
+        prep.call @
+
+        $child.trigger 'click'
+
+        assert.equal clickedExpectation, clicked
+
+      clickAndExpect true, ->
+        @$el.delegate '#someChild', 'click', clickHandler
+
+      clickAndExpect true, ->
+        @$el.undelegate '#someOtherChild', 'click', clickHandler
+
+      clickAndExpect false, ->
+        @$el.undelegate '#someChild', 'click', clickHandler
 
   describe 'unbinding', ->
 

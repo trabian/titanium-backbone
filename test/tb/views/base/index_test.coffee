@@ -112,6 +112,36 @@ describe 'BaseView', ->
 
       assert.isTrue view.clicked
 
+    it 'should allow events to be bubbled up from child views', ->
+
+      class ExtendedView extends View
+
+        clicked: false
+
+        events:
+          'click #someChild': 'clickMethod'
+
+        render: =>
+
+          Backbone.$('<View>')
+            .appendTo(@$el)
+            .attr('id', 'someChild')
+
+          @
+
+        clickMethod: ->
+          @clicked = true
+
+      view = new ExtendedView
+
+      $child = view.render().$el.children()
+
+      assert.isFalse view.clicked
+
+      $child.trigger 'click'
+
+      assert.isTrue view.clicked, 'Click event was not fired'
+
     it 'should allow events to be specified as inline functions', ->
 
       class ExtendedView extends View
