@@ -53,12 +53,16 @@ describe '$ event methods', ->
 
     clicked = false
 
-    clickHandler = (someData) ->
-      clicked = someData is 'some data'
+    clickHandler = (e) ->
+      clicked = e.someData is 'some data'
+
+    click = =>
+      @el.fireEvent 'click',
+        someData: 'some data'
 
     @$el.bind 'click', clickHandler
 
-    @el.fireEvent 'click', 'some data'
+    click()
 
     assert.isTrue clicked, 'Event was not bound'
 
@@ -66,7 +70,7 @@ describe '$ event methods', ->
 
     @$el.unbind 'click', clickHandler
 
-    @el.fireEvent 'click', 'some data'
+    click()
 
     assert.isFalse clicked, 'Event was not unbound'
 
@@ -74,12 +78,16 @@ describe '$ event methods', ->
 
     clicked = false
 
-    clickHandler = (someData) ->
-      clicked = someData is 'some data'
+    clickHandler = (e) ->
+      clicked = e.someData is 'some data'
+
+    click = =>
+      @el.fireEvent 'click',
+        someData: 'some data'
 
     @$el.on 'click', clickHandler
 
-    @el.fireEvent 'click', 'some data'
+    click()
 
     assert.isTrue clicked, 'Event was not bound'
 
@@ -87,9 +95,18 @@ describe '$ event methods', ->
 
     @$el.off 'click', clickHandler
 
-    @el.fireEvent 'click', 'some data'
+    click()
 
     assert.isFalse clicked, 'Event was not unbound'
+
+  it 'should pass the arguments to "trigger" as e.data', ->
+
+    clickHandler = (e) ->
+      assert.equal e.data, 'some data'
+
+    @$el.on 'click', clickHandler
+
+    @$el.trigger 'click', 'some data'
 
   describe 'unbinding', ->
 

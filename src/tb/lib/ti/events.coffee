@@ -43,11 +43,9 @@ add = (element, event, fn) ->
 
   handler.proxy = (e) ->
 
-    # Make sure events are passed into an array so they can be passed to 'apply'.
-    unless _.isArray e
-      e = [e]
+    e ?= {}
 
-    fn.apply element, e
+    callback.apply element, [e].concat e.data
 
     return
 
@@ -80,7 +78,7 @@ module.exports = ($) ->
     @unbind event, callback
 
   trigger: (event, data) ->
-    @each (element) -> element.fireEvent event, data
+    @each (element) -> element.fireEvent event, { data }
 
   triggerHandler: (event, data) ->
 
