@@ -2,7 +2,22 @@
 # regular Javascript array.
 slice = [].slice
 
+# These are from Zepto
+classSelectorRE = /^\.([\w-]+)$/
+idSelectorRE = /^#([\w-]*)$/
+
 module.exports = ($) ->
+
+  _matches = (element, selector) ->
+
+    return false unless element
+
+    if match = selector.match classSelectorRE
+      element.class is match[1]
+    else if match = selector.match idSelectorRE
+      element.id is match[1]
+    else
+      element._viewName is selector
 
   each: (callback) ->
 
@@ -32,3 +47,6 @@ module.exports = ($) ->
       $(@children)
 
   parent: -> $ @[0].parent
+
+  is: (selector) ->
+    _matches @[0], selector

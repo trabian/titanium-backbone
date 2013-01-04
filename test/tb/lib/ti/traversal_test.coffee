@@ -57,3 +57,23 @@ describe '$ traversal methods', ->
 
     assert.equal @$el.children()[0], firstChild
     assert.equal @$el.children()[1], secondChild
+
+  describe 'is()', ->
+
+    beforeEach ->
+
+      @$el.attr 'class', 'someClass'
+      @$el.attr 'id', 'someId'
+
+    it 'should handle class-based selectors', ->
+      assert.isTrue @$el.is '.someClass'
+      assert.isFalse @$el.is '.notThisClass'
+
+    it 'should handle id-based selectors', ->
+      assert.isTrue @$el.is '#someId'
+      assert.isFalse @$el.is '#notThisId'
+
+    it 'should handle viewname-based selectors', ->
+      assert.isTrue @$el.is 'View'
+      assert.isFalse @$el.is 'Window'
+
