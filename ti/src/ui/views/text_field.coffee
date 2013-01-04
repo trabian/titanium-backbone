@@ -1,5 +1,7 @@
 class TitaniumTextField extends TitaniumView
 
+  tiClassName: 'TiUITextField'
+
   setValue: (@value) ->
 
     @trigger 'change',
