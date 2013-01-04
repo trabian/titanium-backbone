@@ -48,5 +48,14 @@ module.exports = ($) ->
 
   parent: -> $ @[0].parent
 
+  closest: (selector) ->
+
+    node = @[0]
+
+    while node and not _matches node, selector
+      node = (node isnt context) and node.parent
+
+    $(node)
+
   is: (selector) ->
     _matches @[0], selector

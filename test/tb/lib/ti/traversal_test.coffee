@@ -58,6 +58,32 @@ describe '$ traversal methods', ->
     assert.equal @$el.children()[0], firstChild
     assert.equal @$el.children()[1], secondChild
 
+  describe 'closest()', ->
+
+    beforeEach ->
+
+      @$el.attr 'class', 'someParent'
+
+      @$child = $('<View>')
+        .appendTo(@$el)
+        .attr('class', 'someChild')
+
+      @$ancestor = $('<View>')
+        .append(@$el)
+        .attr('class', 'someAncestor')
+
+    it 'should return the current element if it matches the selector', ->
+      assert.equal @$child[0], @$child.closest('.someChild')[0]
+
+    it 'should return the parent if it matches the selector', ->
+      assert.equal @$el[0], @$child.closest('.someParent')[0]
+
+    it 'should return an ancestor if it matches the selector', ->
+      assert.equal @$ancestor[0], @$child.closest('.someAncestor')[0]
+
+    it 'should return an empty array if there is no match', ->
+      assert.equal @$child.closest('.noMatch').length, 0
+
   describe 'is()', ->
 
     beforeEach ->
