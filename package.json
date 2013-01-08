@@ -56,7 +56,7 @@
     "images": "vendor/images"
   },
   "mobile": {
-    "id":"com.trabian.titanium-backbone-ks",
+    "id":"com.trabian.titanium_backbone_ks",
     "name":"titanium-backbone-ks",
     "puburl":"http://www.trabian.com"
   }
