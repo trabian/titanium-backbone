@@ -1,10 +1,8 @@
+matchers = require './helpers/matchers'
+
 # `slice` provides a mechanism for converting an extended array back into a
 # regular Javascript array.
 slice = [].slice
-
-# These are from Zepto
-classSelectorRE = /^\.([\w-]+)$/
-idSelectorRE = /^#([\w-]*)$/
 
 module.exports = ($) ->
 
@@ -50,12 +48,20 @@ module.exports = ($) ->
 
   closest: (selector) ->
 
+    parsed = matchers.parseSelector selector
+
     node = @[0]
 
-    while node and not _matches node, selector
-      node = (node isnt context) and node.parent
+    while node and not matchers.isParsedSelector node, parsed
+      node = node.parent
 
     $(node)
 
+  # Should be true if at least one of these elements matches the given
+  # arguments.
   is: (selector) ->
-    _matches @[0], selector
+
+    parsed = matchers.parseSelector selector
+
+    _.some @, (el) ->
+      matchers.isParsedSelector el, parsed

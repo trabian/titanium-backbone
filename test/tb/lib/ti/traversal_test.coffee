@@ -95,6 +95,13 @@ describe '$ traversal methods', ->
       assert.isTrue @$el.is '.someClass'
       assert.isFalse @$el.is '.notThisClass'
 
+    it 'should handle multiple class-based selectors', ->
+
+      $el = $('<View>').attr 'class', 'someClass someOtherClass'
+
+      assert.isTrue $el.is '.someClass'
+      assert.isTrue $el.is '.someOtherClass'
+
     it 'should handle id-based selectors', ->
       assert.isTrue @$el.is '#someId'
       assert.isFalse @$el.is '#notThisId'
@@ -102,4 +109,8 @@ describe '$ traversal methods', ->
     it 'should handle viewname-based selectors', ->
       assert.isTrue @$el.is 'View'
       assert.isFalse @$el.is 'Window'
+
+    it 'should handle selector combinations', ->
+      assert.isTrue @$el.is('View.someClass'), 'Did not handle viewName.class format'
+      assert.isTrue @$el.is('View#someId'), 'Did not handle viewName#id format'
 

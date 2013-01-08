@@ -101,11 +101,12 @@
 
 ### .is
 
-* **$(el).is(selector)**: Returns a boolean indicating whether all elements in the current ElementCollection (`el` in this case) match the provided selector. This currently only supports the following selectors:
+* **$(el).is(selector)**: Returns a boolean indicating whether all elements in the current ElementCollection (`el` in this case) match the provided selector. This currently supports the following selectors:
 
 	* *.someClass*: matches el with `_class='someClass'`
 	* *#someId*: matches el with `id='someId'`
 	* *View* # matches el with `_viewName='View'`. *`_viewName` (or an equivalent) is not provided by Titanium, at least not in a way that I've been able to find, so this attribute is added by ti.createView.*
+  * *View.someClass*: matches el with `viewName='View'` and `_class='someClass'`
 
 ### .closest
 
