@@ -1,3 +1,5 @@
+matchers = require './helpers/matchers'
+
 module.exports = ($) ->
 
   attr: (name, value) ->
@@ -28,3 +30,38 @@ module.exports = ($) ->
         @applyProperties properties
 
     @
+
+  # Supports single or space-separated class names
+  addClass: (newNames) ->
+
+    $el = $(@)
+
+    existingClass = $el.attr 'class'
+    classList = []
+
+    for newName in newNames.split /\s+/g when ! $el.hasClass newName
+      classList.push newName
+
+    classList = classList.join ' '
+
+    newClass = if existingClass then "#{existingClass} #{classList}" else classList
+
+    @attr 'class', newClass
+
+  removeClass: (classNames) ->
+
+    unless classNames
+      return @attr 'class', ''
+
+    if classList = @attr 'class'
+
+      for className in classNames.split /\s+/g
+        classList = classList.replace(matchers.classRE(className), " ")
+
+      @attr 'class', classList.trim()
+
+    else
+      @
+
+  hasClass: (className) ->
+    _.some @, (el) -> matchers.hasClass el, className

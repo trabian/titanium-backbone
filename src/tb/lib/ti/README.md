@@ -20,6 +20,18 @@
 * **$(el).attr(key, value)**: Set the attribute specified by `key` to `value` for each element in the collection.
 * * **$(el).attr(attrHash)**: Sets the attributes specified by `attrHash` for each element in the collection.
 
+### .hasClass
+
+* **$(el).hasClass(className)**: Determine whether any of the matched elements are assigned the given class.
+
+### .addClass
+
+* **$(el).addClass(className)**: Adds the specified class(es) to each of the set of matched elements.
+
+### .removeClass
+
+* **$(el).removeClass(className)**: Remove a single class, multiple classes, or all classes from each element in the set of matched elements.
+
 ## Events:
 
 ### .on (alias 'bind')

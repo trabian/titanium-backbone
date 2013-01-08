@@ -49,3 +49,49 @@ describe '$ attribute methods', ->
     assert.equal @el1._class, 'someClass'
     assert.equal @el2._class, 'someOtherClass'
     assert.equal $(@el1).attr('class'), 'someClass'
+
+  describe 'addClass', ->
+
+    it 'should support simple class names', ->
+
+      $(@el1).addClass 'someClass'
+      $(@el1).addClass 'someOtherClass'
+
+      assert.equal @el1._class, 'someClass someOtherClass'
+
+    it 'should support space-separated class names', ->
+
+      # This prevents the test from working simply by passing the space-
+      # separated string directly to the _class property.
+      $(@el1).addClass 'someClass'
+
+      $(@el1).addClass 'someClass someOtherClass'
+
+      assert.equal @el1._class, 'someClass someOtherClass'
+
+  describe 'removeClass', ->
+
+    beforeEach ->
+      $(@el1).attr 'class', 'someClass someOtherClass oneMoreClass'
+
+    it 'should support removing a single class', ->
+
+      $(@el1).removeClass 'someOtherClass'
+
+      assert.isTrue $(@el1).hasClass 'someClass'
+      assert.isTrue $(@el1).hasClass 'oneMoreClass'
+
+    it 'should support removing multiple space-separated classes', ->
+
+      $(@el1).removeClass 'someOtherClass someClass'
+
+      assert.isTrue $(@el1).hasClass 'oneMoreClass'
+      assert.isFalse $(@el1).hasClass 'someClass'
+
+    it 'should support removing all classes', ->
+
+      $(@el1).removeClass()
+
+      assert.isFalse $(@el1).hasClass 'someClass'
+      assert.isFalse $(@el1).hasClass 'someOtherClass'
+      assert.isFalse $(@el1).hasClass 'oneMoreClass'
