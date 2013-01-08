@@ -94,6 +94,10 @@
 
 * **$(el).each(fn)**: Iterate over an ElementCollection, executing a function (`fn`) for each matched element.
 
+### .find
+
+* **$(el).find(selector)**: Return an ElementCollection whose elements match the elements in the existing ElementCollection that match the provided selector.
+
 ### .map
 
 * **$(el).map(fn)**: Pass each element in the current matched set through a function (`fn`), producing a new ElementCollection containing the return values.

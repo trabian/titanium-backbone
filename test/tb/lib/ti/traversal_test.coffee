@@ -114,3 +114,103 @@ describe '$ traversal methods', ->
       assert.isTrue @$el.is('View.someClass'), 'Did not handle viewName.class format'
       assert.isTrue @$el.is('View#someId'), 'Did not handle viewName#id format'
 
+  describe 'find()', ->
+
+    beforeEach ->
+
+      @$el.attr('class', 'someGrandparent')
+
+      @$el.append @firstChild = ti.createView 'Tab'
+      @$el.append @secondChild = ti.createView 'View'
+
+      $(@firstChild).attr
+        id: 'someId'
+        class: 'someClass'
+
+      $(@secondChild).attr
+        id: 'someOtherId'
+        class: 'someClass someOtherClass'
+
+      $(@firstChild).append @grandChild = ti.createView 'Button'
+      $(@secondChild).append @otherGrandChild = ti.createView 'Button'
+
+      $(@grandChild).attr
+        class: 'someGrandchild'
+
+      $(@otherGrandChild).attr
+        class: 'someGrandchild'
+
+    it 'should handle shallow class-based selectors', ->
+
+      $found = @$el.find '.someClass'
+
+      assert.equal $found.length, 2
+      assert.equal $found[0], @firstChild
+      assert.equal $found[1], @secondChild
+
+    it 'should handle shallow id-based selectors', ->
+
+      $found = @$el.find '#someOtherId'
+
+      assert.equal $found.length, 1
+      assert.equal $found[0], @secondChild
+
+    it 'should handle shallow node-based selectors', ->
+
+      $found = $(@firstChild).find 'Button'
+
+      assert.equal $found.length, 1
+      assert.equal $found[0], @grandChild
+
+    it 'should handle shallow node- and class-based selectors', ->
+
+      assert.equal $(@firstChild).find('Button.someGrandchild').length, 1
+      assert.equal $(@firstChild).find('Button.notPresent').length, 0
+      assert.equal @$el.find('View.someClass').length, 1
+
+    it 'should handle deep node-based selector', ->
+
+      $found = @$el.find 'Button'
+
+      assert.equal $found.length, 2
+
+    it 'should handle class-based selectors scoped by parent with id', ->
+
+      $found = @$el.find '#someId .someGrandchild'
+
+      assert.equal $found.length, 1
+      assert.equal $found[0], @grandChild
+
+    it 'should handle class-based selectors scoped by parent with class', ->
+
+      $found = @$el.find '.someClass .someGrandchild'
+
+      assert.equal $found.length, 2
+      assert.equal $found[0], @grandChild
+
+    it 'should handle class-based selectors scoped by parent with node name', ->
+
+      $found = @$el.find 'Tab .someGrandchild'
+
+      assert.equal $found.length, 1
+      assert.equal $found[0], @grandChild
+
+    it 'should handle direct parents', ->
+      assert.equal @$el.find('.someGrandparent .someGrandchild').length, 2
+      assert.equal @$el.find('.someGrandparent > .someGrandchild').length, 0
+      assert.equal @$el.find('.someGrandparent > .someClass').length, 2
+
+    it 'should handle multiple selectors', ->
+
+      assert.equal @$el.find('Button, .someClass').length, 4 # Children and Grandchildren will match
+      assert.equal @$el.find('Button, .someGrandchild').length, 2 #Grandchildren will match twice but will only return unique
+
+    it 'should combine matching elements from all elements in a collection', ->
+
+      $coll = $ [@firstChild, @secondChild]
+
+      $found = $coll.find 'Button'
+
+      assert.equal $found.length, 2
+      assert.include $found.get(), @grandChild
+      assert.include $found.get(), @otherGrandChild

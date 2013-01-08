@@ -1,4 +1,5 @@
 matchers = require './helpers/matchers'
+mini = require './helpers/mini'
 
 # `slice` provides a mechanism for converting an extended array back into a
 # regular Javascript array.
@@ -23,6 +24,10 @@ module.exports = ($) ->
       callback.apply el, arguments
 
     @
+
+  find: (selector) ->
+    @map ->
+      $ mini.find selector, @
 
   map: (fn) ->
 
