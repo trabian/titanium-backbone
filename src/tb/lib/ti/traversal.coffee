@@ -13,7 +13,7 @@ module.exports = ($) ->
     return false unless element
 
     if match = selector.match classSelectorRE
-      element.class is match[1]
+      element._class is match[1]
     else if match = selector.match idSelectorRE
       element.id is match[1]
     else

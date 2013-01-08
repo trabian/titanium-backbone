@@ -14,6 +14,8 @@
 
 ### .attr
 
+**Note:** `class` is a reserved keyword in Javascript, so the `.attr` method will transparently change any `class` key passed to `.attr` to `_class`.
+
 * **$(el).attr(key)**: Return the attribute specified by `key` for the first element in the collection.
 * **$(el).attr(key, value)**: Set the attribute specified by `key` to `value` for each element in the collection.
 * * **$(el).attr(attrHash)**: Sets the attributes specified by `attrHash` for each element in the collection.
@@ -101,7 +103,7 @@
 
 * **$(el).is(selector)**: Returns a boolean indicating whether all elements in the current ElementCollection (`el` in this case) match the provided selector. This currently only supports the following selectors:
 
-	* *.someClass*: matches el with `class='someClass'`
+	* *.someClass*: matches el with `_class='someClass'`
 	* *#someId*: matches el with `id='someId'`
 	* *View* # matches el with `_viewName='View'`. *`_viewName` (or an equivalent) is not provided by Titanium, at least not in a way that I've been able to find, so this attribute is added by ti.createView.*
 

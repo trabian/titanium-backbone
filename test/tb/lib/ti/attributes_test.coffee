@@ -38,3 +38,14 @@ describe '$ attribute methods', ->
 
     assert.equal @el2.left, 10
     assert.equal @el2.right, 20
+
+  it 'should map the "class" attribute to _class', ->
+
+    $(@el1).attr
+      class: 'someClass'
+
+    $(@el2).attr 'class', 'someOtherClass'
+
+    assert.equal @el1._class, 'someClass'
+    assert.equal @el2._class, 'someOtherClass'
+    assert.equal $(@el1).attr('class'), 'someClass'
