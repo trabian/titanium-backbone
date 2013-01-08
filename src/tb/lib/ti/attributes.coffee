@@ -8,8 +8,12 @@ module.exports = ($) ->
 
       name = '_class' if name is 'class'
 
+      if value is null
+        @each ->
+          delete @[name]
+
       # "name", "value" (Setter)
-      if value?
+      else if value?
         @each ->
           @[name] = value
 
@@ -30,6 +34,9 @@ module.exports = ($) ->
         @applyProperties properties
 
     @
+
+  removeAttr: (name) ->
+    @attr name, null
 
   # Supports single or space-separated class names
   addClass: (newNames) ->

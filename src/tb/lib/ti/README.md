@@ -18,7 +18,12 @@
 
 * **$(el).attr(key)**: Return the attribute specified by `key` for the first element in the collection.
 * **$(el).attr(key, value)**: Set the attribute specified by `key` to `value` for each element in the collection.
+* **$(el).attr(key, null)**: Remove the attribute specified by `key` for each element in the collection.
 * * **$(el).attr(attrHash)**: Sets the attributes specified by `attrHash` for each element in the collection.
+
+### .removeAttr
+
+* **$(el).removeAttr(key)**: Remove the attribute specified by `key` for each element in the collection.
 
 ### .hasClass
 
