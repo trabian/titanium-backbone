@@ -40,13 +40,13 @@ $ npm install
 #### Run the app generator to create a new mobile app
 
 ```console
-$ ./bin/titanium-backbone new [app name]
-# Run ./bin/titanium-backbone new --help for instructions
+$ ./bin/tb new [app name]
+# Run ./bin/tb new --help for instructions
 ```
 
 _Optional:_ Install and run the app generator globally by running:
 
 ```console
 $ npm install -g
-$ titanium-backbone new --help
+$ tb new --help
 ```

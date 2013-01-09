@@ -22,7 +22,8 @@
     "sinon": "1.5.x"
   },
   "bin": {
-    "titanium-backbone": "./bin/titanium-backbone"
+    "titanium-backbone": "./bin/tb",
+    "tb": "./bin/tb"
   },
   "author": {
     "name": "Matt Dean",
