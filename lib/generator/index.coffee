@@ -26,7 +26,7 @@ buildPackage = (options) ->
     "titanium-backbone": "0.1.x"
     "titanium-backbone-ks": "0.0.x"
   stitch:
-    identifier: 'mobileRequire'
+    identifier: 'stitchRequire'
     output:
       app: "Resources/app-impl.js"
       vendor: "Resources/lib"
