@@ -50,3 +50,11 @@ _Optional:_ Install and run the app generator globally by running:
 $ npm install -g
 $ tb new --help
 ```
+
+### Running the tests
+
+The test suite can be run using npm:
+
+```console
+$ npm test
+```

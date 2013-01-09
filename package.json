@@ -25,6 +25,9 @@
     "titanium-backbone": "./bin/tb",
     "tb": "./bin/tb"
   },
+  "scripts": {
+    "test": "node_modules/.bin/cake build:test && node_modules/.bin/mocha"
+  },
   "author": {
     "name": "Matt Dean",
     "email": "matt@trabian.com"
