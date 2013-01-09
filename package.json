@@ -46,9 +46,7 @@
     "dependencies": [
       "deps/console.coffee",
       "vendor/underscore.js",
-      "vendor/backbone.js",
-      "vendor/Deferred.js",
-      "vendor/backbone-relational.js"
+      "vendor/backbone.js"
     ],
     "testDependencies": [
       "ti/dist.js"
