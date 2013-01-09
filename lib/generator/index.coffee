@@ -86,7 +86,6 @@ module.exports =
 
                 $ cd #{options.dir}
                 $ npm install
-                $ cake build
 
               Now you're ready to run a blank mobile app:
 
