@@ -2,19 +2,17 @@ helpers = require '../../../helpers'
 
 { assert } = helpers.chai
 
-View = helpers.require 'tb/views/base'
-
 describe 'BaseView', ->
 
   it 'should create a Titanium view when initialized', ->
-    assert.ok (new View).el
+    assert.ok (new Backbone.View).el
 
   # These should pass unchanged from the Backbone.View tests
   describe 'constructor', ->
 
     beforeEach ->
 
-      @view = new View
+      @view = new Backbone.View
         id: 'test-view'
         className: 'test-view'
         other: 'non-special-option'
@@ -29,7 +27,7 @@ describe 'BaseView', ->
 
     it 'should support options as a function', ->
 
-      class ExtendedView extends View
+      class ExtendedView extends Backbone.View
 
         options: ->
           other: 'other-attribute'
@@ -39,13 +37,23 @@ describe 'BaseView', ->
       assert.equal view.options.other, 'other-attribute'
       assert.ok ! view.other
 
+    it 'should rename "tagName" to "viewName"', ->
+
+      class ExtendedView extends Backbone.View
+
+        viewName: 'Button'
+
+      view = new ExtendedView
+
+      assert.isTrue view.$el.is 'Button'
+
     describe "attributes", ->
 
       it "should allow attributes"
 
       it "should merge attributes passed in the constructor", ->
 
-        class ExtendedView extends View
+        class ExtendedView extends Backbone.View
 
           attributes:
             color: 'blue'
@@ -62,7 +70,7 @@ describe 'BaseView', ->
 
     it 'should allow events to be specified as strings', ->
 
-      class ExtendedView extends View
+      class ExtendedView extends Backbone.View
 
         clicked: false
 
@@ -82,7 +90,7 @@ describe 'BaseView', ->
 
     it 'should allow events to be bubbled up from child views', ->
 
-      class ExtendedView extends View
+      class ExtendedView extends Backbone.View
 
         clicked: false
 
@@ -112,7 +120,7 @@ describe 'BaseView', ->
 
     it 'should allow events to be specified as inline functions', ->
 
-      class ExtendedView extends View
+      class ExtendedView extends Backbone.View
 
         clicked: false
 
@@ -131,7 +139,7 @@ describe 'BaseView', ->
 
     it 'should allow events to be specified as references to object methods', ->
 
-      class ExtendedView extends View
+      class ExtendedView extends Backbone.View
 
         clicked: false
 
@@ -151,7 +159,7 @@ describe 'BaseView', ->
 
     it 'should allow undelegation of events', ->
 
-      class ExtendedView extends View
+      class ExtendedView extends Backbone.View
 
         clicked: false
 

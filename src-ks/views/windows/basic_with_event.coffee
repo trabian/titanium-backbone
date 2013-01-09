@@ -1,6 +1,4 @@
-View = require 'tb/views/base'
-
-module.exports = class Window extends View
+module.exports = class Window extends Backbone.View
 
   viewName: 'Window'
 

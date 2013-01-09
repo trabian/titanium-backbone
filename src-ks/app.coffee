@@ -1,3 +1,5 @@
+require('tb/lib/backbone-extensions').load()
+
 module.exports =
 
   run: ->
