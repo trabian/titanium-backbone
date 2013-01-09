@@ -1,6 +1,6 @@
 {
   "framework": "mocha",
-  "before_tests": "cake build:test",
+  "before_tests": "node_modules/.bin/cake build:test",
   "src_files": [
     "src/**/*.coffee",
     "test/**/*.coffee",
@@ -11,7 +11,7 @@
   ],
   "launchers": {
     "Mocha": {
-      "command": "mocha",
+      "command": "node_modules/.bin/mocha",
       "protocol": "tap"
     }
   }
