@@ -1,4 +1,5 @@
 helpers = require '../../../helpers'
+_ = require 'underscore'
 
 { assert } = helpers.chai
 
@@ -14,41 +15,64 @@ describe '$ attribute methods', ->
 
     @$coll = $ [@el1, @el2]
 
-  it 'should be able to set an attribute on a collection of views', ->
+  describe 'attr', ->
 
-    @$coll.attr 'left', 10
+    it 'should be able to set an attribute on a collection of views', ->
 
-    assert.equal @el1.left, 10
-    assert.equal @el2.left, 10
+      @$coll.attr 'left', 10
 
-  it 'should be able to access an attribute on the first element of a view collection', ->
+      assert.equal @el1.left, 10
+      assert.equal @el2.left, 10
 
-    @el1.left = 10
+    it 'should be able to access an attribute on the first element of a view collection', ->
 
-    assert.equal @$coll.attr('left'), 10
+      @el1.left = 10
 
-  it 'should be able to set multiple attributes on a view', ->
+      assert.equal @$coll.attr('left'), 10
 
-    @$coll.attr
-      left: 10
-      right: 20
+    it 'should be able to set multiple attributes on a view', ->
 
-    assert.equal @el1.left, 10
-    assert.equal @el1.right, 20
+      @$coll.attr
+        left: 10
+        right: 20
 
-    assert.equal @el2.left, 10
-    assert.equal @el2.right, 20
+      assert.equal @el1.left, 10
+      assert.equal @el1.right, 20
 
-  it 'should map the "class" attribute to _class', ->
+      assert.equal @el2.left, 10
+      assert.equal @el2.right, 20
 
-    $(@el1).attr
-      class: 'someClass'
+    it 'should map the "class" attribute to _class', ->
 
-    $(@el2).attr 'class', 'someOtherClass'
+      $(@el1).attr
+        class: 'someClass'
 
-    assert.equal @el1._class, 'someClass'
-    assert.equal @el2._class, 'someOtherClass'
-    assert.equal $(@el1).attr('class'), 'someClass'
+      $(@el2).attr 'class', 'someOtherClass'
+
+      assert.equal @el1._class, 'someClass'
+      assert.equal @el2._class, 'someOtherClass'
+      assert.equal $(@el1).attr('class'), 'someClass'
+
+  describe 'removing attributes', ->
+
+    beforeEach ->
+
+      @$el = $(@el1)
+
+      @$el.attr
+        someAttr: 'someValue'
+
+    it 'should allow removal of an attribute by setting an empty value in attr', ->
+
+      @$el.attr 'someAttr', null
+
+      assert.isFalse _.has @el1, 'someAttr'
+
+    it 'should allow removal of an attribute via removeAttr', ->
+
+      @$el.removeAttr 'someAttr'
+
+      assert.isFalse _.has @el1, 'someAttr'
 
   describe 'addClass', ->
 
