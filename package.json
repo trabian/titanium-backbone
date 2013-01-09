@@ -12,6 +12,7 @@
     "node-uuid": "1.3.x",
     "stitch-up": "~0.3.4",
     "titanium": "3.0.x",
+    "titanium-backbone-ks": "0.1.x",
     "wrench": "1.3.x"
   },
   "devDependencies": {
@@ -40,8 +41,7 @@
       "app": "Resources/app-impl.js"
     },
     "paths": [
-      "src",
-      "src-ks"
+      "src"
     ],
     "dependencies": [
       "deps/console.coffee",
