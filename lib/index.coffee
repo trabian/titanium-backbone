@@ -9,7 +9,7 @@ printWarn = (line) -> process.stderr.write line + '\n'
 
 printIt = (buffer) -> printLine buffer.toString().trim()
 
-titaniumPath = "node_modules/titanium/bin/titanium"
+titaniumPath = "node_modules/.bin/titanium"
 
 runAndWatch = (onRun) ->
 
