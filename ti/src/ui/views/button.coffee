@@ -1,5 +1,7 @@
 class TitaniumButton extends TitaniumView
 
+  tiClassName: 'TiUIButton'
+
 Ti.UI.createButton = (attributes) ->
 
   new TitaniumButton attributes

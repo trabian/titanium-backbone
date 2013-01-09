@@ -3,8 +3,8 @@ fs = require 'fs'
 pd = require('pretty-data').pd
 wrench = require 'wrench'
 
-dasherize = (str) ->
-  str.toLowerCase().replace /[_\s]/g, '-'
+underscore = (str) ->
+  str.toLowerCase().replace /[-\s]/g, '_'
 
 urlToPackage = (url) ->
   url
@@ -15,7 +15,7 @@ urlToPackage = (url) ->
     .join '.'
 
 generateAppId = (options) ->
-  urlToPackage(options.puburl) + '.' + dasherize options.name
+  urlToPackage(options.puburl) + '.' + underscore options.name
 
 buildPackage = (options) ->
   name: options.id
@@ -23,10 +23,11 @@ buildPackage = (options) ->
   private: true
   description: 'Mobile app'
   dependencies:
-    "titanium-backbone": "0.1.x"
-    "titanium-backbone-ks": "0.0.x"
+    "titanium": "3.0.x"
+    "titanium-backbone": "0.5.x"
+    "titanium-backbone-ks": "0.1.x"
   stitch:
-    identifier: 'mobileRequire'
+    identifier: 'stitchRequire'
     output:
       app: "Resources/app-impl.js"
       vendor: "Resources/lib"
@@ -77,7 +78,7 @@ module.exports =
       else
 
         wrench.copyDirRecursive "#{__dirname}/_template", options.dir, ->
-          
+
           writeFile 'package.json', (pd.json JSON.stringify buildPackage(options)), ->
 
             console.log """
@@ -85,7 +86,6 @@ module.exports =
 
                 $ cd #{options.dir}
                 $ npm install
-                $ cake build
 
               Now you're ready to run a blank mobile app:
 

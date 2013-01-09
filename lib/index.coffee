@@ -1,6 +1,7 @@
 path = require 'path'
 fs = require 'fs'
 util = require 'util'
+
 { spawn, exec } = require 'child_process'
 
 printLine = (line) -> process.stdout.write line + '\n'
@@ -8,15 +9,7 @@ printWarn = (line) -> process.stderr.write line + '\n'
 
 printIt = (buffer) -> printLine buffer.toString().trim()
 
-titaniumPath = ->
-
-  envVarName = 'TITANIUM_DIR'
-
-  if titaniumDir = process.env[envVarName]
-    titanium = path.join titaniumDir, 'titanium.py'
-  else
-    console.log "#{envVarName} environment variable must be set."
-    process.exit()
+titaniumPath = "node_modules/.bin/titanium"
 
 runAndWatch = (onRun) ->
 
@@ -24,13 +17,40 @@ runAndWatch = (onRun) ->
 
     child = _child
 
-    restartFile = 'tmp/restart.txt'
+    tmpPath = 'tmp'
+    restartFile = "#{tmpPath}/restart.txt"
 
-    fs.watch restartFile, (curr, prev) ->
-      console.log "Detected change to #{restartFile}. Restarting..."
-      child.kill()
-      onRun (_child) ->
-        child = _child
+    createTmpDir = (cb) ->
+
+      fs.exists tmpPath, (exists) ->
+        if exists
+          cb()
+        else
+          fs.mkdir 'tmp', (err) ->
+            throw err if err
+            cb()
+
+    makeRestart = (cb) ->
+
+      fs.writeFile restartFile, '', (err) ->
+        throw err if err
+        cb()
+
+    watchRestart = ->
+
+      fs.watch restartFile, (curr, prev) ->
+        console.log "Detected change to #{restartFile}. Restarting..."
+        child.kill()
+        onRun (_child) ->
+          child = _child
+
+    createTmpDir ->
+
+      fs.exists restartFile, (exists) ->
+        if exists
+          watchRestart()
+        else
+          makeRestart watchRestart
 
     console.log "Watching #{restartFile} for timestamp changes."
 
@@ -39,10 +59,11 @@ copyTiappIfNeeded = (callback) ->
   buildPath = 'build/iphone'
   appPath = path.join buildPath, 'tiapp.xml'
 
-  path.exists appPath, (exists) ->
+  fs.exists appPath, (exists) ->
     if exists
       callback()
     else
+
       fs.mkdir 'build', (err) ->
 
         throw err if err
@@ -66,8 +87,8 @@ module.exports =
 
     runSimulator = (callback) ->
 
-      simulator = spawn titaniumPath(), [
-        'run'
+      simulator = spawn titaniumPath, [
+        'build'
         '--platform=iphone'
       ]
 
@@ -79,20 +100,28 @@ module.exports =
 
       callback simulator
 
+    bootstrap = require('./util/bootstrap').bootstrap
+
     tasks:
 
-      bootstrap: require('./util/bootstrap').bootstrap
+      bootstrap: bootstrap
 
       build: ->
         buildTasks.all()
 
+      "build:test": ->
+        buildTasks.test()
+
       "iphone:run": ->
 
-        copyTiappIfNeeded ->
-          runAndWatch (callback) ->
-            buildTasks.stitch -> runSimulator callback
+        bootstrap pkg
+
+        runAndWatch (callback) ->
+          console.warn 'build tasks'
+          buildTasks.stitch ->
+            console.warn 'run simulator'
+            runSimulator callback
 
       "iphone:run:nobuild": ->
 
-        copyTiappIfNeeded ->
-          runAndWatch runSimulator
+        runAndWatch runSimulator

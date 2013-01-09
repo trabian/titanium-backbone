@@ -1,5 +1,7 @@
 class TitaniumTabGroup extends TitaniumView
 
+  tiClassName: 'TiUITabGroup'
+
   addTab: (tab) -> @add tab
 
   getTabs: -> @children
@@ -7,6 +9,8 @@ class TitaniumTabGroup extends TitaniumView
   open: ->
 
 class TitaniumTab extends TitaniumView
+
+  tiClassName: 'TiUITab'
 
 Ti.UI.createTabGroup = (attributes) ->
 
