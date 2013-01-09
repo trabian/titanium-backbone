@@ -1,12 +1,13 @@
 ti = require 'tb/lib/ti'
 
+load = _.once ->
+  Backbone.$ = ti.$
+  @extendView()
+  extended = true
+
 module.exports =
 
-  load: ->
-
-    Backbone.$ = ti.$
-
-    @extendView()
+  load: load
 
   extendView: ->
 
