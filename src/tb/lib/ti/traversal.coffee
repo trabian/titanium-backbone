@@ -7,17 +7,6 @@ slice = [].slice
 
 module.exports = ($) ->
 
-  _matches = (element, selector) ->
-
-    return false unless element
-
-    if match = selector.match classSelectorRE
-      element._class is match[1]
-    else if match = selector.match idSelectorRE
-      element.id is match[1]
-    else
-      element._viewName is selector
-
   each: (callback) ->
 
     _.each @, (el) ->
