@@ -54,3 +54,14 @@ The test suite can be run using npm:
 ```console
 $ npm test
 ```
+
+#### testem
+
+During development it can be helpful to use [testem](https://github.com/airportyh/testem) for monitoring the source files and rerunning the tests as the underlying files are changed.
+
+To use testem, run the following in the titanium-backbone directory:
+
+```console
+$ npm install -g testem
+$ testem
+```
