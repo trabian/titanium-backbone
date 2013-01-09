@@ -78,7 +78,7 @@ module.exports =
       else
 
         wrench.copyDirRecursive "#{__dirname}/_template", options.dir, ->
-          
+
           writeFile 'package.json', (pd.json JSON.stringify buildPackage(options)), ->
 
             console.log """
