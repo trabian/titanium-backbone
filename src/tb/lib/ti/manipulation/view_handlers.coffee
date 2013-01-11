@@ -20,7 +20,19 @@ defaultHandler =
   remove: (parent, child) ->
     parent.remove child
 
+barHandler =
+
+  add: (parent, child) ->
+    throw new Error "The children of #{parent._viewName} views are added via the 'labels' array."
+
+  remove: (parent, child) ->
+    throw new Error "The children of #{parent._viewName} views are added via the 'labels' array."
+
 viewHandlers =
+
+  ButtonBar: barHandler
+
+  TabbedBar: barHandler
 
   TableView:
 
