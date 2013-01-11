@@ -60,3 +60,26 @@ describe '$.append and $.remove methods on special containers', ->
         $row.remove()
 
         assert.equal $table[0].sections.length, 0
+
+    describe 'TableViewSection', ->
+
+      it 'should only handle append and remove of rows', ->
+
+        $table = $('<TableView>')
+        $section = $('<TableViewSection>').appendTo $table
+
+        assert.equal $section[0].children.length, 0
+
+        $row = $('<TableViewRow>')
+          .appendTo $section
+
+        assert.equal $table[0].rows.length, 1
+        assert.equal $section[0].rows.length, 1
+
+        assert.throws ->
+          $section.append $('<View>')
+
+        $row.remove()
+
+        assert.equal $table[0].rows.length, 0
+        assert.equal $section[0].rows.length, 0
