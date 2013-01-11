@@ -12,6 +12,7 @@ UI = src/ui/index.coffee \
 	src/ui/views/search_bar.coffee \
 	src/ui/views/slider.coffee \
 	src/ui/views/switch.coffee \
+	src/ui/views/tabbed_bar.coffee \
 	src/ui/views/tab_group.coffee \
 	src/ui/views/table.coffee \
 	src/ui/views/text_area.coffee \
