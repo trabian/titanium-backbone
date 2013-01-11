@@ -15,7 +15,13 @@ class TitaniumTableView extends TitaniumView
     @rows.push row
 
   deleteRow: (index) ->
-    @rows = _.without @rows, @rows[index]
+
+    row = @rows[index]
+
+    if section = row._section
+      section.rows = _.without section.rows, row
+
+    @rows = _.without @rows, row
 
   appendSection: (section) ->
     section.parent = @
@@ -31,6 +37,16 @@ class TitaniumTableViewRow extends TitaniumView
 class TitaniumTableViewSection extends TitaniumView
 
   tiClassName: 'TiUITableViewSection'
+
+  constructor: ->
+    @rows = []
+    super
+
+  add: (row) ->
+    row.parent = @
+    row._section = @
+    @rows.push row
+    @parent.appendRow row
 
 Ti.UI.createTableView = (attributes) ->
 

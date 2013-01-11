@@ -352,7 +352,12 @@ TitaniumTableView = (function(_super) {
   };
 
   TitaniumTableView.prototype.deleteRow = function(index) {
-    return this.rows = _.without(this.rows, this.rows[index]);
+    var row, section;
+    row = this.rows[index];
+    if (section = row._section) {
+      section.rows = _.without(section.rows, row);
+    }
+    return this.rows = _.without(this.rows, row);
   };
 
   TitaniumTableView.prototype.appendSection = function(section) {
@@ -386,11 +391,19 @@ TitaniumTableViewSection = (function(_super) {
 
   __extends(TitaniumTableViewSection, _super);
 
+  TitaniumTableViewSection.prototype.tiClassName = 'TiUITableViewSection';
+
   function TitaniumTableViewSection() {
-    return TitaniumTableViewSection.__super__.constructor.apply(this, arguments);
+    this.rows = [];
+    TitaniumTableViewSection.__super__.constructor.apply(this, arguments);
   }
 
-  TitaniumTableViewSection.prototype.tiClassName = 'TiUITableViewSection';
+  TitaniumTableViewSection.prototype.add = function(row) {
+    row.parent = this;
+    row._section = this;
+    this.rows.push(row);
+    return this.parent.appendRow(row);
+  };
 
   return TitaniumTableViewSection;
 
