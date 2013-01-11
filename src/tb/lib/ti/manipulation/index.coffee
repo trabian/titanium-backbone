@@ -1,7 +1,9 @@
+viewHandlers = require './view_handlers'
+
 module.exports = ($) ->
 
   append: (child) ->
-    @[0].add $(child)[0]
+    viewHandlers.handle 'add', @[0], $(child)[0]
     @
 
   appendTo: (parent) ->
@@ -13,7 +15,7 @@ module.exports = ($) ->
     if parent = @parent()
       @each ->
         unless @_removed
-          parent[0].remove @
+          viewHandlers.handle 'remove', parent[0], @
           @_removed = true
 
     @

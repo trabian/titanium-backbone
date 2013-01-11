@@ -79,4 +79,3 @@ describe '$ manipulation methods', ->
 
     assert.equal @$el.children().length, 0
     assert.isFalse @$el[0].hidden
-
