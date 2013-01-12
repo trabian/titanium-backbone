@@ -20,6 +20,7 @@ describe '$.append and $.remove methods on special containers', ->
       "Slider"
       "Switch"
       "TabbedBar"
+      "iOS::TabbedBar"
       "TextArea"
       "TextField"
       "WebView"

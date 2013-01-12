@@ -34,6 +34,8 @@ viewHandlers =
 
   TabbedBar: barHandler
 
+  "iOS::TabbedBar": barHandler
+
   TableView:
 
     add: (parent, child) ->
@@ -75,6 +77,9 @@ viewHandlers =
         else
           throw new Error "TableViewSection views can only serve as containers for TableViewRow views"
 
+  Toolbar: toolbarHandler
+
+  "iOS::Toolbar": toolbarHandler
 
 for container in nonContainers
 
