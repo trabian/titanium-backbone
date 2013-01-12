@@ -23,6 +23,8 @@ describe '$.append and $.remove methods on special containers', ->
       "iOS::TabbedBar"
       "TextArea"
       "TextField"
+      "Toolbar"
+      "iOS::Toolbar"
       "WebView"
     ]
 

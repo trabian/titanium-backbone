@@ -28,6 +28,14 @@ barHandler =
   remove: (parent, child) ->
     throw new Error "The children of #{parent._viewName} views are added via the 'labels' array."
 
+toolbarHandler =
+
+  add: (parent, child) ->
+    throw new Error "The children of #{parent._viewName} views are added via the 'items' array."
+
+  remove: (parent, child) ->
+    throw new Error "The children of #{parent._viewName} views are added via the 'items' array."
+
 viewHandlers =
 
   ButtonBar: barHandler
