@@ -28,7 +28,8 @@ Ti.UI = {
   createWindow: function(attributes) {
     return console.log('Create window');
   },
-  SIZE: 'size'
+  SIZE: 'size',
+  iOS: {}
 };
 
 Ti.UI.iPhone = {
@@ -299,6 +300,10 @@ TitaniumTabbedBar = (function(_super) {
 })(TitaniumView);
 
 Ti.UI.createTabbedBar = function(attributes) {
+  return new TitaniumTabbedBar(attributes);
+};
+
+Ti.UI.iOS.createTabbedBar = function(attributes) {
   return new TitaniumTabbedBar(attributes);
 };
 

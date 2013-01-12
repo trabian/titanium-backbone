@@ -4,3 +4,5 @@ Ti.UI =
     console.log 'Create window'
 
   SIZE: 'size'
+
+  iOS: {}

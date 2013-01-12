@@ -5,3 +5,7 @@ class TitaniumTabbedBar extends TitaniumView
 Ti.UI.createTabbedBar = (attributes) ->
 
   new TitaniumTabbedBar attributes
+
+Ti.UI.iOS.createTabbedBar = (attributes) ->
+
+  new TitaniumTabbedBar attributes
