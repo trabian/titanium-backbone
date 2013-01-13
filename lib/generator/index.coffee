@@ -6,6 +6,9 @@ wrench = require 'wrench'
 underscore = (str) ->
   str.toLowerCase().replace /[-\s]/g, '_'
 
+dasherize = (str) ->
+  str.toLowerCase().replace /[_\s]/g, '-'
+
 urlToPackage = (url) ->
   url
     .replace(/http[s]?:\/\/(www\.)?/, '')
