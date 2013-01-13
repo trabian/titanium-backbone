@@ -78,12 +78,41 @@ viewHandlers =
       # According to the Titanium API documentation, to remove a row from a
       # section after the table is rendered, use the TableView deleteRow
       # method.
-      switch child._viewName
-        when 'TableViewRow'
-          table = parent.parent
-          table.deleteRow _.indexOf table.rows, child
-        else
-          throw new Error "TableViewSection views can only serve as containers for TableViewRow views"
+      if child._viewName is 'TableViewRow'
+        table = parent.parent
+        table.deleteRow _.indexOf table.rows, child
+      else
+        throw new Error "TableViewSection views can only serve as containers for TableViewRow views"
+
+  Picker:
+
+    add: (parent, child) ->
+      if child._viewName in ['PickerRow', 'PickerColumn']
+        parent.add child
+      else
+        throw new Error "Picker views can only serve as containers for PickerRow and PickerColumn views"
+
+    remove: (parent, child) ->
+
+      if child._viewName is 'PickerColumn'
+        parent.setColumns _.without parent.columns, child
+      else
+        throw new Error "Pickers can not directly remove PickerRows or other view types"
+
+  PickerColumn:
+
+    add: (parent, child) ->
+      if child._viewName is 'PickerRow'
+        parent.addRow child
+      else
+        throw new Error "PickerColumn views can only serve as containers for PickerRow views"
+
+    remove: (parent, child) ->
+      if child._viewName is 'PickerRow'
+        console.warn 'remove row', child
+        parent.removeRow child
+      else
+        throw new Error "PickerColumn views can only serve as containers for PickerRow views"
 
   Toolbar: toolbarHandler
 
@@ -102,6 +131,17 @@ for container in nonContainers
 module.exports =
 
   handle: (command, parent, child) ->
-    handler = viewHandlers[parent._viewName]?[command] or defaultHandler[command]
-    handler parent, child
+
+    # If a PickerRow is added directly to a Picker then a single PickerColumn
+    # will be created by Titanium to hold it and any other rows. This created
+    # PickerColumn will not have a _viewName attribute so we need to handle
+    # removal of PickerRows based on child._viewName rather than
+    # parent._viewName.
+    if (child._viewName is 'PickerRow') and command is 'remove'
+      parent.removeRow child
+
+    else
+
+      handlerCommand = viewHandlers[parent._viewName]?[command] or defaultHandler[command]
+      handlerCommand parent, child
 
