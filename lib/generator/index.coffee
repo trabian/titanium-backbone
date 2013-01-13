@@ -3,7 +3,7 @@ fs = require 'fs'
 pd = require('pretty-data').pd
 wrench = require 'wrench'
 
-underscore = (str) ->
+underscorize = (str) ->
   str.toLowerCase().replace /[-\s]/g, '_'
 
 dasherize = (str) ->
@@ -18,7 +18,7 @@ urlToPackage = (url) ->
     .join '.'
 
 generateAppId = (options) ->
-  urlToPackage(options.puburl) + '.' + underscore options.name
+  urlToPackage(options.puburl) + '.' + underscorize options.name
 
 buildPackage = (options) ->
   name: options.id
