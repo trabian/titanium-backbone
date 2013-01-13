@@ -8,6 +8,7 @@ UI = src/ui/index.coffee \
 	src/ui/views/button.coffee \
 	src/ui/views/image_view.coffee \
 	src/ui/views/label.coffee \
+	src/ui/views/picker.coffee \
 	src/ui/views/progress_bar.coffee \
 	src/ui/views/search_bar.coffee \
 	src/ui/views/slider.coffee \
