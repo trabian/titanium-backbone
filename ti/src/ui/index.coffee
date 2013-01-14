@@ -6,3 +6,5 @@ Ti.UI =
   SIZE: 'size'
 
   iOS: {}
+
+  iPad: {}

@@ -22,7 +22,8 @@ UI = src/ui/index.coffee \
 	src/ui/views/toolbar.coffee \
 	src/ui/views/web_view.coffee \
 	src/ui/views/window.coffee \
-	src/ui/iphone/navigation_group.coffee
+	src/ui/iphone/navigation_group.coffee \
+	src/ui/ipad/split_window.coffee
 
 TI = $(BASE) $(APP) $(PLATFORM) $(UI)
 
