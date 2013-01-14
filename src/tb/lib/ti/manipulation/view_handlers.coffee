@@ -12,10 +12,21 @@ nonContainers = [
   "WebView"
 ]
 
+topLevelContainers = [
+  "Tab"
+  "TabGroup"
+  "iPhone::NavigationGroup"
+  "iPad::SplitWindow"
+]
+
 defaultHandler =
 
   add: (parent, child) ->
-    parent.add child
+
+    if child._viewName in topLevelContainers
+      throw new Error "#{child._viewName} views are top level containers and cannot be added to other containers"
+    else
+      parent.add child
 
   remove: (parent, child) ->
     parent.remove child
@@ -43,6 +54,20 @@ viewHandlers =
   TabbedBar: barHandler
 
   "iOS::TabbedBar": barHandler
+
+  TabGroup:
+
+    add: (parent, child) ->
+      if child._viewName is 'Tab'
+        parent.addTab child
+      else
+        throw new Error "TabGroup views can only serve as containers for Tab views"
+
+    remove: (parent, child) ->
+      if child._viewName is 'Tab'
+        parent.removeTab child
+      else
+        throw new Error "TabGroup views can only serve as containers for Tab views"
 
   TableView:
 

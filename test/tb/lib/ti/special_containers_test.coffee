@@ -145,3 +145,37 @@ describe '$.append and $.remove methods on special containers', ->
         $row.remove()
 
         assert.equal $column[0].rows.length, 0
+
+    describe 'TabGroup', ->
+
+      it 'should only handle append and remove of tabs', ->
+
+        $tabGroup = $('<TabGroup>')
+
+        assert.equal $tabGroup[0].tabs.length, 0
+
+        $tab = $('<Tab>')
+          .appendTo $tabGroup
+
+        assert.equal $tabGroup[0].tabs.length, 1
+
+        assert.throws ->
+          $tabGroup.append $('<View>')
+
+        $tab.remove()
+
+        assert.equal $tabGroup[0].tabs.length, 0
+
+    describe 'top-level containers', ->
+
+      it 'should not allow top-level containers to be added to other views', ->
+
+        for viewName in [
+          "Tab"
+          "TabGroup"
+          "iPhone::NavigationGroup"
+          "iPad::SplitWindow"
+        ]
+
+          assert.throws ->
+            $('<View>').append $("<#{viewName}>")
