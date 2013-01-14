@@ -2,9 +2,18 @@ class TitaniumTabGroup extends TitaniumView
 
   tiClassName: 'TiUITabGroup'
 
-  addTab: (tab) -> @add tab
+  constructor: ->
+    @tabs = []
+    super
 
-  getTabs: -> @children
+  addTab: (tab) ->
+    tab.parent = @
+    @tabs.push tab
+
+  getTabs: -> @tabs
+
+  removeTab: (tab) ->
+    @tabs = _.without @tabs, tab
 
   open: ->
 
