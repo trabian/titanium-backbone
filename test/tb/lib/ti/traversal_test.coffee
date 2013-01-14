@@ -120,7 +120,7 @@ describe '$ traversal methods', ->
 
       @$el.attr('class', 'someGrandparent')
 
-      @$el.append @firstChild = ti.createView 'Tab'
+      @$el.append @firstChild = ti.createView 'ScrollView'
       @$el.append @secondChild = ti.createView 'View'
 
       $(@firstChild).attr
@@ -190,7 +190,7 @@ describe '$ traversal methods', ->
 
     it 'should handle class-based selectors scoped by parent with node name', ->
 
-      $found = @$el.find 'Tab .someGrandchild'
+      $found = @$el.find 'ScrollView .someGrandchild'
 
       assert.equal $found.length, 1
       assert.equal $found[0], @grandChild
