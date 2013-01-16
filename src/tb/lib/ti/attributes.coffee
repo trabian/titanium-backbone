@@ -72,3 +72,29 @@ module.exports = ($) ->
 
   hasClass: (className) ->
     _.some @, (el) -> matchers.hasClass el, className
+
+  text: (text) ->
+
+    getKey = (el) ->
+
+      key = switch el._viewName
+        when 'Button'
+          'title'
+        else
+          'text'
+
+    if text?
+
+      @each ->
+
+        key = getKey @
+
+        if text is null
+          delete @[key]
+        else if text?
+          @[key] = text
+
+    else
+
+      if el = @[0]
+        return el[getKey el]

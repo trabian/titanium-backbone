@@ -119,3 +119,21 @@ describe '$ attribute methods', ->
       assert.isFalse $(@el1).hasClass 'someClass'
       assert.isFalse $(@el1).hasClass 'someOtherClass'
       assert.isFalse $(@el1).hasClass 'oneMoreClass'
+
+  describe 'text', ->
+
+    it 'should handle labels', ->
+
+      $label = $('<Label>').text 'Test Text'
+
+      assert.equal $label[0].text, 'Test Text'
+
+      assert.equal $label.text(), 'Test Text'
+
+    it 'should handle buttons', ->
+
+      $button = $('<Button>').text 'Test Text'
+
+      assert.equal $button[0].title, 'Test Text'
+
+      assert.equal $button.text(), 'Test Text'
