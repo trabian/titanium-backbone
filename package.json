@@ -48,10 +48,14 @@
     "paths": [
       "src"
     ],
+    "testPaths": [
+      "test/src"
+    ],
     "dependencies": [
       "deps/console.coffee",
       "vendor/underscore.js",
-      "vendor/backbone.js"
+      "vendor/backbone.js",
+      "vendor/jade.js"
     ],
     "testDependencies": [
       "ti/dist.js"
