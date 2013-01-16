@@ -30,6 +30,8 @@ ti =
         module = match[1]
         viewName = match[2]
 
+      viewName = 'View' if viewName is 'div'
+
       creator = "create#{viewName}"
 
       if module then Ti.UI[module][creator] else Ti.UI[creator]

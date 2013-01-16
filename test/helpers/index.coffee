@@ -1,7 +1,7 @@
 app = require '../../test.js'
 _ = require 'underscore'
 
-app.stitchRequire('tb/lib/backbone-extensions').load()
+app.Backbone.$ = app.stitchRequire('tb').$
 
 module.exports =
 

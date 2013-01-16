@@ -1,4 +1,4 @@
-require('tb/lib/backbone-extensions').load()
+Backbone.$ = require('tb').$
 
 module.exports =
 

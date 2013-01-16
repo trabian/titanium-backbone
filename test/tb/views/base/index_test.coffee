@@ -37,34 +37,15 @@ describe 'BaseView', ->
       assert.equal view.options.other, 'other-attribute'
       assert.ok ! view.other
 
-    it 'should rename "tagName" to "viewName"', ->
+    it 'should create a view that matches the "tagName"', ->
 
       class ExtendedView extends Backbone.View
 
-        viewName: 'Button'
+        tagName: 'Button'
 
       view = new ExtendedView
 
       assert.isTrue view.$el.is 'Button'
-
-    describe "attributes", ->
-
-      it "should allow attributes"
-
-      it "should merge attributes passed in the constructor", ->
-
-        class ExtendedView extends Backbone.View
-
-          attributes:
-            color: 'blue'
-            height: 30
-
-        view = new ExtendedView
-          attributes:
-            color: 'red'
-
-        assert.equal view.attributes.color, 'red'
-        assert.equal view.attributes.height, 30
 
   describe 'events', ->
 
