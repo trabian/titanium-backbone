@@ -8,6 +8,7 @@
 	* `$('<View>')` creates a new [Titanium.UI.View](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.UI.View)
 	* `$('<Button>')` creates a new [Titanium.UI.Button](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.UI.Button)
 	* `$('<iPhone::NavigationGroup')` creates a new [Titanium.UI.iPhone.NavigationGroup](http://docs.appcelerator.com/titanium/latest/#!/api/Titanium.UI.iPhone.NavigationGroup)
+  * `$('<View><Button height="20">Click Me!</Button></View>')` creates a View with a nested Button with a height attribute and title of 'Click Me!'. This XML can be nested to any depth.
 * **$()** or **$(undefined)**: Creates an empty ElementCollection
 
 ## Attributes:
