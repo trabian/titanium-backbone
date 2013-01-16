@@ -104,3 +104,31 @@ describe '$ manipulation methods', ->
 
     assert.equal @$el.children().length, 0
     assert.isFalse @$el[0].hidden
+
+  describe 'jade support', ->
+
+    beforeEach ->
+
+      template = helpers.require 'fixtures/template'
+
+      @sampleLabelText = 'This is sample label text'
+
+      @$jadeEl = $ template
+        sampleLabelText: @sampleLabelText
+
+    it 'should support regular views', ->
+
+      $testView = @$jadeEl.find('View.testView')
+
+      assert.ok $testView[0]
+      assert.equal $testView.attr('width'), '10'
+      assert.equal $testView.children().length, 2
+
+      assert.ok @$jadeEl.find('#someButton')[0]
+      assert.equal @$jadeEl.find('Label.myLabel').text(), @sampleLabelText
+
+    it 'should support namespaced views', ->
+
+      $adView = @$jadeEl.find('.someAdView')
+
+      assert.equal $adView[0]._viewName, 'iOS:AdView'

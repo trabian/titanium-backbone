@@ -5,20 +5,14 @@ ElementCollection = (collection) ->
 
 module.exports = (ti) ->
 
+  builder = require('./builder') ti
+
   $ = (element) ->
+
     if element instanceof ElementCollection
       element
     else if _.isString element
-
-      # Matches HTML-style tags, e.g. <View>, <View/>, <View />, and <iPhone::NavigationGroup>
-      TAG = /// ^<
-        ([\w\:]*) # Letters and colons
-        \s? # Optional space before closing />
-        /? # Optional / before closing >
-      >$ ///
-
-      if match = element.match TAG
-        $ ti.createView match[1]
+      builder.buildFromXml $, element
 
     else
       if element
