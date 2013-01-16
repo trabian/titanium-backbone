@@ -18,6 +18,15 @@ describe '$ manipulation methods', ->
 
     assert.equal @$el.children().length, 2
 
+  it 'should be able to append multiple child views', ->
+
+    view1 = ti.createView 'View'
+    view2 = ti.createView 'View'
+
+    @$el.append $ [view1, view2]
+
+    assert.equal @$el.children().length, 2
+
   it 'should be able to appendTo an existing view', ->
 
     $(ti.createView 'View').appendTo @$el
