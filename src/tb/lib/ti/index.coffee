@@ -44,7 +44,7 @@ ti =
     if viewCreator
       viewCreator attributes
     else
-      console.log "Could not find viewCreator for #{viewName}"
+      console.log "Could not find viewCreator for #{viewNameOrCreator}"
 
   $: (element) -> extend element
 
