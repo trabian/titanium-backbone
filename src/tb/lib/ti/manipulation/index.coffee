@@ -38,6 +38,9 @@ module.exports = ($) ->
       .each(removeChildren)
       .show()
 
+  html: (children) ->
+    @empty().append children
+
   hide: ->
     @each (el) -> el.hide()
 

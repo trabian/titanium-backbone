@@ -85,6 +85,10 @@
 
 * **$(el).empty()**: Remove all children from `el`.
 
+### .html
+
+* **$(el).html(*childEl*)**: Replace the contents of el with childEl. This essentially combines $.empty() and $.append() and, while the name may not be optimal for this context (what is 'html' in Titanium?) it allows easier use of other Backbone libraries.
+
 ### .show
 
 * **$(el).show()**: Show each element in the ElementCollection (`el` in this example).

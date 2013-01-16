@@ -60,6 +60,22 @@ describe '$ manipulation methods', ->
 
     assert.equal @$el.children().length, 0
 
+  it 'should be able to replace all views using "html"', ->
+
+    @$el.append ti.createView 'View'
+    @$el.append ti.createView 'View'
+
+    @$el.html ti.createView 'View'
+
+    assert.equal @$el.children().length, 1
+
+    view1 = ti.createView 'View'
+    view2 = ti.createView 'View'
+
+    @$el.html $ [view1, view2]
+
+    assert.equal @$el.children().length, 2
+
   it 'should be able to hide the views', ->
 
     @$el.hide()
