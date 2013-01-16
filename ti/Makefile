@@ -1,6 +1,7 @@
 BASE = src/ti.coffee
 APP = src/app/index.coffee src/app/properties.coffee
 PLATFORM = src/platform/index.coffee
+XML = src/xml/index.coffee
 UI = src/ui/index.coffee \
 	src/ui/iphone/index.coffee \
 	src/ui/views/base.coffee \
@@ -26,7 +27,7 @@ UI = src/ui/index.coffee \
 	src/ui/ipad/split_window.coffee \
 	src/ui/ios/ad_view.coffee
 
-TI = $(BASE) $(APP) $(PLATFORM) $(UI)
+TI = $(BASE) $(APP) $(PLATFORM) $(XML) $(UI)
 
 dist.js: $(TI)
 	coffee --bare --join dist.js --compile $(TI)
