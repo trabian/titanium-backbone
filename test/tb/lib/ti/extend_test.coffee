@@ -29,6 +29,10 @@ describe 'extend', ->
 
     assert.ok $('<iPhone:NavigationGroup>')[0]
 
+  it 'should map "div" to "View"', ->
+
+    assert.equal $('<div>')[0]._viewName, 'View'
+
   it 'should return an empty array if the argument is undefined', ->
     assert.equal $(undefined).length, 0
 

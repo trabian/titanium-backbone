@@ -30,7 +30,8 @@ ti =
         module = match[1]
         viewName = match[2]
 
-      viewName = 'View' if viewName is 'div'
+      if viewName is 'div'
+        attributes._viewName = viewName = 'View'
 
       creator = "create#{viewName}"
 
