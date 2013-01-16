@@ -37,6 +37,13 @@
 
 * **$(el).removeClass(className)**: Remove a single class, multiple classes, or all classes from each element in the set of matched elements.
 
+### .text
+
+The `text` method will set or get the appropriate attribute depending on the view type. For example, it will act against a Label's `text` attribute but a Button's `title` attribute.
+
+* **$(el).text(newValue): Sets the text content of el.
+* **$(el).text()**: Returns the text content of el
+
 ## Events:
 
 ### .on (alias 'bind')
