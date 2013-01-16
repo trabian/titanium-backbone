@@ -26,7 +26,7 @@ ti =
       attributes._viewName = viewName = viewNameOrCreator
 
       # Extract module name
-      if match = viewName.match(/(.*)::(.*)/)
+      if match = viewName.match(/(.*):(.*)/)
         module = match[1]
         viewName = match[2]
 
@@ -54,4 +54,5 @@ module.exports =
 
   createView: ti.createView
   $: extend
+  Ti: Ti
 
