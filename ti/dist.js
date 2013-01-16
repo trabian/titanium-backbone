@@ -715,3 +715,19 @@ TitaniumSplitWindow = (function(_super) {
 Ti.UI.iPad.createSplitWindow = function(attributes) {
   return new TitaniumSplitWindow(attributes);
 };
+
+TitaniumAdView = (function(_super) {
+
+  __extends(TitaniumAdView, _super);
+
+  function TitaniumAdView() {
+    return TitaniumAdView.__super__.constructor.apply(this, arguments);
+  }
+
+  return TitaniumAdView;
+
+})(TitaniumView);
+
+Ti.UI.iOS.createAdView = function(attributes) {
+  return new TitaniumAdView(attributes);
+};
