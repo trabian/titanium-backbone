@@ -98,3 +98,10 @@ module.exports = ($) ->
 
       if el = @[0]
         return el[getKey el]
+
+  val: (value) ->
+
+    if value?
+      @each -> @setValue value
+    else
+      @[0]?.getValue()

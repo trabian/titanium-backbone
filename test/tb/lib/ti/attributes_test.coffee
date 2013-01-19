@@ -137,3 +137,21 @@ describe '$ attribute methods', ->
       assert.equal $button[0].title, 'Test Text'
 
       assert.equal $button.text(), 'Test Text'
+
+  describe 'val', ->
+
+    it 'should handle TextFields', ->
+
+      $input = $('<TextField>').val 'Test Text'
+
+      assert.equal $input[0].value, 'Test Text'
+
+      assert.equal $input.val(), 'Test Text'
+
+    it 'should handle TextAreas', ->
+
+      $input = $('<TextArea>').val 'Test Text'
+
+      assert.equal $input[0].value, 'Test Text'
+
+      assert.equal $input.val(), 'Test Text'
