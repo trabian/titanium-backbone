@@ -2,7 +2,7 @@ helpers = require '../../../helpers'
 
 { assert } = helpers.chai
 
-describe 'BaseView', ->
+describe 'Backbone.View', ->
 
   it 'should create a Titanium view when initialized', ->
     assert.ok (new Backbone.View).el
