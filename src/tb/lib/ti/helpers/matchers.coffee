@@ -14,6 +14,21 @@ exprClassName = /^(?:[\w\-_]+)?\.([\w\-_]+)/
 exprId = /^(?:[\w\-_]+)?#([\w\-_]+)/
 exprNodeName = /^([\w\*\-_]+)/
 
+exprAttributes = ///
+  ^(?:[\w\-_]+)? # Allow preceding tagName
+  \[(.*)\] # Match any expression in brackets
+///
+
+exprAttributePresence = ///
+  ^(\w*)$
+///
+
+exprAttributeComponents = ///
+  ^(\w*) # attribute name
+  ([!^*$~|]?\=) # Find comparator with optional !, ^, or *
+  [\"\'](\w*)[\"\'] # expected value (surrounded by quotes)
+///
+
 classCache = {}
 
 classRE = (name) ->
@@ -22,9 +37,39 @@ classRE = (name) ->
 hasClass = (el, className) ->
   classRE(className).test el._class
 
-hasNodeNameAndOrClass = (el, nodeName, className) ->
+hasAttributes = (el, attributes) ->
+
+  if exprAttributePresence.test attributes
+    return _.has el, attributes
+
+  if match = attributes.match exprAttributeComponents
+
+    [ original, attr, comparison, value ] = match
+
+    return switch comparison
+      when '='
+        el[attr] is value
+      when '!='
+        el[attr] isnt value
+      when '^='
+        (new RegExp("^#{value}")).test el[attr]
+      when '$='
+        (new RegExp("#{value}$")).test el[attr]
+      when '*='
+        (new RegExp(value)).test el[attr]
+      when '~='
+        (new RegExp("\\b#{value}\\b")).test el[attr]
+      when '|='
+        (new RegExp("^#{value}(-|$)")).test el[attr]
+      else
+        false
+
+  false
+
+hasNameClassAttrs = (el, nodeName, className, attributes) ->
   matches = !nodeName or el._viewName is nodeName
-  matches and (!className or hasClass el, className)
+  matches = matches and (!className or hasClass el, className)
+  matches and (!attributes or hasAttributes el, attributes)
 
 # Parses a selector into its id, className, and nodeName components
 parseSelector = (selector) ->
@@ -32,26 +77,27 @@ parseSelector = (selector) ->
   id = selector.match(exprId)?[1]
   className = !id and selector.match(exprClassName)?[1]
   nodeName = !id and selector.match(exprNodeName)?[1]
+  attributes = !id and selector.match(exprAttributes)?[1]
 
-  { id, className, nodeName }
+  { id, className, nodeName, attributes }
 
 isIdNameClass = (el, id, nodeName, className) ->
 
   matches = (!id) or el.id is id
-  matches and hasNodeNameAndOrClass el, nodeName, className
+  matches and hasNameClassAttrs el, nodeName, className
 
 # Use parsed selector as a single argument
 isParsedSelector = (el, selectorParts) ->
 
-  { id, nodeName, className } = selectorParts
+  { id, nodeName, className, attributes } = selectorParts
 
   matches = (!id) or el.id is id
-  matches and hasNodeNameAndOrClass el, nodeName, className
+  matches and hasNameClassAttrs el, nodeName, className, attributes
 
 module.exports = {
   classRE
   hasClass
-  hasNodeNameAndOrClass
+  hasNameClassAttrs
   isIdNameClass
   isParsedSelector
   parseSelector

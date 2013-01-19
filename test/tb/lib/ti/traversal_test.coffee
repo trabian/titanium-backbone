@@ -114,6 +114,63 @@ describe '$ traversal methods', ->
       assert.isTrue @$el.is('View.someClass'), 'Did not handle viewName.class format'
       assert.isTrue @$el.is('View#someId'), 'Did not handle viewName#id format'
 
+    describe 'attribute selectors', ->
+
+      beforeEach ->
+        @$el.attr 'someAttr', 'someValue'
+
+      it 'should handle attribute presence selectors', ->
+        assert.isFalse @$el.is('[noAttr]')
+        assert.isTrue @$el.is('[someAttr]')
+
+      it 'should handle = comparators', ->
+        assert.isFalse @$el.is('[noAttr="something"]')
+
+        assert.isTrue @$el.is('View[someAttr="someValue"]')
+        assert.isTrue @$el.is("[someAttr='someValue']")
+
+      it 'should handle != comparators', ->
+
+        assert.isFalse @$el.is('[someAttr!="someValue"]')
+        assert.isTrue @$el.is('[someAttr!="someOtherValue"]')
+
+      it 'should handle ^= comparators', ->
+
+        assert.isTrue @$el.is('[someAttr^="some"]')
+        assert.isFalse @$el.is('[someAttr^="Value"]')
+
+      it 'should handle $= comparators', ->
+
+        assert.isTrue @$el.is('[someAttr$="Value"]')
+        assert.isFalse @$el.is('[someAttr$="some"]')
+
+      it "should handle |= comparators", ->
+
+        @$el.attr 'someHyphenatedAttr', 'someValue-test'
+        @$el.attr 'someLongAttr', 'someValueWithTest'
+
+        assert.isTrue @$el.is('[someAttr|="someValue"]')
+        assert.isTrue @$el.is('[someHyphenatedAttr|="someValue"]')
+        assert.isFalse @$el.is('[someLongAttr|="someValue"]')
+
+      describe 'multiple words', ->
+
+        beforeEach ->
+          @$el.attr 'someLongAttr', 'some attr with words'
+
+        it 'should handle *= comparators', ->
+
+          assert.isTrue @$el.is('[someLongAttr*="with"]')
+          assert.isFalse @$el.is('[someLongAttr*="nope"]')
+
+        it 'should handle ~= comparators', ->
+
+          @$el.attr 'someLongAttr', 'some attr with words'
+
+          assert.isTrue @$el.is('[someLongAttr~="with"]')
+          assert.isFalse @$el.is('[someLongAttr~="wit"]')
+          assert.isFalse @$el.is('[someLongAttr~="nope"]')
+
   describe 'find()', ->
 
     beforeEach ->

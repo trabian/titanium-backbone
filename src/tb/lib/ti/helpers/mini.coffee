@@ -46,7 +46,7 @@ findById = (id, context) ->
   findOne context, (el) -> el.id is id
 
 findByNodeAndClassName = (nodeName, className, context) ->
-  findAll context, (el) -> matchers.hasNodeNameAndOrClass el, nodeName, className
+  findAll context, (el) -> matchers.hasNameClassAttrs el, nodeName, className
 
 filterParents = (selectorParts, collection, direct) ->
 
