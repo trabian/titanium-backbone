@@ -1,3 +1,7 @@
 module.exports =
 
-  $: require('./lib/ti').$
+  load: ->
+
+    Backbone.$ = require('./lib/ti').$
+
+    $: Backbone.$
