@@ -91,7 +91,7 @@ module.exports = ($) ->
 
         if text is null
           delete @[key]
-        else if text?
+        else
           @[key] = text
 
     else
