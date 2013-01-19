@@ -461,6 +461,17 @@ TitaniumSearchBar = (function(_super) {
 
   TitaniumSearchBar.prototype.tiClassName = 'TiUISearchBar';
 
+  TitaniumSearchBar.prototype.setValue = function(value) {
+    this.value = value;
+    return this.fireEvent('change', {
+      value: this.value
+    });
+  };
+
+  TitaniumSearchBar.prototype.getValue = function() {
+    return this.value;
+  };
+
   return TitaniumSearchBar;
 
 })(TitaniumView);
@@ -479,6 +490,17 @@ TitaniumSlider = (function(_super) {
 
   TitaniumSlider.prototype.tiClassName = 'TiUISlider';
 
+  TitaniumSlider.prototype.setValue = function(value) {
+    this.value = value;
+    return this.fireEvent('change', {
+      value: this.value
+    });
+  };
+
+  TitaniumSlider.prototype.getValue = function() {
+    return this.value;
+  };
+
   return TitaniumSlider;
 
 })(TitaniumView);
@@ -496,6 +518,17 @@ TitaniumSwitch = (function(_super) {
   }
 
   TitaniumSwitch.prototype.tiClassName = 'TiUISwitch';
+
+  TitaniumSwitch.prototype.setValue = function(value) {
+    this.value = value;
+    return this.fireEvent('change', {
+      value: this.value
+    });
+  };
+
+  TitaniumSwitch.prototype.getValue = function() {
+    return this.value;
+  };
 
   return TitaniumSwitch;
 
@@ -680,6 +713,17 @@ TitaniumTextArea = (function(_super) {
 
   TitaniumTextArea.prototype.tiClassName = 'TiUITextArea';
 
+  TitaniumTextArea.prototype.setValue = function(value) {
+    this.value = value;
+    return this.fireEvent('change', {
+      value: this.value
+    });
+  };
+
+  TitaniumTextArea.prototype.getValue = function() {
+    return this.value;
+  };
+
   return TitaniumTextArea;
 
 })(TitaniumView);
@@ -700,9 +744,13 @@ TitaniumTextField = (function(_super) {
 
   TitaniumTextField.prototype.setValue = function(value) {
     this.value = value;
-    return this.trigger('change', {
+    return this.fireEvent('change', {
       value: this.value
     });
+  };
+
+  TitaniumTextField.prototype.getValue = function() {
+    return this.value;
   };
 
   return TitaniumTextField;

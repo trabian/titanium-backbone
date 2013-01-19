@@ -4,8 +4,10 @@ class TitaniumTextField extends TitaniumView
 
   setValue: (@value) ->
 
-    @trigger 'change',
+    @fireEvent 'change'
       value: @value
+
+  getValue: -> @value
 
 Ti.UI.createTextField = (attributes) ->
 
