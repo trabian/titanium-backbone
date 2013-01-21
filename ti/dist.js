@@ -133,7 +133,8 @@ Ti.UI = {
   createWindow: function(attributes) {
     return console.log('Create window');
   },
-  SIZE: 'size',
+  SIZE: 'TI:UI:SIZE',
+  FILL: 'TI:UI:FILL',
   iOS: {},
   iPad: {}
 };
