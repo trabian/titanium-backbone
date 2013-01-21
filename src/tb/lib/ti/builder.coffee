@@ -50,8 +50,11 @@ module.exports = (ti) ->
 
           if _.isString nestedView
             $(view).text nestedView
+
           else
-            $(view).append nestedView
+
+            $(view).append nestedView,
+              style: false # Defer styling until after everything has been added
 
         view
 
@@ -59,8 +62,10 @@ module.exports = (ti) ->
 
     if match = xml.match SIMPLE_TAG
 
+      tagName = match[1]
+
       # Skip the XML parsing in the simple case
-      $ ti.createView match[1]
+      $(ti.createView tagName).style()
 
     else
 
@@ -70,6 +75,5 @@ module.exports = (ti) ->
 
       doc = Ti.XML.parseString "<root xmlns:iPhone='tb.iPhone' xmlns:iOS='tb.iOS' xmlns:iPad='tb.iOS'>#{xml}</root>"
 
-      $ @buildView $, doc
+      $(@buildView $, doc).style()
 
-      # $ elements

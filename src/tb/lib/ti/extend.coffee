@@ -24,8 +24,9 @@ module.exports = (ti) ->
   manipulation = require('./manipulation') $
   traversal = require('./traversal') $
   attributes = require('./attributes') $
+  styles = require('./styles') $
 
-  fn = _({}).extend events, manipulation, traversal, attributes
+  fn = _({}).extend events, manipulation, traversal, attributes, styles
 
   ElementCollection:: = fn
 

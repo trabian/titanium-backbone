@@ -2,14 +2,17 @@ viewHandlers = require './view_handlers'
 
 module.exports = ($) ->
 
-  append: (child) ->
+  append: (child, options = {}) ->
 
     parent = @[0]
 
     $(child).each ->
       viewHandlers.handle 'add', parent, $(@)[0]
 
-    @
+    if options.style is false
+      @
+    else
+      @style()
 
   appendTo: (parent) ->
     $(parent).append @[0]
