@@ -7,6 +7,8 @@ slice = [].slice
 
 module.exports = ($) ->
 
+  concat: [].concat
+
   each: (callback) ->
 
     _.each @, (el) ->
@@ -27,6 +29,10 @@ module.exports = ($) ->
       .map(mapWithExtend)
       .flatten()
       .value()
+
+
+  add: (el) ->
+    $ @concat $ el
 
   get: (index) ->
     if index?
