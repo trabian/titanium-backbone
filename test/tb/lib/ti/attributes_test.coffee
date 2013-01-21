@@ -4,7 +4,9 @@ _ = require 'underscore'
 { assert } = helpers.chai
 
 ti = helpers.require 'tb/lib/ti'
+
 $ = ti.$
+Ti = ti.Ti
 
 describe '$ attribute methods', ->
 
@@ -52,6 +54,13 @@ describe '$ attribute methods', ->
       assert.equal @el1._class, 'someClass'
       assert.equal @el2._class, 'someOtherClass'
       assert.equal $(@el1).attr('class'), 'someClass'
+
+    it 'should handle string versions of the Ti attribute values', ->
+
+      $(@el1).attr
+        width: 'Ti.UI.FILL'
+
+      assert.equal @el1.width, Ti.UI.FILL
 
   describe 'removing attributes', ->
 

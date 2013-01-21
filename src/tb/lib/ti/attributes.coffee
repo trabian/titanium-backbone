@@ -1,4 +1,5 @@
 matchers = require './helpers/matchers'
+values = require './helpers/values'
 
 module.exports = ($) ->
 
@@ -15,7 +16,7 @@ module.exports = ($) ->
       # "name", "value" (Setter)
       else if value?
         @each ->
-          @[name] = value
+          @[name] = values.convertTi value
 
       # "name" (Getter)
       else
@@ -31,7 +32,7 @@ module.exports = ($) ->
 
       # name: value
       @each ->
-        @applyProperties properties
+        @applyProperties values.convertTi properties
 
     @
 

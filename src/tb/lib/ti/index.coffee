@@ -1,3 +1,5 @@
+values = require './helpers/values'
+
 ti =
 
   # Public: Create a Titanium View given a viewName.
@@ -43,7 +45,7 @@ ti =
 
     # Equivalent to, for example, Ti.UI.createLabel attributes
     if viewCreator
-      viewCreator attributes
+      viewCreator values.convertTi attributes
     else
       console.log "Could not find viewCreator for #{viewNameOrCreator}"
 
