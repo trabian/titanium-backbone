@@ -113,7 +113,7 @@ describe '$ manipulation methods', ->
 
       @sampleLabelText = 'This is sample label text'
 
-      @$jadeEl = $ template
+      @$jadeEl = $('<View>').append template
         sampleLabelText: @sampleLabelText
 
     it 'should support regular views', ->

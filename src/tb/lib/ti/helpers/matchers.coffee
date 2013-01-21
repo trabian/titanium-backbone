@@ -67,7 +67,7 @@ hasAttributes = (el, attributes) ->
   false
 
 hasNameClassAttrs = (el, nodeName, className, attributes) ->
-  matches = !nodeName or el._viewName is nodeName
+  matches = !nodeName or (nodeName is '*') or el._viewName is nodeName
   matches = matches and (!className or hasClass el, className)
   matches and (!attributes or hasAttributes el, attributes)
 

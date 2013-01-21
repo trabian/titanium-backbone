@@ -197,6 +197,12 @@ describe '$ traversal methods', ->
       $(@otherGrandChild).attr
         class: 'someGrandchild'
 
+    it 'should allow an empty selector', ->
+      assert.equal @$el.find().length, 4
+
+    it 'should not find itself', ->
+      assert.equal @$el.find('.someGrandparent').length, 0
+
     it 'should handle shallow class-based selectors', ->
 
       $found = @$el.find '.someClass'

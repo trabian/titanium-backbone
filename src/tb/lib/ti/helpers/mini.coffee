@@ -30,14 +30,14 @@ findOne = (context, test) ->
       findOne context.children, test
 
 # This is likely not very efficient
-findAll = (context, test, collector = []) ->
+findAll = (context, test, collector = [], include = true) ->
 
   return [] unless context
 
   if _.isArray context
     _.each context, (el) -> findAll el, test, collector
   else
-    collector.push context if test(context)
+    collector.push context if include and test(context)
     findAll context.children, test, collector
 
   collector
@@ -45,8 +45,8 @@ findAll = (context, test, collector = []) ->
 findById = (id, context) ->
   findOne context, (el) -> el.id is id
 
-findByNodeAndClassName = (nodeName, className, context) ->
-  findAll context, (el) -> matchers.hasNameClassAttrs el, nodeName, className
+findByNodeAndClassName = (nodeName, className, context, include = true) ->
+  findAll context, ((el) -> matchers.hasNameClassAttrs el, nodeName, className), [], include
 
 filterParents = (selectorParts, collection, direct) ->
 
@@ -76,7 +76,7 @@ filterParents = (selectorParts, collection, direct) ->
 
   ret
 
-find = (selector, context) ->
+find = (selector = '*', context, includeSelf = false) ->
 
   parts = selector.match snack
   part = parts.pop()
@@ -92,7 +92,7 @@ find = (selector, context) ->
   if id
     return if child = findById(id, context) then [child] else []
   else
-    collection = findByNodeAndClassName nodeName, className, context
+    collection = findByNodeAndClassName nodeName, className, context, includeSelf
 
   if parts[0] and collection[0] then filterParents(parts, collection) else collection
 
