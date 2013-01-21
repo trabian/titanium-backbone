@@ -4,7 +4,9 @@
   "src_files": [
     "src/**/*.coffee",
     "test/**/*.coffee",
-    "ti/dist.js"
+    "test/**/*.styl",
+    "ti/dist.js",
+    "lib/**/*.coffee"
   ],
   "launch_in_dev": [
     "Mocha"

@@ -1,6 +1,7 @@
 path = require 'path'
 fs = require 'fs'
 util = require 'util'
+_ = require 'underscore'
 
 { spawn, exec } = require 'child_process'
 
@@ -8,6 +9,8 @@ printLine = (line) -> process.stdout.write line + '\n'
 printWarn = (line) -> process.stderr.write line + '\n'
 
 printIt = (buffer) -> printLine buffer.toString().trim()
+
+stylusConverter = require './converter/stylus'
 
 titaniumPath = "node_modules/.bin/titanium"
 
@@ -83,7 +86,15 @@ module.exports =
 
   load: (root, pkg) ->
 
-    buildTasks = require('stitch-up').load(root, pkg).tasks
+    options = _({}).extend pkg,
+      compilers:
+        styl: (module, filename) ->
+          source = fs.readFileSync(filename, 'utf8')
+          source = stylusConverter.convert source
+          source = "module.exports = #{JSON.stringify source};"
+          module._compile(source, filename)
+
+    buildTasks = require('stitch-up').load(root, options).tasks
 
     runSimulator = (callback) ->
 
