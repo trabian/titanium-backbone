@@ -81,10 +81,10 @@ parseSelector = (selector) ->
 
   { id, className, nodeName, attributes }
 
-isIdNameClass = (el, id, nodeName, className) ->
+isIdNameClass = (el, id, nodeName, className, attributes) ->
 
   matches = (!id) or el.id is id
-  matches and hasNameClassAttrs el, nodeName, className
+  matches and hasNameClassAttrs el, nodeName, className, attributes
 
 # Use parsed selector as a single argument
 isParsedSelector = (el, selectorParts) ->
@@ -94,6 +94,9 @@ isParsedSelector = (el, selectorParts) ->
   matches = (!id) or el.id is id
   matches and hasNameClassAttrs el, nodeName, className, attributes
 
+matches = (el, selector) ->
+  isParsedSelector el, parseSelector selector
+
 module.exports = {
   classRE
   hasClass
@@ -101,4 +104,5 @@ module.exports = {
   isIdNameClass
   isParsedSelector
   parseSelector
+  matches
 }

@@ -74,7 +74,19 @@ filterParents = (selectorParts, collection, direct) ->
     if matches
       ret.push node
 
-  ret
+  if selectorParts[0] and ret[0] then filterParents(selectorParts, ret) else ret
+
+_is = (selector, context) ->
+
+  parts = selector.match snack
+  part = parts.pop()
+
+  if matchers.matches context, part
+
+    if parts[0]
+      filterParents(parts, [context]).length > 0
+    else
+      true
 
 find = (selector = '*', context, includeSelf = false) ->
 
@@ -96,4 +108,6 @@ find = (selector = '*', context, includeSelf = false) ->
 
   if parts[0] and collection[0] then filterParents(parts, collection) else collection
 
-module.exports = { find }
+module.exports =
+  find: find
+  is: _is
