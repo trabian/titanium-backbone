@@ -1,18 +1,34 @@
 viewHandlers = require './view_handlers'
+styler = require 'tb/lib/styler'
 
 module.exports = ($) ->
 
   append: (child, options = {}) ->
 
+    $parent = @
     parent = @[0]
 
     $(child).each ->
+
       viewHandlers.handle 'add', parent, $(@)[0]
 
-    if options.style is false
-      @
-    else
-      @style()
+      if parent._viewName is 'Window'
+
+        $(child).find().add(child).each ->
+
+          if styles = styler.stylesForView @
+            $(@).attr styles
+
+      else
+
+        if $parent.closest('Window').length
+
+          if styles = styler.stylesForView @
+
+            # Only apply styles if the view is already attached to a Window
+            $(@).attr styles
+
+    @
 
   appendTo: (parent) ->
     $(parent).append @[0]
@@ -42,7 +58,8 @@ module.exports = ($) ->
       .show()
 
   html: (children) ->
-    @empty().append children
+    @empty().append $ children
+    @
 
   hide: ->
     @each (el) -> el.hide()

@@ -1,3 +1,5 @@
+styler = require 'tb/lib/styler'
+
 # Matches HTML-style tags, e.g. <View>, <View/>, <View />, and <iPhone::NavigationGroup>
 SIMPLE_TAG = /// ^<
   ([\w\:]*) # Letters and colons
@@ -46,6 +48,8 @@ module.exports = (ti) ->
 
         view = ti.createView child.nodeName, attrHash
 
+        view._inlineAttributes = _.keys attrHash
+
         for nestedView in @buildView $, child
 
           if _.isString nestedView
@@ -53,8 +57,7 @@ module.exports = (ti) ->
 
           else
 
-            $(view).append nestedView,
-              style: false # Defer styling until after everything has been added
+            $(view).append nestedView
 
         view
 
@@ -64,8 +67,13 @@ module.exports = (ti) ->
 
       tagName = match[1]
 
+      attributes = if tagName is 'Window'
+        styler.shallowStyles 'Window'
+      else
+        {}
+
       # Skip the XML parsing in the simple case
-      $(ti.createView tagName).style()
+      $ ti.createView tagName, attributes
 
     else
 
@@ -75,5 +83,4 @@ module.exports = (ti) ->
 
       doc = Ti.XML.parseString "<root xmlns:iPhone='tb.iPhone' xmlns:iOS='tb.iOS' xmlns:iPad='tb.iOS'>#{xml}</root>"
 
-      $(@buildView $, doc).style()
-
+      $ @buildView $, doc
