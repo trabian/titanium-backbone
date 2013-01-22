@@ -40,6 +40,14 @@
     "email": "matt@trabian.com"
   },
   "main": "./lib/index.coffee",
+  "stylus": {
+    "output": "Resources/styles.js",
+    "paths": [ "styles" ],
+    "plugins": [
+      "titanium-backbone-ks"
+    ],
+    "main": "styles/main.styl"
+  },
   "stitch": {
     "identifier":"stitchRequire",
     "output":

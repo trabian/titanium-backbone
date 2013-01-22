@@ -66,6 +66,16 @@ compiler.prototype.visitProperty = (prop) ->
 
 module.exports =
 
+  convertRenderer: (stylusWrapper, callback) ->
+
+    output = undefined
+
+    compiler.prototype.styles = {}
+
+    stylusWrapper.render (err) ->
+      output = compiler.prototype.styles
+      callback? err, output
+
   convert: (input, callback) ->
 
     output = undefined

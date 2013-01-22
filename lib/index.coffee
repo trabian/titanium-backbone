@@ -10,7 +10,7 @@ printWarn = (line) -> process.stderr.write line + '\n'
 
 printIt = (buffer) -> printLine buffer.toString().trim()
 
-stylusConverter = require './converter/stylus'
+styles = require './styles'
 
 titaniumPath = "node_modules/.bin/titanium"
 
@@ -86,15 +86,7 @@ module.exports =
 
   load: (root, pkg) ->
 
-    options = _({}).extend pkg,
-      compilers:
-        styl: (module, filename) ->
-          source = fs.readFileSync(filename, 'utf8')
-          source = stylusConverter.convert source
-          source = "module.exports = #{JSON.stringify source};"
-          module._compile(source, filename)
-
-    buildTasks = require('stitch-up').load(root, options).tasks
+    buildTasks = require('stitch-up').load(root, pkg).tasks
 
     runSimulator = (callback) ->
 
@@ -123,15 +115,21 @@ module.exports =
       "build:test": ->
         buildTasks.test()
 
+      "build:styles": ->
+        styles.build pkg
+
       "iphone:run": ->
 
         bootstrap pkg
 
         runAndWatch (callback) ->
           console.warn 'build tasks'
-          buildTasks.stitch ->
-            console.warn 'run simulator'
-            runSimulator callback
+
+          styles.build pkg, ->
+
+            buildTasks.stitch ->
+              console.warn 'run simulator'
+              runSimulator callback
 
       "iphone:run:nobuild": ->
 

@@ -20,7 +20,7 @@ _ = require 'underscore'
 
 { assert } = helpers.chai
 
-converter = require '../../lib/converter/stylus'
+converter = require '../../lib/styles/converter'
 
 ti = helpers.require 'tb/lib/ti'
 
@@ -118,22 +118,3 @@ describe 'The stylus converter', ->
         assert.isTrue errorNode.rules.color.important
 
         done()
-
-  it 'should be supported by stitch', ->
-
-    styles = helpers.require 'fixtures/styles'
-
-    assert.ok styles
-
-    Label = styles.Label
-
-    assert.ok Label
-    assert.equal Label.rules?.color, '#333'
-
-    assert.ok Label.selectors
-
-    selectorNode = Label.selectors[0]
-
-    assert.equal selectorNode.selector, 'Window Label'
-    assert.equal selectorNode.rules?.height, 50
-
