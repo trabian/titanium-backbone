@@ -1,6 +1,6 @@
 node_modules
 .DS_Store
-Resources/app-impl.js
+Resources/generated
 tmp
 build
 tb.sublime-*
