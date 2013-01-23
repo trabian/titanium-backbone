@@ -42,7 +42,6 @@
   "main": "./lib/index.coffee",
   "stylus": {
     "output": "Resources/generated/styles.js",
-    "paths": [ "styles" ],
     "plugins": [
       "titanium-backbone-ks"
     ],

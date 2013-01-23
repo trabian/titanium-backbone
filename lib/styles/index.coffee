@@ -11,6 +11,10 @@ module.exports =
 
       fs.readFile config.main, 'utf8', (err, source) ->
 
+        config.paths ?= []
+
+        config.paths.push "#{__dirname}/../../styles"
+
         renderer = stylus(source)
           .set 'paths', config.paths
 
