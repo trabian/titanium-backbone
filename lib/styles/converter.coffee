@@ -2,67 +2,110 @@ stylus = require 'stylus'
 
 compiler = require 'stylus/lib/visitor/compiler'
 matchers = require '../../src/tb/lib/ti/helpers/matchers'
+_ = require 'underscore'
+
+addSelectorRules = (selector, rules, styles) ->
+
+  [parents..., leaf] = selector.split ' '
+
+  { nodeName, className, id } = matchers.parseSelector leaf
+
+  leafNode = styles[nodeName ? className ? id] ?= {}
+
+  if parents.length or (nodeName and className)
+
+    if existingSelectors = leafNode.selectors
+
+      existingRules = _.find existingSelectors, (existingSelector) ->
+        existingSelector.selector is selector
+
+      if existingRules
+        existingRules.rules = _({}).extend existingRules.rules, rules
+
+      else
+
+        existingSelectors.push
+          selector: selector
+          rules: rules
+
+    else
+      leafNode.selectors = [ { selector, rules } ]
+
+  else
+    leafNode.rules = _({}).extend (leafNode.rules ? {}), rules
 
 compiler.prototype.visitGroup = (group) ->
 
-  stack = this.stack
-  stack.push group.nodes
+  @stack.push group.nodes
+
+  @ruleStack ?= []
+  selectors = []
+
+  @ruleStack.push {}
 
   if group.block.hasProperties
 
-    selectors = this.compileSelectors stack
-
-    for selector in selectors
-
-      [parents..., leaf] = selector.split ' '
-
-      { nodeName, className, id } = matchers.parseSelector leaf
-
-      leafNode = @styles[nodeName ? className ? id] ?= {}
-
-      if parents.length or (nodeName and className)
-
-        leafNode.selectors ?= []
-
-        leafNode.selectors.push @context =
-          selector: selector
-          rules: {}
-
-      else
-        @context = leafNode
+    selectors = this.compileSelectors @stack
 
     this.buf += (this.selector = selectors.join(if this.compress then ',' else ',\n'))
 
   this.visit group.block
 
-  stack.pop()
+  rules = @ruleStack.pop()
+
+  unless _.isEmpty rules
+
+    for selector in selectors
+      addSelectorRules selector, rules, @styles
+
+  @stack.pop()
 
 compiler.prototype.visitProperty = (prop) ->
 
+  context = _.last this.ruleStack
+
   val = @visit(prop.expr).trim()
+  important = false
+
   name = prop.name
 
   if match = val.match /(.*)\!important/i
 
-    val =
-      important: true
-      value: match[1].trim()
+    important = true
+    val = match[1].trim()
 
-  if name is 'font'
+  if name.match /^font/
 
-    [ size, weight ] = val.split /\s/
+    switch name
+      when 'font'
 
-    val = {}
+        [ size, weight ] = val.split /\s/
 
-    if size
-      val.fontSize = size
+        val = {}
 
-    if weight
-      val.fontWeight = weight
+        if size
+          val.fontSize = size
 
-  @context.rules ?= {}
+        if weight
+          val.fontWeight = weight
 
-  @context.rules[name] = val
+      when 'font-weight'
+
+        val =
+          fontWeight: val
+
+      when 'font-size'
+
+        val =
+          fontSize: val
+
+    name = 'font'
+
+  context[name] = if important
+    value: val
+    important: true
+  else
+    val
 
 module.exports =
 
