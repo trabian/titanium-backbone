@@ -7,5 +7,12 @@ for _task, func of titanium.tasks
     task "t:#{_task}", -> func pkg
 
 task "build", ->
+  invoke "t:build:styles"
   invoke "t:bootstrap"
   invoke "t:build"
+
+task "build:test", ->
+  invoke "t:build:test"
+
+task "build:styles", ->
+  invoke "t:build:styles"

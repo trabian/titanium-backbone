@@ -32,10 +32,17 @@ buildPackage = (options) ->
   stitch:
     identifier: 'stitchRequire'
     output:
-      app: "Resources/app-impl.js"
+      app: "Resources/generated/app-impl.js"
       vendor: "Resources/lib"
       images: "Resources/images"
     paths: [ "src" ]
+  stylus:
+    output: "Resources/generated/styles.js"
+    paths: [ "styles" ]
+    plugins: [
+      "titanium-backbone-ks"
+    ]
+    main: "styles/main.styl"
   mobile:
     id: options.id
     name: options.name
