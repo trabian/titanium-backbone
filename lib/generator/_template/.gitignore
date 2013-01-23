@@ -1,1 +1,7 @@
 node_modules
+.DS_Store
+Resources/generated
+tmp
+build
+.stitch_source
+test.js
