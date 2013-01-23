@@ -20,6 +20,7 @@ module.exports = (ti) ->
       else
         ElementCollection []
 
+  ajax = require('./ajax') $
   events = require('./events') $
   manipulation = require('./manipulation') $
   traversal = require('./traversal') $
