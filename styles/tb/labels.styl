@@ -1,0 +1,26 @@
+heading(size)
+  @extend Label.full
+  font size bold
+  bottom (size/2)
+
+paragraph(size)
+  @extend Label.full
+  font size
+  bottom (size/2)
+
+Label
+
+  &.full
+    fill('width')
+
+  &.h1
+    heading(20px)
+
+  &.h2
+    heading(18px)
+
+  &.h3
+    heading(16px)
+
+  &.h4
+    heading(16px)
