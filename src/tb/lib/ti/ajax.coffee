@@ -10,11 +10,15 @@ module.exports = ($) ->
 
     ajaxConvert: (type, text) ->
       converter = @ajaxSettings.converters[type] or _.identity
-      converter? text
+      try
+        converter? text
+      catch e
+        '[Parse error]'
 
     ajax: (url, options = {}) ->
 
       xhr = {}
+      s = {}
 
       deferred = new Deferred()
 
@@ -23,10 +27,13 @@ module.exports = ($) ->
       xhr.done ->
         options.success?.apply @, arguments
 
+      xhr.fail ->
+        options.error?.apply @, arguments
+
       s = @ajaxSettings
 
       dataType = options.dataType ? 'text'
-      method = options.method ? s.type
+      s.type = options.method or options.type or s.method or s.type
 
       client = Ti.Network.createHttpClient
 
@@ -34,8 +41,12 @@ module.exports = ($) ->
           data = $.ajaxConvert dataType, @responseText
           deferred.resolve data, null, @
 
-      client.open 'GET', url
+        onerror: (e) ->
+          data = $.ajaxConvert dataType, @responseText
+          deferred.reject data, null, @
 
-      client.send()
+      client.open s.type, url
+
+      client.send options.data
 
       xhr

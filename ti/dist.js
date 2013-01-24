@@ -907,17 +907,25 @@ TitaniumHttpClient = (function() {
   };
 
   TitaniumHttpClient.prototype.send = function(data) {
-    var handleResponse, mock, wait,
+    var handleResponse, mock, response, wait,
       _this = this;
     mock = _.find(TitaniumHttpClient.mocks, function(mock) {
       return mock.url === _this.url && mock.method === _this.method;
     });
-    _.extend(this, mock.response);
     handleResponse = function() {
-      return _this.options.onload.call(_this, {
+      var handler, _ref, _ref1;
+      handler = (_ref = _this.status) === 200 ? 'onload' : 'onerror';
+      return (_ref1 = _this.options[handler]) != null ? _ref1.call(_this, {
         source: _this
-      });
+      }) : void 0;
     };
+    if (!mock) {
+      this.status = 501;
+      handleResponse();
+      return;
+    }
+    response = _.isFunction(mock.response) ? mock.response(data) : mock.response;
+    _.extend(this, response);
     if (wait = TitaniumHttpClient.options.wait) {
       return setTimeout(handleResponse, wait);
     } else {
