@@ -1,20 +1,4 @@
-TiFill = unquote('Ti.UI.FILL')
-TiSize = unquote('Ti.UI.SIZE')
-
-fill(direction)
-  if direction
-    {direction}: TiFill
-  else
-    width: TiFill
-    height: TiFill
-
-size(direction)
-  if direction
-    {direction}: TiSize
-  else
-    width: TiSize
-    height: TiSize
-
+@import 'tb/mixins'
 @import 'tb/layout'
 @import 'tb/forms'
 @import 'tb/labels'
