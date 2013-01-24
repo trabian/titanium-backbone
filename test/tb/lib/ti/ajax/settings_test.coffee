@@ -62,6 +62,21 @@ describe '$.ajax settings', ->
         done()
 
   describe 'async', ->
+
+    it 'should default to true', (done) ->
+
+      result = $.ajax('/test').always (data, textStatus, xhr) ->
+        done()
+
+      assert.equal result.state(), 'pending'
+
+    it 'should be possible to set it to false', ->
+
+      result = $.ajax '/test',
+        async: false
+
+      assert.equal result.state(), 'resolved'
+
   describe 'beforeSend', ->
   describe 'cache', ->
   describe 'complete', ->

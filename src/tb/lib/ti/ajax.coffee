@@ -11,7 +11,7 @@ module.exports = ($) ->
 
     for key, value of src
 
-      if value
+      if value?
 
         _target = if flatOptions[key]
           target
@@ -37,6 +37,8 @@ module.exports = ($) ->
         html: "text/html"
         xml: "application/xml, text/xml"
         json: "application/json, text/javascript"
+
+      async: true
 
       converters:
         json: JSON.parse
@@ -84,21 +86,33 @@ module.exports = ($) ->
       s.type = options.method or options.type or s.method or s.type
       s.dataTypes = (s.dataType or '*').trim().toLowerCase().match /\S+/g
 
+      prepareCallback = (result) ->
+
+        data = $.ajaxConvert dataType, result.responseText
+
+        xhr.headers = result.headers
+        xhr.responseText = result.responseText
+        xhr.status = result.status
+
+        { data, statusText: null, xhr }
+
       client = Ti.Network.createHttpClient
 
         onload: (e) ->
-          data = $.ajaxConvert dataType, @responseText
-          deferred.resolve data, null, @
+
+          { data, statusText, xhr } = prepareCallback @
+          deferred.resolve data, statusText, xhr
 
         onerror: (e) ->
-          data = $.ajaxConvert dataType, @responseText
-          deferred.reject data, null, @
+
+          { data, statusText, xhr } = prepareCallback @
+          deferred.reject data, statusText, xhr
 
       # This will allow wrapping
       xhr.setRequestHeader = (name, value) ->
         client.setRequestHeader name, value
 
-      client.open s.type, url
+      client.open s.type, url, s.async
 
       xhr.setRequestHeader 'Accept',
 

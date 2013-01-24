@@ -8,7 +8,7 @@ class TitaniumHttpClient
   constructor: (@options) ->
     @headers = {}
 
-  open: (@method, @url) ->
+  open: (@method, @url, @async) ->
 
   send: (data) ->
 
@@ -37,7 +37,7 @@ class TitaniumHttpClient
 
     _.extend @, response
 
-    if wait = TitaniumHttpClient.options.wait
+    if @async and wait = TitaniumHttpClient.options.wait
       setTimeout handleResponse, wait
     else
       handleResponse()

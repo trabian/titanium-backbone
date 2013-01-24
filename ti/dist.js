@@ -902,9 +902,10 @@ TitaniumHttpClient = (function() {
     this.headers = {};
   }
 
-  TitaniumHttpClient.prototype.open = function(method, url) {
+  TitaniumHttpClient.prototype.open = function(method, url, async) {
     this.method = method;
     this.url = url;
+    this.async = async;
   };
 
   TitaniumHttpClient.prototype.send = function(data) {
@@ -927,7 +928,7 @@ TitaniumHttpClient = (function() {
     }
     response = _.isFunction(mock.response) ? mock.response(data) : mock.response;
     _.extend(this, response);
-    if (wait = TitaniumHttpClient.options.wait) {
+    if (this.async && (wait = TitaniumHttpClient.options.wait)) {
       return setTimeout(handleResponse, wait);
     } else {
       return handleResponse();
