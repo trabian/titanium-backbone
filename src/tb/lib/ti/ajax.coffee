@@ -20,7 +20,7 @@ module.exports = ($) ->
       xhr = {}
       s = {}
 
-      deferred = new Deferred()
+      deferred = $.Deferred()
 
       _(xhr).extend deferred.promise()
 

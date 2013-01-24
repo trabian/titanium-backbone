@@ -20,6 +20,8 @@ module.exports = (ti) ->
       else
         ElementCollection []
 
+  $.Deferred = jQuery.Deferred
+
   ajax = require('./ajax') $
   events = require('./events') $
   manipulation = require('./manipulation') $

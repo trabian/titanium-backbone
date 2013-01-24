@@ -64,7 +64,7 @@
       "deps/console.coffee",
       "vendor/underscore.js",
       "vendor/backbone.js",
-      "vendor/Deferred.js",
+      "vendor/jquery.deferred.js",
       "backbone.stickit:backbone.stickit.js",
       "vendor/jade.js"
     ],
