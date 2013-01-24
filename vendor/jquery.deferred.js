@@ -30,6 +30,36 @@
 
     isFunction: _.isFunction,
 
+    isArray: _.isArray,
+
+    isPlainObject: _.isObject,
+
+    // isPlainObject: function( obj ) {
+    //   // Not plain objects:
+    //   // - Any object or value whose internal [[Class]] property is not "[object Object]"
+    //   // - DOM nodes
+    //   // - window
+    //   if ( jQuery.type( obj ) !== "object" || obj.nodeType ) {
+    //     return false;
+    //   }
+
+    //   // Support: Firefox >16
+    //   // The try/catch supresses exceptions thrown when attempting to access
+    //   // the "constructor" property of certain host objects, ie. |window.location|
+    //   try {
+    //     if ( obj.constructor &&
+    //         !core_hasOwn.call( obj.constructor.prototype, "isPrototypeOf" ) ) {
+    //       return false;
+    //     }
+    //   } catch ( e ) {
+    //     return false;
+    //   }
+
+    //   // If the function hasn't returned already, we're confident that
+    //   // |obj| is a plain object, created by {} or constructed with new Object
+    //   return true;
+    // },
+
     type: function( obj ) {
       if ( obj === null ) {
         return String( obj );

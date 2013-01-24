@@ -899,6 +899,7 @@ TitaniumHttpClient = (function() {
 
   function TitaniumHttpClient(options) {
     this.options = options;
+    this.headers = {};
   }
 
   TitaniumHttpClient.prototype.open = function(method, url) {
@@ -931,6 +932,10 @@ TitaniumHttpClient = (function() {
     } else {
       return handleResponse();
     }
+  };
+
+  TitaniumHttpClient.prototype.setRequestHeader = function(name, value) {
+    return this.headers[name] = value;
   };
 
   return TitaniumHttpClient;

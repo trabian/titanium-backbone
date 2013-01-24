@@ -6,6 +6,7 @@ class TitaniumHttpClient
     @mocks = []
 
   constructor: (@options) ->
+    @headers = {}
 
   open: (@method, @url) ->
 
@@ -40,6 +41,8 @@ class TitaniumHttpClient
       setTimeout handleResponse, wait
     else
       handleResponse()
+
+  setRequestHeader: (name, value) -> @headers[name] = value
 
 Ti.Network =
 
