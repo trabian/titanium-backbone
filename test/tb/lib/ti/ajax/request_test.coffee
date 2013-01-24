@@ -34,7 +34,7 @@ describe '$.ajax methods', ->
         response:
           status: 500
           responseText: 'This is an error'
-      ], wait: 100
+      ], wait: 5
 
     describe 'success and error handlers', ->
 
@@ -69,17 +69,47 @@ describe '$.ajax methods', ->
           assert.equal data.test, 'This is a test'
           done()
 
-    it 'should support "done" deferreds', (done) ->
+    describe "deferreds", ->
 
-      $.ajax('/test').done (data, textStatus, xhr) ->
-        assert.equal data, JSON.stringify test: 'This is a test'
-        done()
+      it 'should support "done"', (done) ->
 
-    it 'should support "fail" deferreds', (done) ->
+        $.ajax('/test').done (data, textStatus, xhr) ->
+          assert.equal data, JSON.stringify test: 'This is a test'
+          done()
 
-      $.ajax('/error').fail (data, textStatus, xhr) ->
-        assert.equal xhr.status, 500
-        done()
+      it 'should support "fail"', (done) ->
+
+        $.ajax('/error').fail (data, textStatus, xhr) ->
+          assert.equal xhr.status, 500
+          done()
+
+      it 'should support "then" (on success)', (done) ->
+
+        successCallback = (data, textStatus, xhr) ->
+          assert.equal xhr.status, 200
+          done()
+
+        $.ajax('/test').then successCallback
+
+      it 'should support "then" (on failure)', (done) ->
+
+        failCallback = (data, textStatus, xhr) ->
+          assert.equal xhr.status, 500
+          done()
+
+        $.ajax('/error').then null, failCallback
+
+      it 'should support "always" (on success)', (done) ->
+
+        $.ajax('/test').always (data, textStatus, xhr) ->
+          assert.equal xhr.status, 200
+          done()
+
+      it 'should support "always" (on failure)', (done) ->
+
+        $.ajax('/error').always (data, textStatus, xhr) ->
+          assert.equal xhr.status, 500
+          done()
 
   describe 'a simple POST request', ->
 
