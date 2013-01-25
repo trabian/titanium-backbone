@@ -10,12 +10,18 @@ class TitaniumHttpClient
 
   open: (@method, @url, @async) ->
 
+  abort: -> @aborted = true
+
   send: (data) ->
+
+    @responseHeaders = {}
 
     mock = _.find TitaniumHttpClient.mocks, (mock) =>
       mock.url is @url and mock.method is @method
 
     handleResponse = =>
+
+      @status ?= 200
 
       handler = if @status in [200]
         'onload'
@@ -31,11 +37,13 @@ class TitaniumHttpClient
       return
 
     response = if _.isFunction mock.response
-      mock.response data
+      mock.response data, @
     else
       mock.response
 
     _.extend @, response
+
+    @responseHeaders['Content-Type'] = response.contentType or 'text/json'
 
     if @async and wait = TitaniumHttpClient.options.wait
       setTimeout handleResponse, wait
@@ -43,6 +51,8 @@ class TitaniumHttpClient
       handleResponse()
 
   setRequestHeader: (name, value) -> @headers[name] = value
+
+  getResponseHeader: (name) -> @responseHeaders[name]
 
 Ti.Network =
 

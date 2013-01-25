@@ -908,16 +908,24 @@ TitaniumHttpClient = (function() {
     this.async = async;
   };
 
+  TitaniumHttpClient.prototype.abort = function() {
+    return this.aborted = true;
+  };
+
   TitaniumHttpClient.prototype.send = function(data) {
     var handleResponse, mock, response, wait,
       _this = this;
+    this.responseHeaders = {};
     mock = _.find(TitaniumHttpClient.mocks, function(mock) {
       return mock.url === _this.url && mock.method === _this.method;
     });
     handleResponse = function() {
-      var handler, _ref, _ref1;
-      handler = (_ref = _this.status) === 200 ? 'onload' : 'onerror';
-      return (_ref1 = _this.options[handler]) != null ? _ref1.call(_this, {
+      var handler, _ref, _ref1, _ref2;
+      if ((_ref = _this.status) == null) {
+        _this.status = 200;
+      }
+      handler = (_ref1 = _this.status) === 200 ? 'onload' : 'onerror';
+      return (_ref2 = _this.options[handler]) != null ? _ref2.call(_this, {
         source: _this
       }) : void 0;
     };
@@ -926,8 +934,9 @@ TitaniumHttpClient = (function() {
       handleResponse();
       return;
     }
-    response = _.isFunction(mock.response) ? mock.response(data) : mock.response;
+    response = _.isFunction(mock.response) ? mock.response(data, this) : mock.response;
     _.extend(this, response);
+    this.responseHeaders['Content-Type'] = response.contentType || 'text/json';
     if (this.async && (wait = TitaniumHttpClient.options.wait)) {
       return setTimeout(handleResponse, wait);
     } else {
@@ -937,6 +946,10 @@ TitaniumHttpClient = (function() {
 
   TitaniumHttpClient.prototype.setRequestHeader = function(name, value) {
     return this.headers[name] = value;
+  };
+
+  TitaniumHttpClient.prototype.getResponseHeader = function(name) {
+    return this.responseHeaders[name];
   };
 
   return TitaniumHttpClient;

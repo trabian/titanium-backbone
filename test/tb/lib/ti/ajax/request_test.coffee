@@ -49,7 +49,7 @@ describe '$.ajax methods', ->
       it 'should return a status and responseText on error', (done) ->
 
         $.ajax '/error',
-          error: (data, textStatus, xhr) ->
+          error: (xhr, textStatus, error) ->
             assert.ok xhr.responseText
             assert.equal xhr.status, 500
             done()
@@ -58,7 +58,7 @@ describe '$.ajax methods', ->
 
       $.ajax '/test',
         success: (data, textStatus, xhr) ->
-          assert.equal data, JSON.stringify test: 'This is a test'
+          assert.deepEqual data, test: 'This is a test'
           done()
 
     it 'should format JSON data', (done) ->
@@ -74,12 +74,12 @@ describe '$.ajax methods', ->
       it 'should support "done"', (done) ->
 
         $.ajax('/test').done (data, textStatus, xhr) ->
-          assert.equal data, JSON.stringify test: 'This is a test'
+          assert.deepEqual data, test: 'This is a test'
           done()
 
       it 'should support "fail"', (done) ->
 
-        $.ajax('/error').fail (data, textStatus, xhr) ->
+        $.ajax('/error').fail (xhr, textStatus, error) ->
           assert.equal xhr.status, 500
           done()
 
@@ -93,7 +93,7 @@ describe '$.ajax methods', ->
 
       it 'should support "then" (on failure)', (done) ->
 
-        failCallback = (data, textStatus, xhr) ->
+        failCallback = (xhr, textStatus, error) ->
           assert.equal xhr.status, 500
           done()
 
@@ -102,13 +102,23 @@ describe '$.ajax methods', ->
       it 'should support "always" (on success)', (done) ->
 
         $.ajax('/test').always (data, textStatus, xhr) ->
+
+          unless xhr?.status
+            xhr = data
+
           assert.equal xhr.status, 200
+
           done()
 
       it 'should support "always" (on failure)', (done) ->
 
         $.ajax('/error').always (data, textStatus, xhr) ->
+
+          unless xhr?.status
+            xhr = data
+
           assert.equal xhr.status, 500
+
           done()
 
   describe 'a simple POST request', ->
@@ -141,7 +151,7 @@ describe '$.ajax methods', ->
         dataType: 'json'
         data: postedData
       .done (data, textStatus, xhr) ->
-        assert.equal JSON.stringify(data), JSON.stringify(wrapped: postedData)
+        assert.deepEqual data, wrapped: postedData
         done()
 
     it 'should support POSTs without data', (done) ->

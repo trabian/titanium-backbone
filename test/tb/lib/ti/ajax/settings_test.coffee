@@ -39,10 +39,14 @@ describe '$.ajax settings', ->
         accepts:
           'custom': 'custom-request-type'
         dataType: 'custom text'
+        converters:
+          "* custom": _.identity
 
-      $.ajax('/test', settings).always (data, textStatus, xhr) ->
-        assert.match xhr.headers['Accept'], /custom-request-type/
+      $.ajax('/test', settings).done (data, textStatus, xhr) ->
+        assert.match xhr.getRequestHeader('Accept'), /custom-request-type/
         done()
+      .fail (xhr, textStatus, error) ->
+        throw error
 
     it 'should not overwrite existing request headers', (done) ->
 
@@ -50,15 +54,17 @@ describe '$.ajax settings', ->
         accepts:
           custom: 'custom-request-type'
         dataType: 'text'
+        converters:
+          "* custom": _.identity
 
       $.ajax('/test', settings).always (data, textStatus, xhr) ->
-        assert.match xhr.headers['Accept'], /text\/plain/
+        assert.match xhr.getRequestHeader('Accept'), /text\/plain/
         done()
 
     it 'should default to */*', (done) ->
 
       $.ajax('/test').always (data, textStatus, xhr) ->
-        assert.equal xhr.headers['Accept'], "*/*"
+        assert.equal xhr.getRequestHeader('Accept'), '*/*'
         done()
 
   describe 'async', ->
@@ -78,6 +84,37 @@ describe '$.ajax settings', ->
       assert.equal result.state(), 'resolved'
 
   describe 'beforeSend', ->
+
+    beforeEach ->
+
+      Ti.Network.HTTPClient.mocks.push
+        url: '/capture'
+        method: 'GET'
+        response: (data, xhr) ->
+          responseText: xhr.headers['some-header']
+          contentType: 'text'
+
+    it 'should allow manipulation of the request', (done) ->
+
+      settings =
+        beforeSend: (xhr, settings) ->
+          xhr.setRequestHeader 'some-header', 'some header value'
+
+      $.ajax('/capture', settings).done (data, textStatus, xhr) ->
+        assert.equal data, 'some header value'
+        done()
+      .fail (xhr, textStatus, error) ->
+        throw error
+
+    it 'should abort the request if it returns false', (done) ->
+
+      settings =
+        beforeSend: (xhr, settings) ->
+          false
+
+      $.ajax('/capture', settings).fail (data, textStatus, xhr) ->
+        done()
+
   describe 'cache', ->
   describe 'complete', ->
   describe 'contents', ->
