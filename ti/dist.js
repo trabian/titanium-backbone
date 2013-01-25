@@ -917,7 +917,7 @@ TitaniumHttpClient = (function() {
       _this = this;
     this.responseHeaders = {};
     mock = _.find(TitaniumHttpClient.mocks, function(mock) {
-      return mock.url === _this.url && mock.method === _this.method;
+      return mock.method === _this.method && _this.url.match(mock.url);
     });
     handleResponse = function() {
       var handler, _ref, _ref1, _ref2;

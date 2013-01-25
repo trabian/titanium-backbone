@@ -1,5 +1,13 @@
 handlers = require './handlers'
 
+ajax_nonce = Date.now()
+
+rts = /([?&])_=[^&]*/
+ajax_rquery = /\?/
+rnoContent = /^(?:GET|HEAD)$/
+rprotocol = /^\/\//
+rurl = /^([\w.+-]+:)(?:\/\/([^\/?#:]*)(?::(\d+)|)|)/
+
 module.exports = ($) ->
 
   # A special extend for ajax options
@@ -155,6 +163,8 @@ module.exports = ($) ->
 
       s = $.ajaxSetup {}, options
 
+      s.url ?= url
+
       strAbort = 'canceled'
 
       xhr.done ->
@@ -167,6 +177,19 @@ module.exports = ($) ->
 
       s.type = options.method or options.type or s.method or s.type
       s.dataTypes = (s.dataType or '*').trim().toLowerCase().match /\S+/g
+
+      # Determine if request has content
+      s.hasContent = ! rnoContent.test s.type
+
+      cacheURL = s.url
+
+      unless s.hasContent
+
+        if s.cache is false
+          s.url = if rts.test cacheURL
+            cacheURL.replace rts, "$1_=#{ajax_nonce++}"
+          else
+            cacheURL + (if ajax_rquery.test(cacheURL) then "&" else "?") + "_=" + ajax_nonce++
 
       handleClientResponse = ->
 
@@ -187,7 +210,7 @@ module.exports = ($) ->
 
         onerror: (e) -> handleClientResponse.call @
 
-      client.open s.type, url, s.async
+      client.open s.type, s.url, s.async
 
       xhr.setRequestHeader 'Accept',
 

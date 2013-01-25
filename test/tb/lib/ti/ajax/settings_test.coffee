@@ -116,6 +116,58 @@ describe '$.ajax settings', ->
         done()
 
   describe 'cache', ->
+
+    beforeEach ->
+
+      Ti.Network.HTTPClient.mocks.push
+        url: '/capture'
+        method: 'GET'
+        response: (data, xhr) ->
+          responseText: xhr.url
+          contentType: 'text'
+
+      Ti.Network.HTTPClient.mocks.push
+        url: '/capture'
+        method: 'POST'
+        response: (data, xhr) ->
+          responseText: xhr.url
+          contentType: 'text'
+
+    it 'should add a timestamp to the URL when false', (done) ->
+
+      settings =
+        cache: false
+
+      $.ajax('/capture', settings).done (data, textStatus, xhr) ->
+        assert.match data, /\_\=/ # /capture?_=[timestamp]
+        done()
+
+    it 'should not add a timestamp to the URL when true', (done) ->
+
+      settings =
+        cache: true
+
+      $.ajax('/capture', settings).done (data, textStatus, xhr) ->
+        assert.equal data, '/capture'
+        done()
+
+    it 'should be true by default', (done) ->
+
+      $.ajax('/capture').done (data, textStatus, xhr) ->
+        assert.equal data, '/capture'
+        done()
+
+
+    it 'should not add a timestamp to the URL when false on a POST', (done) ->
+
+      settings =
+        cache: false
+        method: 'POST'
+
+      $.ajax('/capture', settings).done (data, textStatus, xhr) ->
+        assert.equal data, '/capture'
+        done()
+
   describe 'complete', ->
   describe 'contents', ->
   describe 'contentType', ->

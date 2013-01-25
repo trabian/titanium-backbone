@@ -17,7 +17,7 @@ class TitaniumHttpClient
     @responseHeaders = {}
 
     mock = _.find TitaniumHttpClient.mocks, (mock) =>
-      mock.url is @url and mock.method is @method
+      mock.method is @method and @url.match mock.url
 
     handleResponse = =>
 
