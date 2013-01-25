@@ -22,6 +22,15 @@
 
 (function() {
 
+  // Used for splitting on whitespace
+  var core_rnotwhite = /\S+/g,
+
+    // String to Object options format cache
+    optionsCache = {},
+    class2type = {},
+    core_toString = class2type.toString,
+    core_hasOwn = class2type.hasOwnProperty;
+
   var jQuery = {
 
     each: function(array, callback) {
@@ -32,33 +41,35 @@
 
     isArray: _.isArray,
 
-    isPlainObject: _.isObject,
+    // isPlainObject: function (object) { return _.isObject(object); },
 
-    // isPlainObject: function( obj ) {
-    //   // Not plain objects:
-    //   // - Any object or value whose internal [[Class]] property is not "[object Object]"
-    //   // - DOM nodes
-    //   // - window
-    //   if ( jQuery.type( obj ) !== "object" || obj.nodeType ) {
-    //     return false;
-    //   }
+    isPlainObject: function( obj ) {
 
-    //   // Support: Firefox >16
-    //   // The try/catch supresses exceptions thrown when attempting to access
-    //   // the "constructor" property of certain host objects, ie. |window.location|
-    //   try {
-    //     if ( obj.constructor &&
-    //         !core_hasOwn.call( obj.constructor.prototype, "isPrototypeOf" ) ) {
-    //       return false;
-    //     }
-    //   } catch ( e ) {
-    //     return false;
-    //   }
+      // Not plain objects:
+      // - Any object or value whose internal [[Class]] property is not "[object Object]"
+      // - DOM nodes
+      // - window
+      if ( jQuery.type( obj ) !== "object" || obj.nodeType ) {
+        return false;
+      }
 
-    //   // If the function hasn't returned already, we're confident that
-    //   // |obj| is a plain object, created by {} or constructed with new Object
-    //   return true;
-    // },
+      // Support: Firefox >16
+      // The try/catch supresses exceptions thrown when attempting to access
+      // the "constructor" property of certain host objects, ie. |window.location|
+      try {
+        if ( obj.constructor &&
+            !core_hasOwn.call( obj.constructor.prototype, "isPrototypeOf" ) ) {
+          return false;
+        }
+      } catch ( e ) {
+        console.warn('error', e);
+        return false;
+      }
+
+      // If the function hasn't returned already, we're confident that
+      // |obj| is a plain object, created by {} or constructed with new Object
+      return true;
+    },
 
     type: function( obj ) {
       if ( obj === null ) {
@@ -71,13 +82,6 @@
 
   };
 
-// Used for splitting on whitespace
-var core_rnotwhite = /\S+/g,
-
-  // String to Object options format cache
-  optionsCache = {},
-  class2type = {},
-  core_toString = class2type.toString;
 
 // Populate the class2type map
 jQuery.each("Boolean Number String Function Array Date RegExp Object Error".split(" "), function(i, name) {
@@ -134,6 +138,7 @@ jQuery.extend = function() {
 
         // Recurse if we're merging plain objects or arrays
         if ( deep && copy && ( jQuery.isPlainObject(copy) || (copyIsArray = jQuery.isArray(copy)) ) ) {
+
           if ( copyIsArray ) {
             copyIsArray = false;
             clone = src && jQuery.isArray(src) ? src : [];
