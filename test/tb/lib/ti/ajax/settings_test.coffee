@@ -213,6 +213,41 @@ describe '$.ajax settings', ->
         done()
 
   describe 'contentType', ->
+
+    beforeEach ->
+
+      Ti.Network.HTTPClient.mocks.push
+        url: '/capture'
+        method: 'POST'
+        response: (data, xhr) ->
+          responseText: xhr?.headers['Content-Type']
+          contentType: 'text'
+
+    it 'should be settable', (done) ->
+
+      settings =
+        method: 'POST'
+        contentType: 'test-content-type'
+
+      $.ajax('/capture', settings).done (data, textStatus, xhr) ->
+        assert.equal data, 'test-content-type'
+        done()
+      .fail (textStatus, xhr, error) ->
+        throw error
+
+    it "should default to 'application/x-www-form-urlencoded; charset=UTF-8'", (done) ->
+
+      settings =
+        method: 'POST'
+        data:
+          test: 'this'
+
+      $.ajax('/capture', settings).done (data, textStatus, xhr) ->
+        assert.equal data, 'application/x-www-form-urlencoded; charset=UTF-8'
+        done()
+      .fail (textStatus, xhr, error) ->
+        throw error
+
   describe 'context', ->
   describe 'converters', ->
   describe 'data', ->

@@ -59,6 +59,8 @@ module.exports = ($) ->
 
       async: true
 
+      contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+
       converters:
         '* text': String
         'text html': true
@@ -212,6 +214,10 @@ module.exports = ($) ->
         onerror: (e) -> handleClientResponse.call @
 
       client.open s.type, s.url, s.async
+
+      #  Set the correct header, if data is being sent
+      if s.data and s.hasContent and s.contentType isnt false or options.contentType
+        xhr.setRequestHeader "Content-Type", s.contentType
 
       xhr.setRequestHeader 'Accept',
 
