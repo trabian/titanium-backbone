@@ -116,7 +116,12 @@ module.exports = ($) ->
 
       deferred = $.Deferred()
 
-      _(xhr).extend deferred.promise()
+      completeDeferred = $.Callbacks('once memory')
+
+      deferred.promise(xhr).complete = completeDeferred.add
+
+      xhr.success = xhr.done
+      xhr.error = xhr.fail
 
       done = (status, nativeStatusText, responses, headers) ->
 
@@ -150,7 +155,7 @@ module.exports = ($) ->
           error = statusText
 
           if status or ! statusText
-            statusText is 'error'
+            statusText = 'error'
             status = 0 if status < 0
 
         xhr.status = status
@@ -161,17 +166,13 @@ module.exports = ($) ->
         else
           deferred.rejectWith callbackContext, [xhr, statusText, error]
 
+        completeDeferred.fireWith callbackContext, [xhr, statusText]
+
       s = $.ajaxSetup {}, options
 
       s.url ?= url
 
       strAbort = 'canceled'
-
-      xhr.done ->
-        options.success?.apply @, arguments
-
-      xhr.fail ->
-        options.error?.apply @, arguments
 
       dataType = options.dataType ? 'text'
 
@@ -180,6 +181,9 @@ module.exports = ($) ->
 
       # Determine if request has content
       s.hasContent = ! rnoContent.test s.type
+
+      for callback in ['success', 'error', 'complete']
+        xhr[callback] s[callback]
 
       cacheURL = s.url
 

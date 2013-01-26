@@ -21,6 +21,7 @@ module.exports = (ti) ->
         ElementCollection []
 
   $.Deferred = jQuery.Deferred
+  $.Callbacks = jQuery.Callbacks
 
   ajax = require('./ajax') $
   events = require('./events') $

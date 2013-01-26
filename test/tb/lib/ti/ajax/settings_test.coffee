@@ -157,7 +157,6 @@ describe '$.ajax settings', ->
         assert.equal data, '/capture'
         done()
 
-
     it 'should not add a timestamp to the URL when false on a POST', (done) ->
 
       settings =
@@ -169,6 +168,21 @@ describe '$.ajax settings', ->
         done()
 
   describe 'complete', ->
+
+    it 'should call a "complete" handler on success', (done) ->
+
+      $.ajax '/test',
+        complete: (xhr, textStatus) ->
+          assert.equal textStatus, 'success'
+          done()
+
+    it 'should call a "complete" handler on failure', (done) ->
+
+      $.ajax '/error',
+        complete: (xhr, textStatus) ->
+          assert.equal textStatus, 'error'
+          done()
+
   describe 'contents', ->
   describe 'contentType', ->
   describe 'context', ->
