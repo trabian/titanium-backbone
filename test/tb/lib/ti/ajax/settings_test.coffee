@@ -184,6 +184,24 @@ describe '$.ajax settings', ->
           done()
 
   describe 'contents', ->
+
+    it 'should allow custom contents handling', (done) ->
+
+      Ti.Network.HTTPClient.mocks.push
+        url: '/capture'
+        method: 'GET'
+        response: (data, xhr) ->
+          responseText: JSON.stringify { test: 'this' }
+          contentType: 'fakeson'
+
+      settings =
+        contents:
+          json: /json|fakeson/
+
+      $.ajax('/capture', settings).done (data, textStatus, xhr) ->
+        assert.deepEqual data, { test: 'this' }
+        done()
+
   describe 'contentType', ->
   describe 'context', ->
   describe 'converters', ->
