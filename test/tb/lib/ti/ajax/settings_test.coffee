@@ -33,6 +33,14 @@ describe '$.ajax settings', ->
 
   describe 'accepts', ->
 
+    beforeEach ->
+      Ti.Network.HTTPClient.mocks.push
+        url: '/capture'
+        method: 'GET'
+        response: (data, xhr) ->
+          status: 200
+          responseText: JSON.stringify { accept: xhr.headers['Accept'] }
+
     it 'should set the Accept request header', (done) ->
 
       settings =
@@ -42,8 +50,8 @@ describe '$.ajax settings', ->
         converters:
           "* custom": _.identity
 
-      $.ajax('/test', settings).done (data, textStatus, xhr) ->
-        assert.match xhr.getRequestHeader('Accept'), /custom-request-type/
+      $.ajax('/capture', settings).done (data, textStatus, xhr) ->
+        assert.match data, /custom-request-type/
         done()
       .fail (xhr, textStatus, error) ->
         throw error
@@ -57,15 +65,17 @@ describe '$.ajax settings', ->
         converters:
           "* custom": _.identity
 
-      $.ajax('/test', settings).always (data, textStatus, xhr) ->
-        assert.match xhr.getRequestHeader('Accept'), /text\/plain/
+      $.ajax('/capture', settings).always (data, textStatus, xhr) ->
+        assert.match data, /text\/plain/
         done()
 
     it 'should default to */*', (done) ->
 
-      $.ajax('/test').always (data, textStatus, xhr) ->
-        assert.equal xhr.getRequestHeader('Accept'), '*/*'
+      $.ajax('/capture').done (data, textStatus, xhr) ->
+        assert.equal data.accept, '*/*'
         done()
+      .fail (xhr, textStatus, error) ->
+        throw error
 
   describe 'async', ->
 

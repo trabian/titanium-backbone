@@ -99,9 +99,6 @@ module.exports = ($) ->
         setRequestHeader: (name, value) ->
           requestHeaders[name] = value
 
-        getRequestHeader: (name) ->
-          requestHeaders[name]
-
         getResponseHeader: (name) -> @headers?[name]
 
         abort: (statusText) ->
