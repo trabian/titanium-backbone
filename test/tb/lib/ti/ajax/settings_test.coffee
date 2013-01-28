@@ -281,6 +281,18 @@ describe '$.ajax settings', ->
         done()
 
   describe 'converters', ->
+
+    it 'should add the converter while preserving the existing converters', (done) ->
+
+      settings =
+        converters:
+          '* custom': ->
+
+      $.ajax('/test', settings).done (data, textStatus, xhr) ->
+        assert.ok @converters['* custom']
+        assert.ok @converters['* text']
+        done()
+
   describe 'data', ->
   describe 'dataFilter', ->
   describe 'dataType', ->
