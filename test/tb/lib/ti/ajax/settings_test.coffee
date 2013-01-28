@@ -31,7 +31,7 @@ describe '$.ajax settings', ->
   afterEach ->
     Ti.Network.HTTPClient.resetMock()
 
-  describe 'accepts', ->
+  describe 'accepts and converters', ->
 
     beforeEach ->
       Ti.Network.HTTPClient.mocks.push
