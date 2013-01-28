@@ -122,7 +122,7 @@ describe '$.ajax settings', ->
         beforeSend: (xhr, settings) ->
           false
 
-      $.ajax('/capture', settings).fail (data, textStatus, xhr) ->
+      $.ajax('/capture', settings).fail (xhr, textStatus, error) ->
         done()
 
   describe 'cache', ->
@@ -232,7 +232,7 @@ describe '$.ajax settings', ->
       $.ajax('/capture', settings).done (data, textStatus, xhr) ->
         assert.equal data, 'test-content-type'
         done()
-      .fail (textStatus, xhr, error) ->
+      .fail (xhr, textStatus, error) ->
         throw error
 
     it "should default to 'application/x-www-form-urlencoded; charset=UTF-8'", (done) ->
@@ -245,7 +245,7 @@ describe '$.ajax settings', ->
       $.ajax('/capture', settings).done (data, textStatus, xhr) ->
         assert.equal data, 'application/x-www-form-urlencoded; charset=UTF-8'
         done()
-      .fail (textStatus, xhr, error) ->
+      .fail (xhr, textStatus, error) ->
         throw error
 
   describe 'context', ->
@@ -329,7 +329,7 @@ describe '$.ajax settings', ->
       $.ajax('/test', settings).done (data, textStatus, xhr) ->
         assert.equal data.test, 'This is reformatted'
         done()
-      .fail (data, textStatus, error) ->
+      .fail (xhr, textStatus, error) ->
         throw error
 
   describe 'dataType', ->
@@ -342,7 +342,7 @@ describe '$.ajax settings', ->
       $.ajax('/test', settings).done (data, textStatus, xhr) ->
         assert.equal data.test, 'This is a test'
         done()
-      .fail (data, textStatus, error) ->
+      .fail (xhr, textStatus, error) ->
         throw error
 
     it 'should process the response data according to the dataType (text)', (done) ->
@@ -353,7 +353,7 @@ describe '$.ajax settings', ->
       $.ajax('/test', settings).done (data, textStatus, xhr) ->
         assert.equal data, JSON.stringify test: 'This is a test'
         done()
-      .fail (data, textStatus, error) ->
+      .fail (xhr, textStatus, error) ->
         throw error
 
     it 'should infer the dataType based on the contentType (text)', (done) ->
@@ -368,7 +368,7 @@ describe '$.ajax settings', ->
       $.ajax('/capture').done (data, textStatus, xhr) ->
         assert.equal data, JSON.stringify test: 'this'
         done()
-      .fail (data, textStatus, error) ->
+      .fail (xhr, textStatus, error) ->
         throw error
 
     it 'should infer the dataType based on the contentType (json)', (done) ->
@@ -383,7 +383,7 @@ describe '$.ajax settings', ->
       $.ajax('/capture').done (data, textStatus, xhr) ->
         assert.equal data.test, 'this'
         done()
-      .fail (data, textStatus, error) ->
+      .fail (xhr, textStatus, error) ->
         throw error
 
   describe 'error', ->
