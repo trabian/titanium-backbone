@@ -333,6 +333,59 @@ describe '$.ajax settings', ->
         throw error
 
   describe 'dataType', ->
+
+    it 'should process the response data according to the dataType (json)', (done) ->
+
+      settings =
+        dataType: 'json'
+
+      $.ajax('/test', settings).done (data, textStatus, xhr) ->
+        assert.equal data.test, 'This is a test'
+        done()
+      .fail (data, textStatus, error) ->
+        throw error
+
+    it 'should process the response data according to the dataType (text)', (done) ->
+
+      settings =
+        dataType: 'text'
+
+      $.ajax('/test', settings).done (data, textStatus, xhr) ->
+        assert.equal data, JSON.stringify test: 'This is a test'
+        done()
+      .fail (data, textStatus, error) ->
+        throw error
+
+    it 'should infer the dataType based on the contentType (text)', (done) ->
+
+      Ti.Network.HTTPClient.mocks.push
+        url: '/capture'
+        method: 'GET'
+        response: (data, xhr) ->
+          responseText: JSON.stringify { test: 'this' }
+          contentType: 'text/plain'
+
+      $.ajax('/capture').done (data, textStatus, xhr) ->
+        assert.equal data, JSON.stringify test: 'this'
+        done()
+      .fail (data, textStatus, error) ->
+        throw error
+
+    it 'should infer the dataType based on the contentType (json)', (done) ->
+
+      Ti.Network.HTTPClient.mocks.push
+        url: '/capture'
+        method: 'GET'
+        response: (data, xhr) ->
+          responseText: JSON.stringify { test: 'this' }
+          contentType: 'application/json'
+
+      $.ajax('/capture').done (data, textStatus, xhr) ->
+        assert.equal data.test, 'this'
+        done()
+      .fail (data, textStatus, error) ->
+        throw error
+
   describe 'error', ->
   describe 'global', ->
   describe 'headers', ->
