@@ -65,6 +65,7 @@
       "vendor/underscore.js",
       "vendor/backbone.js",
       "vendor/jquery.deferred.js",
+      "vendor/jquery.param.js",
       "backbone.stickit:backbone.stickit.js",
       "vendor/jade.js"
     ],

@@ -23,6 +23,8 @@ module.exports = (ti) ->
   $.Deferred = jQuery.Deferred
   $.Callbacks = jQuery.Callbacks
 
+  $.param = jQuery.param
+
   ajax = require('./ajax') $
   events = require('./events') $
   manipulation = require('./manipulation') $
