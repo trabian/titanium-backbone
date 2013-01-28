@@ -73,6 +73,8 @@ module.exports = ($) ->
         url: true
         context: true
 
+      processData: true
+
     ajaxSetup: (target, settings) ->
       if target
 
@@ -179,6 +181,9 @@ module.exports = ($) ->
       s.type = options.method or options.type or s.method or s.type
       s.dataTypes = (s.dataType or '*').trim().toLowerCase().match /\S+/g
 
+      if s.data and s.processData and not _.isString s.data
+        s.data = $.param s.data, s.traditional
+
       # Determine if request has content
       s.hasContent = ! rnoContent.test s.type
 
@@ -190,6 +195,12 @@ module.exports = ($) ->
       cacheURL = s.url
 
       unless s.hasContent
+
+        # If data is available, append data to url
+        if s.data
+          cacheURL = s.url += if ajax_rquery.test(cacheURL) then "&" else "?" + s.data
+          # remove data so that it's not used in an eventual retry
+          delete s.data;
 
         if s.cache is false
           s.url = if rts.test cacheURL

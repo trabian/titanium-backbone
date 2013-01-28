@@ -294,6 +294,28 @@ describe '$.ajax settings', ->
         done()
 
   describe 'data', ->
+
+    it 'should add the data to the query string', (done) ->
+
+      settings =
+        data:
+          someKey: 'someVal'
+
+      $.ajax('/test', settings).done (data, textStatus, xhr) ->
+        assert.equal @url, '/test?someKey=someVal'
+        done()
+
+    it 'should add a data array to the query string', (done) ->
+
+      settings =
+        data:
+          someKey: ['1', '2', '3']
+
+      # ?someKey[]=1&someKey[]=2&someKey[]=3
+      $.ajax('/test', settings).done (data, textStatus, xhr) ->
+        assert.equal @url, '/test?someKey%5B%5D=1&someKey%5B%5D=2&someKey%5B%5D=3'
+        done()
+
   describe 'dataFilter', ->
   describe 'dataType', ->
   describe 'error', ->
@@ -301,6 +323,23 @@ describe '$.ajax settings', ->
   describe 'headers', ->
   describe 'ifModified', ->
   describe 'processData', ->
+
+    it 'should default to true', (done) ->
+
+      $.ajax('/test').done ->
+        assert.isTrue @processData
+        done()
+
+    it 'should not serialize the data added to the query string if false', (done) ->
+
+      settings =
+        processData: false
+        data: 'someVal'
+
+      $.ajax('/test', settings).done (data, textStatus, xhr) ->
+        assert.equal @url, '/test?someVal'
+        done()
+
   describe 'statusCode', ->
   describe 'success', ->
   describe 'timeout', ->
