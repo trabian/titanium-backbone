@@ -401,7 +401,6 @@ describe '$.ajax settings', ->
 
       $.ajax '/error', settings
 
-  describe 'global', ->
   describe 'headers', ->
   describe 'ifModified', ->
   describe 'processData', ->
