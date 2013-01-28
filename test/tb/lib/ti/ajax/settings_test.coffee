@@ -12,6 +12,8 @@ describe '$.ajax settings', ->
 
   beforeEach ->
 
+    Ti.Network.HTTPClient.resetCaches()
+
     Ti.Network.HTTPClient.mock [
       url: '/test'
       method: 'GET'
@@ -429,6 +431,65 @@ describe '$.ajax settings', ->
         throw error
 
   describe 'ifModified', ->
+
+    it 'should allow checking of last modified header', (done) ->
+
+      lastModified = Date.now()
+
+      Ti.Network.HTTPClient.mocks.push
+        url: '/capture'
+        method: 'GET'
+        response: ->
+          responseText: JSON.stringify(test: 'this')
+          headers:
+            "Last-Modified": lastModified
+
+      settings =
+        ifModified: true
+
+      $.ajax('/capture', settings).done (data, textStatus, xhr) ->
+
+        assert.ok xhr.getResponseHeader 'Last-Modified'
+
+        $.ajax('/capture', settings).done (data, textStatus, xhr) ->
+          assert.equal xhr.status, 304
+          assert.equal textStatus, 'notmodified'
+          done()
+        .fail (xhr, textStatus, error) ->
+          throw error
+
+      .fail (xhr, textStatus, error) ->
+        throw error
+
+    it 'should allow checking of etag', (done) ->
+
+      lastModified = Date.now()
+
+      Ti.Network.HTTPClient.mocks.push
+        url: '/capture'
+        method: 'GET'
+        response: ->
+          responseText: JSON.stringify(test: 'this')
+          headers:
+            "etag": 'some-etag'
+
+      settings =
+        ifModified: true
+
+      $.ajax('/capture?1', settings).done (data, textStatus, xhr) ->
+
+        assert.ok xhr.getResponseHeader 'etag'
+
+        $.ajax('/capture?1', settings).done (data, textStatus, xhr) ->
+          assert.equal xhr.status, 304
+          assert.equal textStatus, 'notmodified'
+          done()
+        .fail (xhr, textStatus, error) ->
+          throw error
+
+      .fail (xhr, textStatus, error) ->
+        throw error
+
   describe 'processData', ->
 
     it 'should default to true', (done) ->

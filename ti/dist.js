@@ -934,6 +934,11 @@ TitaniumHTTPClient = (function() {
     this.options = options != null ? options : {};
   };
 
+  TitaniumHTTPClient.resetCaches = function() {
+    this.lastModifiedCache = {};
+    return this.etagCache = {};
+  };
+
   TitaniumHTTPClient.resetMock = function() {
     return this.mocks = [];
   };
@@ -954,20 +959,42 @@ TitaniumHTTPClient = (function() {
   };
 
   TitaniumHTTPClient.prototype.send = function(data) {
-    var handleResponse, headers, mock, name, response, value, wait,
+    var handleResponse, headers, mock, name, requestHeaders, response, value, wait,
       _this = this;
     this.responseHeaders = {};
     mock = _.find(TitaniumHTTPClient.mocks, function(mock) {
       return mock.method === _this.method && _this.url.match(mock.url);
     });
+    requestHeaders = _.clone(this.headers);
     handleResponse = function() {
-      var handler, _ref, _ref1, _ref2;
+      var etag, handler, lastModified, timestamp, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6;
       if ((_ref = _this.status) == null) {
         _this.status = 200;
       }
+      if (lastModified = requestHeaders['If-Modified-Since']) {
+        if (timestamp = ((_ref1 = TitaniumHTTPClient.lastModifiedCache) != null ? _ref1[_this.url] : void 0) || 0) {
+          if (lastModified <= timestamp) {
+            _this.status = 304;
+          }
+        }
+      }
+      if (etag = requestHeaders['If-None-Match']) {
+        if (etag === ((_ref2 = TitaniumHTTPClient.etagCache) != null ? _ref2[_this.url] : void 0)) {
+          _this.status = 304;
+        }
+      }
+      if ((_ref3 = TitaniumHTTPClient.lastModifiedCache) != null) {
+        _ref3[_this.url] = _this.responseHeaders['Last-Modifified'] = Date.now();
+      }
+      if ((_ref4 = TitaniumHTTPClient.etagCache) != null) {
+        _ref4[_this.url] = _this.headers['etag'];
+      }
       _this.statusText = StatusCodes[_this.status];
-      handler = (_ref1 = _this.status) === 200 ? 'onload' : 'onerror';
-      return (_ref2 = _this.options[handler]) != null ? _ref2.call(_this, {
+      if (_this.status === 304) {
+        _this.responseText = null;
+      }
+      handler = (_ref5 = _this.status) === 200 || _ref5 === 304 ? 'onload' : 'onerror';
+      return (_ref6 = _this.options[handler]) != null ? _ref6.call(_this, {
         source: _this
       }) : void 0;
     };

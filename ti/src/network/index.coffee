@@ -42,6 +42,10 @@ class TitaniumHTTPClient
 
   @mock: (@mocks, @options = {}) ->
 
+  @resetCaches: ->
+    @lastModifiedCache = {}
+    @etagCache = {}
+
   @resetMock: ->
     @mocks = []
 
@@ -59,13 +63,31 @@ class TitaniumHTTPClient
     mock = _.find TitaniumHTTPClient.mocks, (mock) =>
       mock.method is @method and @url.match mock.url
 
+    requestHeaders = _.clone @headers
+
     handleResponse = =>
 
       @status ?= 200
 
+      if lastModified = requestHeaders['If-Modified-Since']
+
+        if timestamp = TitaniumHTTPClient.lastModifiedCache?[@url] or 0
+
+          if lastModified <= timestamp
+            @status = 304
+
+      if etag = requestHeaders['If-None-Match']
+        @status = 304 if etag is TitaniumHTTPClient.etagCache?[@url]
+
+      TitaniumHTTPClient.lastModifiedCache?[@url] = @responseHeaders['Last-Modifified'] = Date.now()
+      TitaniumHTTPClient.etagCache?[@url] = @headers['etag']
+
       @statusText = StatusCodes[@status]
 
-      handler = if @status in [200]
+      if @status is 304
+        @responseText = null
+
+      handler = if @status in [200, 304]
         'onload'
       else
         'onerror'

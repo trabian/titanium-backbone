@@ -30,6 +30,9 @@ rnoContent = /^(?:GET|HEAD)$/
 rprotocol = /^\/\//
 rurl = /^([\w.+-]+:)(?:\/\/([^\/?#:]*)(?::(\d+)|)|)/
 
+lastModifiedCache = {}
+etagCache = {}
+
 module.exports = ($) ->
 
   callbackContext = null
@@ -161,9 +164,18 @@ module.exports = ($) ->
 
         if status >= 200 and status < 300 or status is 304
 
+          if s.ifModified
+
+            if modified = xhr.getResponseHeader 'Last-Modified'
+              lastModifiedCache[cacheURL] = modified
+
+            if modified = xhr.getResponseHeader 'etag'
+              etagCache[cacheURL] = modified
+
           if status is 304
             isSuccess = true
             statusText = 'notmodified'
+
           else
 
             isSuccess = handlers.convert s, response
@@ -232,6 +244,14 @@ module.exports = ($) ->
             cacheURL.replace rts, "$1_=#{ajax_nonce++}"
           else
             cacheURL + (if ajax_rquery.test(cacheURL) then "&" else "?") + "_=" + ajax_nonce++
+
+      if s.ifModified
+
+        if timestamp = lastModifiedCache[cacheURL]
+          xhr.setRequestHeader 'If-Modified-Since', timestamp
+
+        if etag = etagCache[cacheURL]
+          xhr.setRequestHeader 'If-None-Match', etag
 
       handleClientResponse = ->
 
