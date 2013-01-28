@@ -206,6 +206,9 @@ module.exports = ($) ->
       if s.data and s.processData and not _.isString s.data
         s.data = $.param s.data, s.traditional
 
+      for name, value of s.headers
+        xhr.setRequestHeader name, value
+
       # Determine if request has content
       s.hasContent = ! rnoContent.test s.type
 

@@ -402,6 +402,32 @@ describe '$.ajax settings', ->
       $.ajax '/error', settings
 
   describe 'headers', ->
+
+    it 'should add request headers and come before beforeSend', (done) ->
+
+      Ti.Network.HTTPClient.mocks.push
+        url: '/capture'
+        method: 'GET'
+        response: (data, xhr) ->
+          responseText: JSON.stringify
+            'some-header': xhr.headers['some-header']
+            'some-other-header': xhr.headers['some-other-header']
+          contentType: 'json'
+
+      settings =
+        headers:
+          'some-other-header': 'some other header value'
+          'some-header': 'should be overwritten'
+        beforeSend: (xhr, settings) ->
+          xhr.setRequestHeader 'some-header', 'some header value'
+
+      $.ajax('/capture', settings).done (data, textStatus, xhr) ->
+        assert.equal data['some-header'], 'some header value'
+        assert.equal data['some-other-header'], 'some other header value'
+        done()
+      .fail (xhr, textStatus, error) ->
+        throw error
+
   describe 'ifModified', ->
   describe 'processData', ->
 
