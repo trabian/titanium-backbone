@@ -10,6 +10,8 @@ rurl = /^([\w.+-]+:)(?:\/\/([^\/?#:]*)(?::(\d+)|)|)/
 
 module.exports = ($) ->
 
+  callbackContext = null
+
   # A special extend for ajax options
   # that takes "flat" options (not to be deep extended)
   # Fixes #9887
@@ -94,7 +96,6 @@ module.exports = ($) ->
       requestHeaders = {}
 
       client = null
-      callbackContext = @
 
       xhr =
 
@@ -181,6 +182,8 @@ module.exports = ($) ->
       # Determine if request has content
       s.hasContent = ! rnoContent.test s.type
 
+      callbackContext = s.context or s
+
       for callback in ['success', 'error', 'complete']
         xhr[callback] s[callback]
 
@@ -233,7 +236,7 @@ module.exports = ($) ->
         else
           s.accepts['*']
 
-      if s.beforeSend?.call(@, xhr, s) is false
+      if s.beforeSend?.call(callbackContext, xhr, s) is false
         return xhr.abort()
 
       for key, value of requestHeaders

@@ -249,6 +249,37 @@ describe '$.ajax settings', ->
         throw error
 
   describe 'context', ->
+
+    it 'should be the settings by default', (done) ->
+
+      settings =
+        someSetting: 'someVal'
+
+      $.ajax('/test', settings).done (data, textStatus, xhr) ->
+        assert.equal @someSetting, 'someVal'
+        done()
+
+    it 'should be made the context of callbacks', (done) ->
+
+      settings =
+        context:
+          someKey: 'someVal'
+
+      $.ajax('/test', settings).done (data, textStatus, xhr) ->
+        assert.equal @someKey, 'someVal'
+        done()
+
+    it 'should apply to beforeSend', (done) ->
+
+      settings =
+        context:
+          someSetting: 'someVal'
+        beforeSend: ->
+          assert.equal @someSetting, 'someVal'
+
+      $.ajax('/test', settings).done (data, textStatus, xhr) ->
+        done()
+
   describe 'converters', ->
   describe 'data', ->
   describe 'dataFilter', ->
