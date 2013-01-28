@@ -62,8 +62,8 @@ module.exports =
 
     i = 0
 
-    # if s.dataFilter
-    #   response = s.dataFilter response, s.dataType
+    if s.dataFilter
+      response = s.dataFilter response, s.dataType
 
     if dataTypes[1]
 

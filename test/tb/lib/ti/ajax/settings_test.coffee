@@ -317,6 +317,21 @@ describe '$.ajax settings', ->
         done()
 
   describe 'dataFilter', ->
+
+    it 'should process the response data', (done) ->
+
+      settings =
+        dataType: 'json'
+        dataFilter: (data, dataType) ->
+          assert.equal dataType, 'json'
+          data.replace /a\stest/, 'reformatted'
+
+      $.ajax('/test', settings).done (data, textStatus, xhr) ->
+        assert.equal data.test, 'This is reformatted'
+        done()
+      .fail (data, textStatus, error) ->
+        throw error
+
   describe 'dataType', ->
   describe 'error', ->
   describe 'global', ->
