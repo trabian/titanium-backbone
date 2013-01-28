@@ -235,10 +235,8 @@ module.exports = ($) ->
 
       handleClientResponse = ->
 
-        headers = {}
+        headers = _.clone @getResponseHeaders()
 
-        for name in ['Content-Type']
-          headers[name] = @getResponseHeader name
         responses = {}
 
         # Titanium will try to parse the XML on @responseXML, so make sure
