@@ -38,7 +38,7 @@ StatusCodes =
   504: 'Gateway Timeout'
   505: 'HTTP Version Not Supported'
 
-class TitaniumHttpClient
+class TitaniumHTTPClient
 
   @mock: (@mocks, @options = {}) ->
 
@@ -56,7 +56,7 @@ class TitaniumHttpClient
 
     @responseHeaders = {}
 
-    mock = _.find TitaniumHttpClient.mocks, (mock) =>
+    mock = _.find TitaniumHTTPClient.mocks, (mock) =>
       mock.method is @method and @url.match mock.url
 
     handleResponse = =>
@@ -87,7 +87,12 @@ class TitaniumHttpClient
 
     @responseHeaders['Content-Type'] = response.contentType or 'text/json'
 
-    if @async and wait = TitaniumHttpClient.options.wait
+    if headers = response.headers
+
+      for name, value of headers
+        @responseHeaders[name] = value
+
+    if @async and wait = TitaniumHTTPClient.options.wait
       setTimeout handleResponse, wait
     else
       handleResponse()
@@ -96,10 +101,13 @@ class TitaniumHttpClient
 
   getResponseHeader: (name) -> @responseHeaders[name]
 
+  # This is not in the API documentation but is available on iOS (at least - perhaps on Android as well)
+  getResponseHeaders: -> @responseHeaders
+
 Ti.Network =
 
-  HTTPClient: TitaniumHttpClient
+  HTTPClient: TitaniumHTTPClient
 
-  createHttpClient: (options) ->
-    new TitaniumHttpClient options
+  createHTTPClient: (options) ->
+    new TitaniumHTTPClient options
 

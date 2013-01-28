@@ -239,14 +239,18 @@ module.exports = ($) ->
 
         for name in ['Content-Type']
           headers[name] = @getResponseHeader name
+        responses = {}
 
-        responses =
-          text: @responseText
-          xml: @responseXML
+        # Titanium will try to parse the XML on @responseXML, so make sure
+        # it's only requested when the content type is XML
+        if headers['Content-Type']?.match /xml/
+          responses.xml = @responseXML
+        else
+          responses.text = @responseText
 
         done @status, @statusText, responses, headers
 
-      client = Ti.Network.createHttpClient
+      client = Ti.Network.createHTTPClient
 
         onload: (e) -> handleClientResponse.call @
 
@@ -278,6 +282,9 @@ module.exports = ($) ->
       for key, value of requestHeaders
         client.setRequestHeader key, value
 
-      client.send options.data
+      if options.data
+        client.send options.data
+      else
+        client.send()
 
       xhr
