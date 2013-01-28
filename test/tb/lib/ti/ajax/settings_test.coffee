@@ -387,6 +387,20 @@ describe '$.ajax settings', ->
         throw error
 
   describe 'error', ->
+
+    it 'should accept an error callback', (done) ->
+
+      settings =
+        someSetting: 'someValue'
+        error: (xhr, textStatus, error) ->
+          assert.ok xhr
+          assert.equal error, 'Internal Server Error'
+          assert.equal textStatus, 'error'
+          assert.ok @someSetting, 'someValue' # Check context to callback
+          done()
+
+      $.ajax '/error', settings
+
   describe 'global', ->
   describe 'headers', ->
   describe 'ifModified', ->
