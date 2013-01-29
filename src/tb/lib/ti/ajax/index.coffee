@@ -307,6 +307,8 @@ module.exports = ($) ->
 
         onerror: (e) -> handleClientResponse.call @
 
+        timeout: s.timeout
+
       client.open s.type, s.url, s.async
 
       #  Set the correct header, if data is being sent
@@ -333,9 +335,8 @@ module.exports = ($) ->
       for key, value of requestHeaders
         client.setRequestHeader key, value
 
-
-
       state = 1
+
       if options.data
         client.send options.data
       else

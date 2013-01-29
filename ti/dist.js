@@ -1026,7 +1026,14 @@ TitaniumHTTPClient = (function() {
       }
     }
     if (this.async && (wait = TitaniumHTTPClient.options.wait)) {
-      return setTimeout(handleResponse, wait);
+      if (this.options.timeout < wait) {
+        this.status = 0;
+        return this.options.onerror.call(this, {
+          source: this
+        });
+      } else {
+        return setTimeout(handleResponse, wait);
+      }
     } else {
       return handleResponse();
     }

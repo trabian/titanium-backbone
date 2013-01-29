@@ -571,6 +571,32 @@ describe '$.ajax settings', ->
       $.ajax '/test', settings
 
   describe 'timeout', ->
+
+    beforeEach ->
+
+      @delay = Ti.Network.HTTPClient.options.wait
+
+      Ti.Network.HTTPClient.options.wait = 60
+
+    afterEach ->
+      Ti.Network.HTTPClient.options.wait = @delay
+
+    it 'should throw an error on timeout', (done) ->
+
+      settings =
+        timeout: 50
+
+      $.ajax('/test', settings).fail ->
+        done()
+
+    it 'should not throw an error if the response occurs within the timeout', (done) ->
+
+      settings =
+        timeout: 70
+
+      $.ajax('/test', settings).done ->
+        done()
+
   describe 'type and method', ->
 
     beforeEach ->

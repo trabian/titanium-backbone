@@ -115,7 +115,19 @@ class TitaniumHTTPClient
         @responseHeaders[name] = value
 
     if @async and wait = TitaniumHTTPClient.options.wait
-      setTimeout handleResponse, wait
+
+      if @options.timeout < wait
+
+        # console.warn 'error!'
+
+        @status = 0
+
+        @options.onerror.call @,
+          source: @
+
+      else
+        setTimeout handleResponse, wait
+
     else
       handleResponse()
 
