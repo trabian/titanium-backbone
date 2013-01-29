@@ -509,6 +509,27 @@ describe '$.ajax settings', ->
         done()
 
   describe 'statusCode', ->
+
+    it 'should behave like a success callback when the request is successful', (done) ->
+
+      settings =
+        statusCode:
+          200: (data, textStatus, xhr) ->
+            assert.deepEqual data, { test: 'This is a test' }
+            done()
+
+      $.ajax '/test', settings
+
+    it 'should behave like an error callback when the request is unsuccessful', (done) ->
+
+      settings =
+        statusCode:
+          500: (xhr, textStatus, error) ->
+            assert.equal error, 'This is an error'
+            done()
+
+      $.ajax '/test', settings
+
   describe 'success', ->
   describe 'timeout', ->
   describe 'type', ->

@@ -21,6 +21,8 @@ ti =
   # Returns the created view
   createView: (viewNameOrCreator, attributeHashes...) ->
 
+    console.warn 'create view', viewNameOrCreator
+
     attributes = _.extend {}, attributeHashes...
 
     viewCreator = if _.isString viewNameOrCreator

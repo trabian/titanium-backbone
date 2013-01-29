@@ -36,6 +36,7 @@ etagCache = {}
 module.exports = ($) ->
 
   callbackContext = null
+  statusCode = null
 
   # A special extend for ajax options
   # that takes "flat" options (not to be deep extended)
@@ -127,13 +128,32 @@ module.exports = ($) ->
       requestHeaders = {}
 
       client = null
+      state = 0
 
       xhr =
+
+        readyState: 0
 
         setRequestHeader: (name, value) ->
           requestHeaders[name] = value
 
         getResponseHeader: (name) -> @headers?[name]
+
+        statusCode: (map) ->
+
+          if map
+
+            if state < 2
+
+              for code, status of map
+                statusCode[code] = [ statusCode[code], status ]
+
+              console.warn statusCode unless _.isEmpty statusCode
+
+            else
+              xhr.always map[xhr.status]
+
+          @
 
         abort: (statusText) ->
 
@@ -155,6 +175,10 @@ module.exports = ($) ->
       xhr.error = xhr.fail
 
       done = (status, nativeStatusText, responses, headers) ->
+
+        return if state is 2
+
+        state = 2
 
         isSuccess = null
         client = null
@@ -206,6 +230,9 @@ module.exports = ($) ->
         else
           deferred.rejectWith callbackContext, [xhr, statusText, error]
 
+        xhr.statusCode statusCode
+        statusCode = undefined
+
         completeDeferred.fireWith callbackContext, [xhr, statusText]
 
       s = $.ajaxSetup {}, options
@@ -229,6 +256,8 @@ module.exports = ($) ->
       s.hasContent = ! rnoContent.test s.type
 
       callbackContext = s.context or s
+
+      statusCode = s.statusCode or {}
 
       for callback in ['success', 'error', 'complete']
         xhr[callback] s[callback]
@@ -304,6 +333,9 @@ module.exports = ($) ->
       for key, value of requestHeaders
         client.setRequestHeader key, value
 
+
+
+      state = 1
       if options.data
         client.send options.data
       else
