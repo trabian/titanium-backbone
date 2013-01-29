@@ -490,6 +490,26 @@ describe '$.ajax settings', ->
       .fail (xhr, textStatus, error) ->
         throw error
 
+  describe 'mimeType', ->
+
+    it 'should override the xhr mime type', (done) ->
+
+      Ti.Network.HTTPClient.mocks.push
+        url: '/capture'
+        method: 'GET'
+        response: (data, xhr) ->
+          responseText: JSON.stringify { test: 'this' }
+          contentType: 'text/plain'
+
+      settings =
+        mimeType: 'application/json'
+
+      $.ajax('/capture', settings).done (data, textStatus, xhr) ->
+        assert.deepEqual data, { test: 'this' }
+        done()
+      .fail (xhr, textStatus, error) ->
+        throw error
+
   describe 'processData', ->
 
     it 'should default to true', (done) ->
