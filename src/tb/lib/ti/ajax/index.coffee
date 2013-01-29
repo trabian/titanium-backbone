@@ -102,7 +102,7 @@ module.exports = ($) ->
       processData: true
 
     ajaxSetup: (target, settings) ->
-      if target
+      if settings
 
         # Building a settings object
         ajaxExtend ajaxExtend( target, $.ajaxSettings ), settings
