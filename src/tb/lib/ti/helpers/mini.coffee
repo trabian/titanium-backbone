@@ -12,102 +12,104 @@ matchers = require './matchers'
  Version: 0.01 (BETA)
 ###
 
-snack = /(?:[\w\-\\.#]+)+(?:\[\w+?=([\'"])?(?:\\\1|.)+?\1\])?|\*|>/ig
+module.exports = ($) ->
 
-findOne = (context, test) ->
+  snack = /(?:[\w\-\\.#]+)+(?:\[\w+?=([\'"])?(?:\\\1|.)+?\1\])?|\*|>/ig
 
-  return unless context
+  findOne = (context, test) ->
 
-  if _.isArray context
+    return unless context
 
-    if result = _.find(context, (el) -> findOne el, test)
-      result
+    if _.isArray context
 
-  else
-    if test context
-      context
+      if result = _.find(context, (el) -> findOne el, test)
+        result
+
     else
-      findOne context.children, test
+      if test context
+        context
+      else
+        findOne context.children, test
 
-# This is likely not very efficient
-findAll = (context, test, collector = [], include = true) ->
+  # This is likely not very efficient
+  findAll = (context, test, collector = [], include = true) ->
 
-  return [] unless context
+    return [] unless context
 
-  if _.isArray context
-    _.each context, (el) -> findAll el, test, collector
-  else
-    collector.push context if include and test(context)
-    findAll context.children, test, collector
-
-  collector
-
-findById = (id, context) ->
-  findOne context, (el) -> el.id is id
-
-findByNodeAndClassName = (nodeName, className, context, include = true) ->
-  findAll context, ((el) -> matchers.hasNameClassAttrs el, nodeName, className), [], include
-
-filterParents = (selectorParts, collection, direct) ->
-
-  parentSelector = selectorParts.pop()
-
-  if parentSelector is '>'
-    return filterParents selectorParts, collection, true
-
-  ret = []
-
-  { id, className, nodeName } = matchers.parseSelector parentSelector
-
-  for node in collection
-
-    parent = node.parent
-
-    while parent
-
-      matches = matchers.isIdNameClass parent, id, nodeName, className
-
-      break if direct or matches
-
-      parent = parent.parent
-
-    if matches
-      ret.push node
-
-  if selectorParts[0] and ret[0] then filterParents(selectorParts, ret) else ret
-
-_is = (selector, context) ->
-
-  parts = selector.match snack
-  part = parts.pop()
-
-  if matchers.matches context, part
-
-    if parts[0]
-      filterParents(parts, [context]).length > 0
+    if _.isArray context
+      $(context).each -> findAll @, test, collector
     else
-      true
+      context = $(context).get 0
+      collector.push context if include and test(context)
+      findAll $(context).children(), test, collector
 
-find = (selector = '*', context, includeSelf = false) ->
+    collector
 
-  parts = selector.match snack
-  part = parts.pop()
+  findById = (id, context) ->
+    findOne context, (el) -> el.id is id
 
-  if selector.indexOf(',') > -1
+  findByNodeAndClassName = (nodeName, className, context, include = true) ->
+    findAll context, ((el) -> matchers.hasNameClassAttrs el, nodeName, className), [], include
+
+  filterParents = (selectorParts, collection, direct) ->
+
+    parentSelector = selectorParts.pop()
+
+    if parentSelector is '>'
+      return filterParents selectorParts, collection, true
+
     ret = []
-    for selector in selector.split(/,/g)
-      ret = _.uniq ret.concat find selector.trim(), context
-    return ret
 
-  { id, className, nodeName } = matchers.parseSelector part
+    { id, className, nodeName } = matchers.parseSelector parentSelector
 
-  if id
-    return if child = findById(id, context) then [child] else []
-  else
-    collection = findByNodeAndClassName nodeName, className, context, includeSelf
+    for node in collection
 
-  if parts[0] and collection[0] then filterParents(parts, collection) else collection
+      parent = node.parent
 
-module.exports =
+      while parent
+
+        matches = matchers.isIdNameClass parent, id, nodeName, className
+
+        break if direct or matches
+
+        parent = parent.parent
+
+      if matches
+        ret.push node
+
+    if selectorParts[0] and ret[0] then filterParents(selectorParts, ret) else ret
+
+  _is = (selector, context) ->
+
+    parts = selector.match snack
+    part = parts.pop()
+
+    if matchers.matches context, part
+
+      if parts[0]
+        filterParents(parts, [context]).length > 0
+      else
+        true
+
+  find = (selector = '*', context, includeSelf = false) ->
+
+    parts = selector.match snack
+    part = parts.pop()
+
+    if selector.indexOf(',') > -1
+      ret = []
+      for selector in selector.split(/,/g)
+        ret = _.uniq ret.concat find selector.trim(), context
+      return ret
+
+    { id, className, nodeName } = matchers.parseSelector part
+
+    if id
+      return if child = findById(id, context) then [child] else []
+    else
+      collection = findByNodeAndClassName nodeName, className, context, includeSelf
+
+    if parts[0] and collection[0] then filterParents(parts, collection) else collection
+
   find: find
   is: _is

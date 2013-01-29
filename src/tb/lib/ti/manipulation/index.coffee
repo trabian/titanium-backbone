@@ -1,4 +1,4 @@
-viewHandlers = require './view_handlers'
+viewHandlers = require '../helpers/view_handlers'
 styler = require 'tb/lib/styler'
 
 module.exports = ($) ->

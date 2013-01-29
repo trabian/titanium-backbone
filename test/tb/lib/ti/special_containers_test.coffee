@@ -67,6 +67,37 @@ describe '$.append and $.remove methods on special containers', ->
 
         assert.equal $table[0].sections.length, 0
 
+      describe 'traversal methods', ->
+
+        it 'should support rows', ->
+
+          $table = $('<TableView>')
+            .append('<TableViewRow>')
+            .append('<TableViewRow>')
+
+          $root = $('<View>')
+            .append $table
+
+          assert.equal $table.children().length, 2
+
+          assert.equal $root.find().length, 3
+
+        it 'should support sections and rows', ->
+
+          $table = $('<TableView>')
+            .append('<TableViewSection>')
+
+          $section = $('<TableViewSection>')
+            .appendTo($table)
+            .append('<TableViewRow>')
+            .append '<TableViewRow>'
+
+          $root = $('<View>')
+            .append $table
+
+          assert.equal $table.children().length, 2
+          assert.equal $root.find().length, 5
+
     describe 'TableViewSection', ->
 
       it 'should only handle append and remove of rows', ->
@@ -165,6 +196,20 @@ describe '$.append and $.remove methods on special containers', ->
         $tab.remove()
 
         assert.equal $tabGroup[0].tabs.length, 0
+
+      it 'should support traversal', ->
+
+        $tabGroup = $('<TabGroup>')
+
+        $('<Tab>')
+          .appendTo($tabGroup)
+          .append '<View>'
+
+        $('<Tab>')
+          .appendTo $tabGroup
+
+        assert.equal $tabGroup.children().length, 2
+        assert.equal $tabGroup.find().length, 3
 
     describe 'top-level containers', ->
 

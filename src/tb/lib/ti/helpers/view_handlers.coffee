@@ -31,6 +31,9 @@ defaultHandler =
   remove: (parent, child) ->
     parent.remove child
 
+  children: (parent) ->
+    parent.children
+
 barHandler =
 
   add: (parent, child) ->
@@ -69,6 +72,8 @@ viewHandlers =
       else
         throw new Error "TabGroup views can only serve as containers for Tab views"
 
+    children: (parent) -> parent.tabs
+
   TableView:
 
     add: (parent, child) ->
@@ -90,10 +95,19 @@ viewHandlers =
         else
           throw new Error "TableView views can only serve as containers for TableViewRow and TableViewSection views"
 
+    children: (parent) ->
+
+      # Only return
+      rows = _.filter parent.rows, (_row) ->
+        ! _row._inSection
+
+      _.flatten [rows, parent.sections]
+
   TableViewSection:
 
     add: (parent, child) ->
       if child._viewName is 'TableViewRow'
+        child._inSection = true
         parent.add child
       else
         throw new Error "TableViewSection views can only serve as containers for TableViewRow views"
@@ -108,6 +122,8 @@ viewHandlers =
         table.deleteRow _.indexOf table.rows, child
       else
         throw new Error "TableViewSection views can only serve as containers for TableViewRow views"
+
+    children: (parent) -> parent.rows
 
   Picker:
 
@@ -162,7 +178,7 @@ module.exports =
     # PickerColumn will not have a _viewName attribute so we need to handle
     # removal of PickerRows based on child._viewName rather than
     # parent._viewName.
-    if (child._viewName is 'PickerRow') and command is 'remove'
+    if (child?._viewName is 'PickerRow') and command is 'remove'
       parent.removeRow child
 
     else
