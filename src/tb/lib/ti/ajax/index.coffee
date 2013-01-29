@@ -148,10 +148,10 @@ module.exports = ($) ->
               for code, status of map
                 statusCode[code] = [ statusCode[code], status ]
 
-              console.warn statusCode unless _.isEmpty statusCode
-
             else
-              xhr.always map[xhr.status]
+
+              if statusHandler = map[xhr.status]
+                xhr.always statusHandler
 
           @
 

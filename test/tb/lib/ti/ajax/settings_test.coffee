@@ -525,10 +525,10 @@ describe '$.ajax settings', ->
       settings =
         statusCode:
           500: (xhr, textStatus, error) ->
-            assert.equal error, 'This is an error'
+            assert.equal error, 'Internal Server Error'
             done()
 
-      $.ajax '/test', settings
+      $.ajax '/error', settings
 
   describe 'success', ->
   describe 'timeout', ->
