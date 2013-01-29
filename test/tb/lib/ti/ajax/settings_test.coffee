@@ -12,6 +12,8 @@ describe '$.ajax settings', ->
 
   beforeEach ->
 
+    @originalSettings = _.clone $.ajaxSettings
+
     Ti.Network.HTTPClient.resetCaches()
 
     Ti.Network.HTTPClient.mock [
@@ -32,6 +34,7 @@ describe '$.ajax settings', ->
 
   afterEach ->
     Ti.Network.HTTPClient.resetMock()
+    $.ajaxSettings = @originalSettings
 
   describe 'accepts and converters', ->
 
@@ -79,6 +82,21 @@ describe '$.ajax settings', ->
       .fail (xhr, textStatus, error) ->
         throw error
 
+    it 'should be configurable via $.ajaxSetup', (done) ->
+
+      $.ajaxSetup
+        accepts:
+          'custom': 'custom-request-type'
+        dataType: 'custom text'
+        converters:
+          "* custom": _.identity
+
+      $.ajax('/capture').done (data, textStatus, xhr) ->
+        assert.match data, /custom-request-type/
+        done()
+      .fail (xhr, textStatus, error) ->
+        throw error
+
   describe 'async', ->
 
     it 'should default to true', (done) ->
@@ -92,6 +110,15 @@ describe '$.ajax settings', ->
 
       result = $.ajax '/test',
         async: false
+
+      assert.equal result.state(), 'resolved'
+
+    it 'should be configurable via $.ajaxSetup', ->
+
+      $.ajaxSetup
+        async: false
+
+      result = $.ajax '/test'
 
       assert.equal result.state(), 'resolved'
 
@@ -126,6 +153,18 @@ describe '$.ajax settings', ->
 
       $.ajax('/capture', settings).fail (xhr, textStatus, error) ->
         done()
+
+    it 'should be configurable via $.ajaxSetup', (done) ->
+
+      $.ajaxSetup
+        beforeSend: (xhr, settings) ->
+          xhr.setRequestHeader 'some-header', 'some header value'
+
+      $.ajax('/capture').done (data, textStatus, xhr) ->
+        assert.equal data, 'some header value'
+        done()
+      .fail (xhr, textStatus, error) ->
+        throw error
 
   describe 'cache', ->
 
@@ -179,6 +218,15 @@ describe '$.ajax settings', ->
         assert.equal data, '/capture'
         done()
 
+    it 'should be configurable via $.ajaxSetup', (done) ->
+
+      $.ajaxSetup
+        cache: false
+
+      $.ajax('/capture').done (data, textStatus, xhr) ->
+        assert.match data, /\_\=/ # /capture?_=[timestamp]
+        done()
+
   describe 'complete', ->
 
     it 'should call a "complete" handler on success', (done) ->
@@ -195,9 +243,18 @@ describe '$.ajax settings', ->
           assert.equal textStatus, 'error'
           done()
 
+    it 'should be configurable via $.ajaxSetup', (done) ->
+
+      $.ajaxSetup
+        complete: (xhr, textStatus) ->
+          assert.equal textStatus, 'success'
+          done()
+
+      $.ajax '/test'
+
   describe 'contents', ->
 
-    it 'should allow custom contents handling', (done) ->
+    beforeEach ->
 
       Ti.Network.HTTPClient.mocks.push
         url: '/capture'
@@ -206,11 +263,23 @@ describe '$.ajax settings', ->
           responseText: JSON.stringify { test: 'this' }
           contentType: 'fakeson'
 
+    it 'should allow custom contents handling', (done) ->
+
       settings =
         contents:
           json: /json|fakeson/
 
       $.ajax('/capture', settings).done (data, textStatus, xhr) ->
+        assert.deepEqual data, { test: 'this' }
+        done()
+
+    it 'should be configurable via $.ajaxSetup', (done) ->
+
+      $.ajaxSetup
+        contents:
+          json: /json|fakeson/
+
+      $.ajax('/capture').done (data, textStatus, xhr) ->
         assert.deepEqual data, { test: 'this' }
         done()
 
@@ -250,6 +319,36 @@ describe '$.ajax settings', ->
       .fail (xhr, textStatus, error) ->
         throw error
 
+    it 'should be configurable via $.ajaxSetup but not set up unless data is present', (done) ->
+
+      $.ajaxSetup
+        contentType: 'test-global-content-type'
+
+      settings =
+        method: 'POST'
+
+      $.ajax('/capture', settings).done (data, textStatus, xhr) ->
+        assert.equal data, undefined
+        done()
+      .fail (xhr, textStatus, error) ->
+        throw error
+
+    it 'should be configurable via $.ajaxSetup when data is present', (done) ->
+
+      $.ajaxSetup
+        contentType: 'test-global-content-type'
+
+      settings =
+        method: 'POST'
+        data:
+          test: 'this'
+
+      $.ajax('/capture', settings).done (data, textStatus, xhr) ->
+        assert.equal data, 'test-global-content-type'
+        done()
+      .fail (xhr, textStatus, error) ->
+        throw error
+
   describe 'context', ->
 
     it 'should be the settings by default', (done) ->
@@ -282,6 +381,16 @@ describe '$.ajax settings', ->
       $.ajax('/test', settings).done (data, textStatus, xhr) ->
         done()
 
+    it 'should be configurable via $.ajaxSetup', (done) ->
+
+      $.ajaxSetup
+        context:
+          someKey: 'someVal'
+
+      $.ajax('/test').done (data, textStatus, xhr) ->
+        assert.equal @someKey, 'someVal'
+        done()
+
   describe 'converters', ->
 
     it 'should add the converter while preserving the existing converters', (done) ->
@@ -291,6 +400,17 @@ describe '$.ajax settings', ->
           '* custom': ->
 
       $.ajax('/test', settings).done (data, textStatus, xhr) ->
+        assert.ok @converters['* custom']
+        assert.ok @converters['* text']
+        done()
+
+    it 'be configurable via $.ajaxSetup', (done) ->
+
+      $.ajaxSetup
+        converters:
+          '* custom': ->
+
+      $.ajax('/test').done (data, textStatus, xhr) ->
         assert.ok @converters['* custom']
         assert.ok @converters['* text']
         done()
@@ -318,6 +438,20 @@ describe '$.ajax settings', ->
         assert.equal @url, '/test?someKey%5B%5D=1&someKey%5B%5D=2&someKey%5B%5D=3'
         done()
 
+    it 'should be configurable via $.ajaxSetup (and merged with data passed in settings', (done) ->
+
+      $.ajaxSetup
+        data:
+          someOtherKey: 'someOtherValue'
+
+      settings =
+        data:
+          someKey: 'someVal'
+
+      $.ajax('/test', settings).done (data, textStatus, xhr) ->
+        assert.equal @url, '/test?someOtherKey=someOtherValue&someKey=someVal'
+        done()
+
   describe 'dataFilter', ->
 
     it 'should process the response data', (done) ->
@@ -327,6 +461,22 @@ describe '$.ajax settings', ->
         dataFilter: (data, dataType) ->
           assert.equal dataType, 'json'
           data.replace /a\stest/, 'reformatted'
+
+      $.ajax('/test', settings).done (data, textStatus, xhr) ->
+        assert.equal data.test, 'This is reformatted'
+        done()
+      .fail (xhr, textStatus, error) ->
+        throw error
+
+    it 'should be configurable via $.ajaxSetup', (done) ->
+
+      $.ajaxSetup
+        dataFilter: (data, dataType) ->
+          assert.equal dataType, 'json'
+          data.replace /a\stest/, 'reformatted'
+
+      settings =
+        dataType: 'json'
 
       $.ajax('/test', settings).done (data, textStatus, xhr) ->
         assert.equal data.test, 'This is reformatted'
@@ -388,6 +538,17 @@ describe '$.ajax settings', ->
       .fail (xhr, textStatus, error) ->
         throw error
 
+    it 'should be configurable via $.ajaxSetup', (done) ->
+
+      $.ajaxSetup
+        dataType: 'json'
+
+      $.ajax('/test').done (data, textStatus, xhr) ->
+        assert.equal data.test, 'This is a test'
+        done()
+      .fail (xhr, textStatus, error) ->
+        throw error
+
   describe 'error', ->
 
     it 'should accept an error callback', (done) ->
@@ -403,9 +564,24 @@ describe '$.ajax settings', ->
 
       $.ajax '/error', settings
 
+    it 'should be configurable via $.ajaxSetup', (done) ->
+
+      $.ajaxSetup
+        error: (xhr, textStatus, error) ->
+          assert.ok xhr
+          assert.equal error, 'Internal Server Error'
+          assert.equal textStatus, 'error'
+          assert.ok @someSetting, 'someValue' # Check context to callback
+          done()
+
+      settings =
+        someSetting: 'someValue'
+
+      $.ajax '/error', settings
+
   describe 'headers', ->
 
-    it 'should add request headers and come before beforeSend', (done) ->
+    beforeEach ->
 
       Ti.Network.HTTPClient.mocks.push
         url: '/capture'
@@ -416,10 +592,30 @@ describe '$.ajax settings', ->
             'some-other-header': xhr.headers['some-other-header']
           contentType: 'json'
 
+    it 'should add request headers and come before beforeSend', (done) ->
+
       settings =
         headers:
           'some-other-header': 'some other header value'
           'some-header': 'should be overwritten'
+        beforeSend: (xhr, settings) ->
+          xhr.setRequestHeader 'some-header', 'some header value'
+
+      $.ajax('/capture', settings).done (data, textStatus, xhr) ->
+        assert.equal data['some-header'], 'some header value'
+        assert.equal data['some-other-header'], 'some other header value'
+        done()
+      .fail (xhr, textStatus, error) ->
+        throw error
+
+    it 'should be configurable via $.ajaxSetup', (done) ->
+
+      $.ajaxSetup
+        headers:
+          'some-other-header': 'some other header value'
+          'some-header': 'should be overwritten'
+
+      settings =
         beforeSend: (xhr, settings) ->
           xhr.setRequestHeader 'some-header', 'some header value'
 
@@ -490,9 +686,38 @@ describe '$.ajax settings', ->
       .fail (xhr, textStatus, error) ->
         throw error
 
+    it 'should be configurable via $.ajaxSetup', (done) ->
+
+      lastModified = Date.now()
+
+      Ti.Network.HTTPClient.mocks.push
+        url: '/capture'
+        method: 'GET'
+        response: ->
+          responseText: JSON.stringify(test: 'this')
+          headers:
+            "Last-Modified": lastModified
+
+      $.ajaxSetup
+        ifModified: true
+
+      $.ajax('/capture').done (data, textStatus, xhr) ->
+
+        assert.ok xhr.getResponseHeader 'Last-Modified'
+
+        $.ajax('/capture').done (data, textStatus, xhr) ->
+          assert.equal xhr.status, 304
+          assert.equal textStatus, 'notmodified'
+          done()
+        .fail (xhr, textStatus, error) ->
+          throw error
+
+      .fail (xhr, textStatus, error) ->
+        throw error
+
   describe 'mimeType', ->
 
-    it 'should override the xhr mime type', (done) ->
+    beforeEach ->
 
       Ti.Network.HTTPClient.mocks.push
         url: '/capture'
@@ -501,10 +726,23 @@ describe '$.ajax settings', ->
           responseText: JSON.stringify { test: 'this' }
           contentType: 'text/plain'
 
+    it 'should override the xhr mime type', (done) ->
+
       settings =
         mimeType: 'application/json'
 
       $.ajax('/capture', settings).done (data, textStatus, xhr) ->
+        assert.deepEqual data, { test: 'this' }
+        done()
+      .fail (xhr, textStatus, error) ->
+        throw error
+
+    it 'should be configurable via $.ajaxSetup', (done) ->
+
+      $.ajaxSetup
+        mimeType: 'application/json'
+
+      $.ajax('/capture').done (data, textStatus, xhr) ->
         assert.deepEqual data, { test: 'this' }
         done()
       .fail (xhr, textStatus, error) ->
@@ -522,6 +760,18 @@ describe '$.ajax settings', ->
 
       settings =
         processData: false
+        data: 'someVal'
+
+      $.ajax('/test', settings).done (data, textStatus, xhr) ->
+        assert.equal @url, '/test?someVal'
+        done()
+
+    it 'should be configurable via $.ajaxSetup', (done) ->
+
+      $.ajaxSetup
+        processData: false
+
+      settings =
         data: 'someVal'
 
       $.ajax('/test', settings).done (data, textStatus, xhr) ->
@@ -550,6 +800,16 @@ describe '$.ajax settings', ->
 
       $.ajax '/error', settings
 
+    it 'should be configurable via $.ajaxSetup', (done) ->
+
+      $.ajaxSetup
+        statusCode:
+          200: (data, textStatus, xhr) ->
+            assert.deepEqual data, { test: 'This is a test' }
+            done()
+
+      $.ajax '/test'
+
   describe 'success', ->
 
     it 'should allow an array of functions and call each in turn', (done) ->
@@ -569,6 +829,13 @@ describe '$.ajax settings', ->
         ]
 
       $.ajax '/test', settings
+
+    it 'should be configurable via $.ajaxSetup', (done) ->
+
+      $.ajaxSetup
+        success: -> done()
+
+      $.ajax '/test'
 
   describe 'timeout', ->
 
@@ -595,6 +862,14 @@ describe '$.ajax settings', ->
         timeout: 70
 
       $.ajax('/test', settings).done ->
+        done()
+
+    it 'should be configurable via $.ajaxSetup', (done) ->
+
+      $.ajaxSetup
+        timeout: 50
+
+      $.ajax('/test').fail ->
         done()
 
   describe 'traditional', ->
@@ -634,6 +909,20 @@ describe '$.ajax settings', ->
         assert.equal @url, '/test?someKey=1&someKey=2&someKey=3'
         done()
 
+    it 'should be configurable via $.ajaxSetup', (done) ->
+
+      $.ajaxSetup
+        traditional: true
+
+      settings =
+        data:
+          someKey: ['1', '2', '3']
+
+      # ?someKey=1&someKey=2&someKey=3
+      $.ajax('/test', settings).done (data, textStatus, xhr) ->
+        assert.equal @url, '/test?someKey=1&someKey=2&someKey=3'
+        done()
+
   describe 'type and method', ->
 
     beforeEach ->
@@ -663,6 +952,13 @@ describe '$.ajax settings', ->
 
       $.ajax('/test').done -> done()
 
+    it 'should be configurable via $.ajaxSetup', (done) ->
+
+      $.ajaxSetup
+        method: 'POST'
+
+      $.ajax('/capture').done -> done()
+
   describe 'url', ->
 
     it 'should allow the url to be passed in as a setting', (done) ->
@@ -678,6 +974,13 @@ describe '$.ajax settings', ->
         url: '/nope'
 
       $.ajax('/test', settings).done -> done()
+
+    it 'should be configurable via $.ajaxSetup (for some reason)', (done) ->
+
+      $.ajaxSetup
+        url: '/test'
+
+      $.ajax().done -> done()
 
   describe 'xhrFields', ->
 
@@ -700,9 +1003,32 @@ describe '$.ajax settings', ->
       .fail (xhr, textStatus, error) ->
         throw error
 
+    it 'should be configurable via $.ajaxSetup', (done) ->
+
+      Ti.Network.HTTPClient.mocks.push
+        url: '/capture'
+        method: 'GET'
+        response: (data, xhr) ->
+          responseText: [xhr?.autoEncodeUrl, xhr?.tlsVersion].join ':'
+          contentType: 'text'
+
+      $.ajaxSetup
+        xhrFields:
+          tlsVersion: 3
+
+      settings =
+        xhrFields:
+          autoEncodeUrl: false
+
+      $.ajax('/capture', settings).done (data) ->
+        assert.equal data, "false:3"
+        done()
+      .fail (xhr, textStatus, error) ->
+        throw error
+
   describe 'username and password', ->
 
-    it 'should set fields on the HTTPClient', (done) ->
+    beforeEach ->
 
       Ti.Network.HTTPClient.mocks.push
         url: '/capture'
@@ -711,11 +1037,25 @@ describe '$.ajax settings', ->
           responseText: [xhr.username, xhr.password].join ':'
           contentType: 'text'
 
+    it 'should set fields on the HTTPClient', (done) ->
+
       settings =
         username: 'someUsername'
         password: 'somePassword'
 
       $.ajax('/capture', settings).done (data) ->
+        assert.equal data, "someUsername:somePassword"
+        done()
+      .fail (xhr, textStatus, error) ->
+        throw error
+
+    it 'should be configurable via $.ajaxSetup', (done) ->
+
+      $.ajaxSetup
+        username: 'someUsername'
+        password: 'somePassword'
+
+      $.ajax('/capture').done (data) ->
         assert.equal data, "someUsername:somePassword"
         done()
       .fail (xhr, textStatus, error) ->
