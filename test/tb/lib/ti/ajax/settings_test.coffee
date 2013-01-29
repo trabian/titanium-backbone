@@ -571,6 +571,34 @@ describe '$.ajax settings', ->
       $.ajax '/test', settings
 
   describe 'timeout', ->
-  describe 'type', ->
+  describe 'type and method', ->
+
+    beforeEach ->
+
+      Ti.Network.HTTPClient.mocks.push
+        url: '/capture'
+        method: 'POST'
+        response: (data, xhr) ->
+          responseText: xhr?.headers['Content-Type']
+          contentType: 'text'
+
+    it 'should call the request using the specified type', (done) ->
+
+      settings =
+        type: 'POST'
+
+      $.ajax('/capture', settings).done -> done()
+
+    it 'should call the request using the specified method', (done) ->
+
+      settings =
+        method: 'POST'
+
+      $.ajax('/capture', settings).done -> done()
+
+    it 'should be "GET" by default', (done) ->
+
+      $.ajax('/test').done -> done()
+
   describe 'url', ->
   describe 'xhrFields', ->
