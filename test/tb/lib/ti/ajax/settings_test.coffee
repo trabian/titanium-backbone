@@ -681,6 +681,25 @@ describe '$.ajax settings', ->
 
   describe 'xhrFields', ->
 
+    it 'should set fields on the HTTPClient', (done) ->
+
+      Ti.Network.HTTPClient.mocks.push
+        url: '/capture'
+        method: 'GET'
+        response: (data, xhr) ->
+          responseText: xhr?.autoEncodeUrl
+          contentType: 'text'
+
+      settings =
+        xhrFields:
+          autoEncodeUrl: false
+
+      $.ajax('/capture', settings).done (data) ->
+        assert.equal data, false
+        done()
+      .fail (xhr, textStatus, error) ->
+        throw error
+
   describe 'username and password', ->
 
     it 'should set fields on the HTTPClient', (done) ->

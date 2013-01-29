@@ -317,6 +317,11 @@ module.exports = ($) ->
 
       client.open s.type, s.url, s.async
 
+      if s.xhrFields
+
+        for key, value of s.xhrFields
+          client[key] = value
+
       #  Set the correct header, if data is being sent
       if s.data and s.hasContent and s.contentType isnt false or options.contentType
         xhr.setRequestHeader "Content-Type", s.contentType
