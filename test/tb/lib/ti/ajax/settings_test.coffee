@@ -551,6 +551,25 @@ describe '$.ajax settings', ->
       $.ajax '/error', settings
 
   describe 'success', ->
+
+    it 'should allow an array of functions and call each in turn', (done) ->
+
+      handled = 0
+
+      settings =
+        success: [
+          (data, textStatus, xhr) ->
+            handled++
+        ,
+          (data, textStatus, xhr) ->
+            handled++
+        ,
+          (data, textStatus, xhr) ->
+            done() if handled is 2
+        ]
+
+      $.ajax '/test', settings
+
   describe 'timeout', ->
   describe 'type', ->
   describe 'url', ->
