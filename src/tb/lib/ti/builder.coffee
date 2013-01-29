@@ -19,8 +19,6 @@ module.exports = (ti) ->
 
   buildView: ($, node) ->
 
-    console.warn 'build view', node.nodeName
-
     children = node.childNodes
 
     for index in [0...children.length]
