@@ -56,7 +56,6 @@ module.exports = (ti) ->
             $(view).text nestedView
 
           else
-
             $(view).append nestedView
 
         view
