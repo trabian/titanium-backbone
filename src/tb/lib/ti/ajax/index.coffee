@@ -120,6 +120,10 @@ module.exports = ($) ->
 
     ajax: (url, options = {}) ->
 
+      if _.isObject url
+        options = url
+        url = undefined
+
       requestHeaders = {}
 
       client = null

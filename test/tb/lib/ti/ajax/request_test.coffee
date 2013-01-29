@@ -46,6 +46,15 @@ describe '$.ajax methods', ->
             assert.equal xhr.status, 200
             done()
 
+      it 'should support a single-parameter method call', (done) ->
+
+        $.ajax
+          url: '/test'
+          success: (data, textStatus, xhr) ->
+            assert.ok xhr.responseText
+            assert.equal xhr.status, 200
+            done()
+
       it 'should return a status and responseText on error', (done) ->
 
         $.ajax '/error',
