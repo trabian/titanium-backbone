@@ -601,4 +601,19 @@ describe '$.ajax settings', ->
       $.ajax('/test').done -> done()
 
   describe 'url', ->
+
+    it 'should allow the url to be passed in as a setting', (done) ->
+
+      settings =
+        url: '/test'
+
+      $.ajax(settings).done -> done()
+
+    it 'should give precedence to the url passed in the first parameter', (done) ->
+
+      settings =
+        url: '/nope'
+
+      $.ajax('/test', settings).done -> done()
+
   describe 'xhrFields', ->

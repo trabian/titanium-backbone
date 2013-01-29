@@ -237,7 +237,7 @@ module.exports = ($) ->
 
       s = $.ajaxSetup {}, options
 
-      s.url ?= url
+      s.url = url or s.url
 
       strAbort = 'canceled'
 
