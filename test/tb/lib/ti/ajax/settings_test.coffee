@@ -597,6 +597,43 @@ describe '$.ajax settings', ->
       $.ajax('/test', settings).done ->
         done()
 
+  describe 'traditional', ->
+
+    it 'should add array param when false', (done) ->
+
+      settings =
+        traditional: false
+        data:
+          someKey: ['1', '2', '3']
+
+      # ?someKey[]=1&someKey[]=2&someKey[]=3
+      $.ajax('/test', settings).done (data, textStatus, xhr) ->
+        assert.equal @url, '/test?someKey%5B%5D=1&someKey%5B%5D=2&someKey%5B%5D=3'
+        done()
+
+    it 'should default to false', (done) ->
+
+      settings =
+        data:
+          someKey: ['1', '2', '3']
+
+      # ?someKey[]=1&someKey[]=2&someKey[]=3
+      $.ajax('/test', settings).done (data, textStatus, xhr) ->
+        assert.equal @url, '/test?someKey%5B%5D=1&someKey%5B%5D=2&someKey%5B%5D=3'
+        done()
+
+    it 'should not add array param when true', (done) ->
+
+      settings =
+        traditional: true
+        data:
+          someKey: ['1', '2', '3']
+
+      # ?someKey=1&someKey=2&someKey=3
+      $.ajax('/test', settings).done (data, textStatus, xhr) ->
+        assert.equal @url, '/test?someKey=1&someKey=2&someKey=3'
+        done()
+
   describe 'type and method', ->
 
     beforeEach ->
