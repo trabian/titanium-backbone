@@ -134,6 +134,8 @@ module.exports = ($) ->
 
         readyState: 0
 
+        _requestHeader: (name) -> requestHeaders[name]
+
         setRequestHeader: (name, value) ->
           requestHeaders[name] = value
 
