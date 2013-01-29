@@ -309,6 +309,12 @@ module.exports = ($) ->
 
         timeout: s.timeout
 
+      if username = s.username
+        client.username = username
+
+      if password = s.password
+        client.password = password
+
       client.open s.type, s.url, s.async
 
       #  Set the correct header, if data is being sent

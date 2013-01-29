@@ -680,3 +680,24 @@ describe '$.ajax settings', ->
       $.ajax('/test', settings).done -> done()
 
   describe 'xhrFields', ->
+
+  describe 'username and password', ->
+
+    it 'should set fields on the HTTPClient', (done) ->
+
+      Ti.Network.HTTPClient.mocks.push
+        url: '/capture'
+        method: 'GET'
+        response: (data, xhr) ->
+          responseText: [xhr.username, xhr.password].join ':'
+          contentType: 'text'
+
+      settings =
+        username: 'someUsername'
+        password: 'somePassword'
+
+      $.ajax('/capture', settings).done (data) ->
+        assert.equal data, "someUsername:somePassword"
+        done()
+      .fail (xhr, textStatus, error) ->
+        throw error
