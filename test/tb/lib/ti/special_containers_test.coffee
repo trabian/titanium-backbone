@@ -73,16 +73,22 @@ describe '$.append and $.remove methods on special containers', ->
 
         it 'should support rows', ->
 
+          $row = $('<TableViewRow>')
+
+          $label = $('<Label>').appendTo $row
+
           $table = $('<TableView>')
             .append('<TableViewRow>')
-            .append('<TableViewRow>')
+            .append $row
 
-          $root = $('<View>')
+          $root = $('<Window>')
             .append $table
 
           assert.equal $table.children().length, 2
 
-          assert.equal $root.find().length, 3
+          assert.equal $root.find().length, 4
+
+          assert.deepEqual $label.closest('Window'), $root
 
         it 'should support sections and rows', ->
 
