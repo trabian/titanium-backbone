@@ -71,14 +71,16 @@ describe 'CSS styling', ->
 
     it 'should apply the styles when the view is added to a view that is already attached to a window', ->
 
-      $label = $('<Label class="error" />')
+      $childView = $('<View><Label class="error" /></View>')
 
       $view = $('<View class="container">').appendTo '<Window>'
+
+      $label = $childView.find 'Label'
 
       assert.equal $label.attr('height'), undefined
       assert.equal $label.attr('color'), undefined
 
-      $label.appendTo $view
+      $childView.appendTo $view
 
       assert.equal $label.attr('height'), 20
       assert.equal $label.attr('width'), undefined

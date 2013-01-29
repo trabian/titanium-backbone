@@ -12,20 +12,11 @@ module.exports = ($) ->
 
       viewHandlers.handle 'add', parent, $(@)[0]
 
-      if parent._viewName is 'Window'
+      if (parent._viewName is 'Window') or $parent.closest('Window').length
 
-        $(child).find().add(child).each ->
-
-          if styles = styler.stylesForView @
-            $(@).attr styles
-
-      else
-
-        if $parent.closest('Window').length
+        $(@).find().add(@).each ->
 
           if styles = styler.stylesForView @
-
-            # Only apply styles if the view is already attached to a Window
             $(@).attr styles
 
     @
