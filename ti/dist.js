@@ -618,7 +618,7 @@ TitaniumTableView = (function(_super) {
   __extends(TitaniumTableView, _super);
 
   function TitaniumTableView() {
-    this.rows = [];
+    this.data = [];
     this.sections = [];
     TitaniumTableView.__super__.constructor.apply(this, arguments);
   }
@@ -630,26 +630,36 @@ TitaniumTableView = (function(_super) {
   };
 
   TitaniumTableView.prototype.appendRow = function(row) {
-    row.parent = this;
-    return this.rows.push(row);
+    var defaultSection;
+    if (!this.data.length) {
+      defaultSection = new TitaniumTableViewSection;
+      defaultSection.parent = this;
+      this.data.push(defaultSection);
+      this.sections.push(defaultSection);
+    }
+    return this.data[0].add(row);
   };
 
-  TitaniumTableView.prototype.deleteRow = function(index) {
-    var row, section;
-    row = this.rows[index];
-    if (section = row._section) {
-      section.rows = _.without(section.rows, row);
+  TitaniumTableView.prototype.deleteRow = function(indexOrRow) {
+    var _ref;
+    if (_.isNumber(indexOrRow)) {
+
+    } else {
+      return (_ref = this.data[0]) != null ? _ref._remove(indexOrRow) : void 0;
     }
-    return this.rows = _.without(this.rows, row);
   };
 
   TitaniumTableView.prototype.appendSection = function(section) {
     section.parent = this;
+    this.data.push(section);
     return this.sections.push(section);
   };
 
-  TitaniumTableView.prototype.deleteSection = function(index) {
-    return this.sections = _.without(this.sections, this.sections[index]);
+  TitaniumTableView.prototype.deleteSection = function(indexOrSection) {
+    var section;
+    section = _.isNumber(indexOrSection) ? this.sections[indexOrSection] : indexOrSection;
+    this.data = _.without(this.data, section);
+    return this.sections = _.without(this.sections, section);
   };
 
   return TitaniumTableView;
@@ -684,8 +694,11 @@ TitaniumTableViewSection = (function(_super) {
   TitaniumTableViewSection.prototype.add = function(row) {
     row.parent = this;
     row._section = this;
-    this.rows.push(row);
-    return this.parent.appendRow(row);
+    return this.rows.push(row);
+  };
+
+  TitaniumTableViewSection.prototype._remove = function(row) {
+    return this.rows = _.without(this.rows, row);
   };
 
   return TitaniumTableViewSection;

@@ -97,11 +97,13 @@ viewHandlers =
 
     children: (parent) ->
 
-      # Only return
-      rows = _.filter parent.rows, (_row) ->
-        ! _row._inSection
+      data = parent.data
 
-      _.flatten [rows, parent.sections]
+      # Check for default section
+      if (data.length is 1) and not data[0]._viewName
+        data[0].rows
+      else
+        data
 
   TableViewSection:
 
@@ -118,8 +120,10 @@ viewHandlers =
       # section after the table is rendered, use the TableView deleteRow
       # method.
       if child._viewName is 'TableViewRow'
+
         table = parent.parent
-        table.deleteRow _.indexOf table.rows, child
+        table.deleteRow child
+
       else
         throw new Error "TableViewSection views can only serve as containers for TableViewRow views"
 
@@ -180,6 +184,11 @@ module.exports =
     # parent._viewName.
     if (child?._viewName is 'PickerRow') and command is 'remove'
       parent.removeRow child
+
+    else if (child?._viewName is 'TableViewRow') and not parent._viewName
+
+      handlerCommand = viewHandlers['TableViewSection']?[command] or defaultHandler[command]
+      handlerCommand parent, child
 
     else
 

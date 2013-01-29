@@ -1,7 +1,7 @@
 class TitaniumTableView extends TitaniumView
 
   constructor: ->
-    @rows = []
+    @data = []
     @sections = []
     super
 
@@ -11,24 +11,40 @@ class TitaniumTableView extends TitaniumView
     throw new Error 'Rows can not be added to tables via `add`'
 
   appendRow: (row) ->
-    row.parent = @
-    @rows.push row
 
-  deleteRow: (index) ->
+    unless @data.length
 
-    row = @rows[index]
+      defaultSection = new TitaniumTableViewSection
 
-    if section = row._section
-      section.rows = _.without section.rows, row
+      defaultSection.parent = @
 
-    @rows = _.without @rows, row
+      @data.push defaultSection
+      @sections.push defaultSection
+
+    @data[0].add row
+
+  deleteRow: (indexOrRow) ->
+
+    if _.isNumber indexOrRow
+      # Perhaps add handling later?
+
+    else
+      @data[0]?._remove indexOrRow
 
   appendSection: (section) ->
     section.parent = @
+    @data.push section
     @sections.push section
 
-  deleteSection: (index) ->
-    @sections = _.without @sections, @sections[index]
+  deleteSection: (indexOrSection) ->
+
+    section = if _.isNumber indexOrSection
+      @sections[indexOrSection]
+    else
+      indexOrSection
+
+    @data = _.without @data, section
+    @sections = _.without @sections, section
 
 class TitaniumTableViewRow extends TitaniumView
 
@@ -46,7 +62,9 @@ class TitaniumTableViewSection extends TitaniumView
     row.parent = @
     row._section = @
     @rows.push row
-    @parent.appendRow row
+
+  _remove: (row) ->
+    @rows = _.without @rows, row
 
 Ti.UI.createTableView = (attributes) ->
 
