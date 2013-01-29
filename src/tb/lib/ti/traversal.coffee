@@ -1,11 +1,14 @@
 matchers = require './helpers/matchers'
 mini = require './helpers/mini'
+viewHandlers = require './helpers/view_handlers'
 
 # `slice` provides a mechanism for converting an extended array back into a
 # regular Javascript array.
 slice = [].slice
 
 module.exports = ($) ->
+
+  mini = require('./helpers/mini') $
 
   concat: [].concat
 
@@ -42,7 +45,7 @@ module.exports = ($) ->
 
   children: ->
     @map ->
-      $(@children)
+      viewHandlers.handle 'children', @
 
   parent: -> $ @[0].parent
 
