@@ -1,3 +1,5 @@
+mini = require 'tb/lib/ti/helpers/mini'
+
 # matcher = require 'tb/lib/ti/helpers/matchers'
 mergeAttributes = (el, attributes, newAttributes, priority) ->
 
@@ -22,8 +24,7 @@ mergeAttributes = (el, attributes, newAttributes, priority) ->
 
 module.exports =
 
-  load: (@styles, $) ->
-    @mini = require('tb/lib/ti/helpers/mini') $
+  load: (@styles) ->
 
   reset: -> @styles = null
 
@@ -46,7 +47,7 @@ module.exports =
 
           { rules, selector } = selectorRules
 
-          if @mini.is selector, el
+          if mini.is selector, el
             mergeAttributes el, attributes, rules, selector.split(/\s/).length
 
       _.reduce attributes, (out, val, key) ->

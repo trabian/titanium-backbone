@@ -1,7 +1,7 @@
 viewHandlers = require '../helpers/view_handlers'
 styler = require 'tb/lib/styler'
 
-module.exports = ($) ->
+module.exports =
 
   append: (child, options = {}) ->
 

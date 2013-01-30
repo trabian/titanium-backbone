@@ -67,7 +67,7 @@ remove = (element, event, fn, selector) ->
     delete handlers[id][handler.index]
     element.removeEventListener handler.e, handler.proxy
 
-module.exports = ($) ->
+module.exports =
 
   bind: (event, selector, callback) ->
     if not selector or _.isFunction selector

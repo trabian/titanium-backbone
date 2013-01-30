@@ -3,11 +3,13 @@ ElementCollection = (collection) ->
   collection.__proto__ = arguments.callee.prototype
   collection
 
+global = this
+
 module.exports = (ti) ->
 
   builder = require('./builder') ti
 
-  $ = (element) ->
+  $ = global.$ = (element) ->
 
     if element instanceof ElementCollection
       element
@@ -25,13 +27,10 @@ module.exports = (ti) ->
 
   $.param = jQuery.param
 
-  ajax = require('./ajax') $
-  events = require('./events') $
-  manipulation = require('./manipulation') $
-  traversal = require('./traversal') $
-  attributes = require('./attributes') $
+  extensions = for name in ['ajax', 'events', 'manipulation', 'traversal', 'attributes']
+    require "./#{name}"
 
-  fn = _({}).extend events, manipulation, traversal, attributes
+  fn = _({}).extend extensions...
 
   ElementCollection:: = fn
 

@@ -1,7 +1,7 @@
 matchers = require './helpers/matchers'
 values = require './helpers/values'
 
-module.exports = ($) ->
+module.exports =
 
   attr: (name, value) ->
 

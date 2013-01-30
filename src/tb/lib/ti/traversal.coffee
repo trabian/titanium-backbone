@@ -6,9 +6,7 @@ viewHandlers = require './helpers/view_handlers'
 # regular Javascript array.
 slice = [].slice
 
-module.exports = ($) ->
-
-  mini = require('./helpers/mini') $
+module.exports =
 
   concat: [].concat
 
