@@ -1,3 +1,7 @@
+global = @
+
+global.document = {}
+
 module.exports =
 
   load: (options = {}) ->
