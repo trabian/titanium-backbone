@@ -1,5 +1,7 @@
 styles = require('styles').ui
 
+environment = require 'environment'
+
 Presenter = require 'presenters/view'
 
 { Window } = require 'views/ui'
@@ -44,15 +46,20 @@ module.exports = class FormWindow extends Window
     @options.cancelButtonStyle ?= 'nav'
 
     if @options.saveButtonStyle is 'nav'
-      @add @buildSaveButton(), @view, 'setRightNavButton'
+
+      unless environment.android
+        @add @buildSaveButton(), @view, 'setRightNavButton'
+
       @options.layout = styles.window.layouts.default
       @options.formLayout = {}
     else
       @options.layout = styles.window.layouts.noPadding
       @options.formLayout = styles.window.layouts.default
 
-    if @options.cancelButtonStyle is 'nav'
-      @view.leftNavButton = @buildCancelButton().render().view
+
+    unless environment.android
+      if @options.cancelButtonStyle is 'nav'
+        @view.leftNavButton = @buildCancelButton().render().view
 
   buildCancelButton: =>
 

@@ -1,6 +1,13 @@
 styles = require('styles/ui').window
 
+{ ActionBarPresenter } = require 'core/presenters/action_bar'
+
+environment = require 'environment'
+
 mediator = require 'chaplin/mediator'
+
+if environment.android
+  ActionBar = require 'views/android/action_bar'
 
 View = require 'views/base'
 
@@ -22,12 +29,26 @@ module.exports = class Window extends View
 
   initialize: ->
 
+    super
+
     if @options.title
-      @view.title = @options.title
-    else if @title
+      @title = @options.title
+
+    if @title
       @view.title = _.result @, 'title'
 
-    super
+      if environment.android
+
+        @barPresenter = new ActionBarPresenter
+          title: @view.title
+
+        @add bar = new ActionBar
+          presenter: @barPresenter
+
+        @actionBarHeight = bar.view.height
+
+    if environment.android
+      @view.navBarHidden = true
 
     # This introduces a dependence on the 'trabian-banking-core-mobile',
     # but we need to combine those anyway
@@ -50,7 +71,13 @@ module.exports = class Window extends View
       callback = options
       options = {}
 
-    @wrap { height: Ti.UI.FILL }, (view) =>
+    wrapperStyle =
+      height: Ti.UI.FILL
+
+    if @actionBarHeight
+      wrapperStyle.top = @actionBarHeight
+
+    @wrap wrapperStyle, (view) =>
 
       layout = @make 'View', options.style or styles.layouts.default
 
@@ -102,6 +129,8 @@ module.exports = class Window extends View
     @view?.close options
 
   destroy: ->
+    @trigger 'destroy'
+    super
     @dispose?()
 
   _bindControllerEvents: =>

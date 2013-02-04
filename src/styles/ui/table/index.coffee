@@ -1,5 +1,6 @@
 colors = require('styles/theme').colors
 labels = require 'styles/ui/labels'
+helpers = require 'styles/helpers'
 
 sectionLabel = _({}).extend labels.label(13),
   color: colors.table.sectionLabel
@@ -73,23 +74,44 @@ module.exports =
           width: '60%'
         label:
           primary:
-            height: 17
-            font:
-              fontWeight: 'bold'
-              fontSize: 14
+            helpers.deviceStyles
+              default:
+                font:
+                  fontWeight: 'bold'
+                  fontSize: 14
+              android:
+                wordWrap: false
+                ellipsize: true
+              ios:
+                height: 17
           meta:
-            height: 15
+            helpers.deviceStyles
+              ios:
+                height: 15
+              android:
+                wordWrap: false
       subtitle:
         view:
           right: 11
           width: '40%'
         label:
           primary:
-            height: 17
-            textAlign: 'right'
-            font:
-              fontWeight: 'bold'
-              fontSize: 14
+            helpers.deviceStyles
+              default:
+                textAlign: 'right'
+                font:
+                  fontWeight: 'bold'
+                  fontSize: 14
+              ios:
+                height: 17
+              android:
+                wordWrap: false
+                ellipsize: true
           meta:
-            height: 15
-            textAlign: 'right'
+            helpers.deviceStyles
+              default:
+                textAlign: 'right'
+              ios:
+                height: 15
+              android:
+                wordWrap: false
