@@ -1,4 +1,4 @@
-helpers = require '../../../helpers'
+helpers = require '../../helpers'
 
 { assert } = helpers.chai
 
