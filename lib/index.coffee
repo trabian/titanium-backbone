@@ -64,11 +64,11 @@ module.exports =
 
     buildTasks = require('stitch-up').load(root, pkg).tasks
 
-    runSimulator = (callback) ->
+    runSimulator = (platform, callback) ->
 
       simulator = spawn titaniumPath(), [
         'run'
-        '--platform=iphone'
+        "--platform=#{platform}"
       ]
 
       simulator.stdout.on 'data', printIt
@@ -92,9 +92,15 @@ module.exports =
 
         copyTiappIfNeeded ->
           runAndWatch (callback) ->
-            buildTasks.stitch -> runSimulator callback
+            buildTasks.stitch -> runSimulator 'iphone', callback
 
       "iphone:run:nobuild": ->
 
         copyTiappIfNeeded ->
           runAndWatch runSimulator
+
+      "android:run": ->
+
+        copyTiappIfNeeded ->
+          runAndWatch (callback) ->
+            buildTasks.stitch -> runSimulator 'android', callback
