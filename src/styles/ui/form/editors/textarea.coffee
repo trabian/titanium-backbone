@@ -3,16 +3,16 @@ colors = require('styles/theme').colors
 module.exports =
 
   view:
-    height: 150
+    height: 75
     borderColor: colors.table.border
     borderRadius: 11
     backgroundColor: '#fff'
+    bottom: 11
 
   textarea:
     top: 11
-    bottom: 11
     left: 7
     right: 7
-    suppressReturn: false
+    # suppressReturn: false
     font:
       fontSize: 14
