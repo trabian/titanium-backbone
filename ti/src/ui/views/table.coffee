@@ -11,6 +11,8 @@ class TitaniumTableView extends TitaniumView
 
 class TitaniumTableViewRow extends TitaniumView
 
+  setHasChild: (@hasChild) ->
+
 Ti.UI.createTableView = (attributes) ->
 
   new TitaniumTableView attributes

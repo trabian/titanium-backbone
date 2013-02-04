@@ -300,6 +300,10 @@ TitaniumTableViewRow = (function(_super) {
     return TitaniumTableViewRow.__super__.constructor.apply(this, arguments);
   }
 
+  TitaniumTableViewRow.prototype.setHasChild = function(hasChild) {
+    this.hasChild = hasChild;
+  };
+
   return TitaniumTableViewRow;
 
 })(TitaniumView);
