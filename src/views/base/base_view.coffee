@@ -67,7 +67,7 @@ module.exports = class View
     @cid = _.uniqueId 'view'
 
     @_configure options
-    @_bindControllerEvents()
+    # @_bindControllerEvents()
     @_ensureView()
     @initialize.apply @, arguments
     @delegateEvents()
@@ -252,6 +252,8 @@ module.exports = class View
       for binding in @bindings
         do (binding) =>
           binding.model.off binding.eventName, binding.callback
+
+    # @view = null
 
   # Public: Titanium doesn't provide a method for completely clearing a view and
   # replacing it with a new view (similar to @$el.html('replace everything') which

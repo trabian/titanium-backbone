@@ -102,6 +102,8 @@ module.exports = class Window extends View
     @view?.close options
 
   destroy: ->
+    @trigger 'destroy'
+    super
     @dispose?()
 
   _bindControllerEvents: =>

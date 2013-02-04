@@ -30,3 +30,12 @@ module.exports = class Label extends View
       meta: label.meta
     else
       primary: label
+
+  dispose: ->
+
+    return if @disposed
+
+    @primary = null
+    @meta = null
+
+    super
