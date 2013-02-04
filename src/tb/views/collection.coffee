@@ -9,3 +9,6 @@ module.exports = class CollectionView extends Chaplin.CollectionView
   getTemplateFunction: -> @template or ->
 
   filterCallback: (view, included) ->
+
+  delegateNewEvents: (events) ->
+    @_delegateEvents events
