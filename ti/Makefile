@@ -7,6 +7,7 @@ build:
 		src/ui/index.coffee \
 		src/ui/views/base.coffee \
 		src/ui/iphone/index.coffee \
+		src/ui/views/activity_indicator.coffee \
 		src/ui/views/button.coffee \
 		src/ui/views/label.coffee \
 		src/ui/views/scroll_view.coffee \
