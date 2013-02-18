@@ -171,7 +171,7 @@ describe '$ traversal methods', ->
           assert.isFalse @$el.is('[someLongAttr~="wit"]')
           assert.isFalse @$el.is('[someLongAttr~="nope"]')
 
-  describe 'find()', ->
+  describe 'find() and parents()', ->
 
     beforeEach ->
 
@@ -196,6 +196,14 @@ describe '$ traversal methods', ->
 
       $(@otherGrandChild).attr
         class: 'someGrandchild'
+
+    it 'should support traversal of all parents', ->
+      assert.equal $(@grandChild).parents().length, 2
+      assert.ok $(@grandChild).parents().each
+
+    it 'should support traversal of parents matching a selector', ->
+      assert.equal $(@grandChild).parents('.someClass').length, 1
+      assert.ok $(@grandChild).parents('.someClass').each
 
     it 'should allow an empty selector', ->
       assert.equal @$el.find().length, 4

@@ -47,6 +47,24 @@ module.exports =
 
   parent: -> $ @[0].parent
 
+  parents: (selector) ->
+
+    ancestors = []
+    nodes = @
+
+    while nodes[0]
+
+      nodes = $(nodes).map ->
+        if (node = @parent) and ancestors.indexOf(node) < 0
+          if selector
+            ancestors.push node if $(node).is selector
+          else
+            ancestors.push node
+          return node
+        return
+
+    $ ancestors
+
   closest: (selector) ->
 
     parsed = matchers.parseSelector selector
