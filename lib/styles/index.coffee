@@ -34,3 +34,6 @@ module.exports =
 
             callback?()
 
+    else
+      console.log 'stylus node not included in package - skipping style compilation'
+      callback?()
