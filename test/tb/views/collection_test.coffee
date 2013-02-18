@@ -1,6 +1,7 @@
 helpers = require '../../helpers'
 
 { assert } = helpers.chai
+sinon = helpers.sinon
 
 _ = require 'underscore'
 
@@ -43,6 +44,44 @@ describe 'Collection view', ->
 
     assert.equal table.$el.find('TableViewRow').length, 2
 
-    # assert.equal (new ViewWithoutAutoRender).$el.find('Label').length, 0
+  it 'should resize a ScrollView if present when adding items', ->
 
-    # assert.equal (new ViewWithAutoRender).$el.find('Label').length, 1
+    class Row extends Chaplin.View
+
+      tagName: 'TableViewRow'
+
+      className: -> @model.get 'name'
+
+      render: ->
+        @$el.html '<Label>'
+        @
+
+    class Table extends CollectionView
+
+      tagName: 'TableView'
+
+      autoRender: true
+
+      itemView: Row
+
+    class ScrollView extends Chaplin.View
+
+      tagName: 'ScrollView'
+
+    collection = new Backbone.Collection()
+
+    table = new Table { collection }
+
+    scrollView = new ScrollView
+
+    spy = sinon.spy();
+
+    scrollView.$el.append table.el
+
+    scrollView.el.applyProperties = spy
+
+    collection.add
+      id: _.uniqueId 'row'
+      name: 'test-3'
+
+    assert spy.called

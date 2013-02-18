@@ -12,3 +12,21 @@ module.exports = class CollectionView extends Chaplin.CollectionView
 
   delegateNewEvents: (events) ->
     @_delegateEvents events
+
+  # If the collection view is within a ScrollView then the ScrollView needs to
+  # have its height reset after items are added. If there isn't a ScrollView
+  # then this will be a noop.
+  resizeScrollView: ->
+
+    @findScrollView ?= _.once =>
+      @_scrollView = @$list.parents 'ScrollView'
+
+    @findScrollView().attr height: Ti.UI.SIZE
+
+  itemAdded: ->
+    super
+    @resizeScrollView()
+
+  itemsResetted: ->
+    super
+    @resizeScrollView()
