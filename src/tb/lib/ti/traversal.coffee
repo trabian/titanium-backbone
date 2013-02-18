@@ -31,7 +31,6 @@ module.exports =
       .flatten()
       .value()
 
-
   add: (el) ->
     $ @concat $ el
 
