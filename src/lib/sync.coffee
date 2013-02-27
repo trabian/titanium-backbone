@@ -54,7 +54,9 @@ module.exports = class Sync
 
       beforeSend: @options.beforeSend
 
-      error: @options.error
+      error: (e, responseText, status) =>
+        @options.error e, responseText, status
+        options.error? e, responseText, status
 
       progress: @options.progress
 
