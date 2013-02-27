@@ -25,8 +25,8 @@ module.exports = class Button extends View
 
   render: =>
 
-    @view.title = @presenter.get 'text'
-    @view.enabled = !! @presenter.get 'enabled'
+    @view.setTitle @presenter.get 'text'
+    @view.setEnabled !! @presenter.get 'enabled'
 
     @
 
