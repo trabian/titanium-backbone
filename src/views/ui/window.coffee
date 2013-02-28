@@ -90,6 +90,8 @@ module.exports = class Window extends View
 
         scroll.add layout
 
+        @on 'resize', -> scroll.setContentHeight 'auto'
+
         view.add scroll
 
       else

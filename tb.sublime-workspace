@@ -1,0 +1,3027 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"default",
+				"default_payment_date"
+			],
+			[
+				"External",
+				"ExternalView"
+			],
+			[
+				"initia",
+				"initialPath"
+			],
+			[
+				"req",
+				"require"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "Searching 14917 files for \"ajaxTest\" (regex)\n\nUnable to open /Users/mattdean/dev/backbone/titanium-backbone-dev/build/iphone/build/Debug-iphonesimulator/titanium-backbone-ks.app/app-impl.js\nUnable to open /Users/mattdean/dev/backbone/titanium-backbone-dev/build/iphone/build/Debug-iphonesimulator/titanium-backbone-ks.app/styles.js\nUnable to open /Users/mattdean/dev/banking/modules/core/mobile/node_modules/titanium-backbone/build/iphone/build/Debug-iphonesimulator/titanium-backbone-ks.app/app-impl.js\nUnable to open /Users/mattdean/dev/banking/modules/core/mobile/node_modules/titanium-backbone/build/iphone/build/Debug-iphonesimulator/titanium-backbone-ks.app/styles.js\nUnable to open /Users/mattdean/dev/banking/modules/core/mobile-android/node_modules/titanium-backbone/build/iphone/build/Debug-iphonesimulator/titanium-backbone-ks.app/app-impl.js\nUnable to open /Users/mattdean/dev/banking/modules/core/mobile-android/node_modules/titanium-backbone/build/iphone/build/Debug-iphonesimulator/titanium-backbone-ks.app/styles.js\n/Users/mattdean/dev/forks/jquery/test/data/testinit.js:\n  145  \n  146  // Ajax testing helper\n  147: function ajaxTest( title, expect, options ) {\n  148  	var requestOptions;\n  149  	if ( jQuery.isFunction( options ) ) {\n  ...\n  165  				if ( !completed && --remaining === 0 ) {\n  166  					completed = true;\n  167: 					delete ajaxTest.abort;\n  168  					if ( options.teardown ) {\n  169  						options.teardown();\n  ...\n  197  			});\n  198  \n  199: 		ajaxTest.abort = function( reason ) {\n  200  			if ( !completed ) {\n  201  				completed = true;\n  202: 				delete ajaxTest.abort;\n  203  				ok( false, \"aborted \" + reason );\n  204  				jQuery.each( requests, function( i, request ) {\n\n/Users/mattdean/dev/forks/jquery/test/data/testrunner.js:\n  310  		if ( jQuery.active !== undefined && jQuery.active !== oldActive ) {\n  311  			equal( jQuery.active, 0, \"No AJAX requests are still active\" );\n  312: 			if ( ajaxTest.abort ) {\n  313: 				ajaxTest.abort(\"active requests\");\n  314  			}\n  315  			oldActive = jQuery.active;\n\n/Users/mattdean/dev/forks/jquery/test/unit/ajax.js:\n   36  	});\n   37  \n   38: 	ajaxTest( \"jQuery.ajax() - success callbacks\", 8, {\n   39  		setup: addGlobalEvents(\"ajaxStart ajaxStop ajaxSend ajaxComplete ajaxSuccess\"),\n   40  		url: url(\"data/name.html\"),\n   ..\n   50  	});\n   51  \n   52: 	ajaxTest( \"jQuery.ajax() - success callbacks - (url, options) syntax\", 8, {\n   53  		setup: addGlobalEvents(\"ajaxStart ajaxStop ajaxSend ajaxComplete ajaxSuccess\"),\n   54  		create: function( options ) {\n   ..\n   66  	});\n   67  \n   68: 	ajaxTest( \"jQuery.ajax() - success callbacks (late binding)\", 8, {\n   69  		setup: addGlobalEvents(\"ajaxStart ajaxStop ajaxSend ajaxComplete ajaxSuccess\"),\n   70  		url: url(\"data/name.html\"),\n   ..\n   84  	});\n   85  \n   86: 	ajaxTest( \"jQuery.ajax() - success callbacks (oncomplete binding)\", 8, {\n   87  		setup: addGlobalEvents(\"ajaxStart ajaxStop ajaxSend ajaxComplete ajaxSuccess\"),\n   88  		url: url(\"data/name.html\"),\n   ..\n  102  	});\n  103  \n  104: 	ajaxTest( \"jQuery.ajax() - error callbacks\", 8, {\n  105  		setup: addGlobalEvents(\"ajaxStart ajaxStop ajaxSend ajaxComplete ajaxError\"),\n  106  		url: url(\"data/name.php?wait=5\"),\n  ...\n  119  	});\n  120  \n  121: 	ajaxTest( \"jQuery.ajax() - textStatus and errorThrown values\", 4, [\n  122  		{\n  123  			url: url(\"data/name.php?wait=5\"),\n  ...\n  142  	]);\n  143  \n  144: 	ajaxTest( \"jQuery.ajax() - responseText on error\", 1, {\n  145  		url: url(\"data/errorWithText.php\"),\n  146  		error: function( xhr ) {\n  ...\n  183  	});\n  184  \n  185: 	ajaxTest( \"jQuery.ajax() - headers\", 4, {\n  186  		setup: function() {\n  187  			jQuery( document ).ajaxSend(function( evt, xhr ) {\n  ...\n  219  	});\n  220  \n  221: 	ajaxTest( \"jQuery.ajax() - Accept header\", 1, {\n  222  		url: url(\"data/headers.php?keys=accept\"),\n  223  		headers: {\n  ...\n  232  	});\n  233  \n  234: 	ajaxTest( \"jQuery.ajax() - contentType\", 2, [\n  235  		{\n  236  			url: url(\"data/headers.php?keys=content-type\"),\n  ...\n  249  	]);\n  250  \n  251: 	ajaxTest( \"jQuery.ajax() - protocol-less urls\", 1, {\n  252  		url: \"//somedomain.com\",\n  253  		beforeSend: function( xhr, settings ) {\n  ...\n  258  	});\n  259  \n  260: 	ajaxTest( \"jQuery.ajax() - hash\", 3, [\n  261  		{\n  262  			url: \"data/name.html#foo\",\n  ...\n  288  	]);\n  289  \n  290: 	ajaxTest( \"jQuery.ajax() - cross-domain detection\", 7, function() {\n  291  		function request( url, title, crossDomainOrOptions ) {\n  292  			return jQuery.extend( {\n  ...\n  342  	});\n  343  \n  344: 	ajaxTest( \"jQuery.ajax() - abort\", 9, {\n  345  		setup: addGlobalEvents(\"ajaxStart ajaxStop ajaxSend ajaxError ajaxComplete\"),\n  346  		url: url(\"data/name.php?wait=5\"),\n  ...\n  359  	});\n  360  \n  361: 	ajaxTest( \"jQuery.ajax() - events with context\", 12, function() {\n  362  \n  363  		var context = document.createElement(\"div\");\n  ...\n  397  	});\n  398  \n  399: 	ajaxTest( \"jQuery.ajax() - events without context\", 3, function() {\n  400  		function nocallback( msg ) {\n  401  			return function() {\n  ...\n  411  	});\n  412  \n  413: 	ajaxTest( \"jQuery.ajax() - context modification\", 1, {\n  414  		url: url(\"data/name.html\"),\n  415  		context: {},\n  ...\n  423  	});\n  424  \n  425: 	ajaxTest( \"jQuery.ajax() - context modification through ajaxSetup\", 3, function() {\n  426  		var obj = {};\n  427  		return {\n  ...\n  447  	});\n  448  \n  449: 	ajaxTest( \"jQuery.ajax() - disabled globals\", 3, {\n  450  		setup: addGlobalEvents(\"\"),\n  451  		global: false,\n  ...\n  462  	});\n  463  \n  464: 	ajaxTest( \"jQuery.ajax() - xml: non-namespace elements inside namespaced elements\", 3, {\n  465  		url: url(\"data/with_fries.xml\"),\n  466  		dataType: \"xml\",\n  ...\n  472  	});\n  473  \n  474: 	ajaxTest( \"jQuery.ajax() - xml: non-namespace elements inside namespaced elements (over JSONP)\", 3, {\n  475  		url: url(\"data/with_fries_over_jsonp.php\"),\n  476  		dataType: \"jsonp xml\",\n  ...\n  482  	});\n  483  \n  484: 	ajaxTest( \"jQuery.ajax() - HEAD requests\", 2, [\n  485  		{\n  486  			url: url(\"data/name.html\"),\n  ...\n  502  	]);\n  503  \n  504: 	ajaxTest( \"jQuery.ajax() - beforeSend\", 1, {\n  505  		url: url(\"data/name.html\"),\n  506  		beforeSend: function( xml ) {\n  ...\n  512  	});\n  513  \n  514: 	ajaxTest( \"jQuery.ajax() - beforeSend, cancel request manually\", 2, {\n  515  		create: function() {\n  516  			return jQuery.ajax({\n  ...\n  536  	});\n  537  \n  538: 	ajaxTest( \"jQuery.ajax() - dataType html\", 5, {\n  539  		setup: function() {\n  540  			Globals.register(\"testFoo\");\n  ...\n  551  	});\n  552  \n  553: 	ajaxTest( \"jQuery.ajax() - synchronous request\", 1, {\n  554  		url: url(\"data/json_obj.js\"),\n  555  		dataType: \"text\",\n  ...\n  561  	});\n  562  \n  563: 	ajaxTest( \"jQuery.ajax() - synchronous request with callbacks\", 2, {\n  564  		url: url(\"data/json_obj.js\"),\n  565  		async: false,\n  ...\n  606  	});\n  607  \n  608: 	ajaxTest( \"jQuery.ajax() - cache\", 12, function() {\n  609  \n  610  		var re = /_=(.*?)(&|$)/g;\n  ...\n  657  	jQuery.each( [ \" - Same Domain\", \" - Cross Domain\" ], function( crossDomain, label ) {\n  658  \n  659: 		ajaxTest( \"jQuery.ajax() - JSONP - Query String (?n)\" + label, 4, [\n  660  			{\n  661  				url: \"data/jsonp.php?callback=?\",\n  ...\n  692  		]);\n  693  \n  694: 		ajaxTest( \"jQuery.ajax() - JSONP - Explicit callback param\" + label, 9, {\n  695  			setup: function() {\n  696  				Globals.register(\"functionToCleanUp\");\n  ...\n  756  		});\n  757  \n  758: 		ajaxTest( \"jQuery.ajax() - JSONP - Callback in data\" + label, 2, [\n  759  			{\n  760  				url: \"data/jsonp.php\",\n  ...\n  778  \n  779  \n  780: 		ajaxTest( \"jQuery.ajax() - JSONP - POST\" + label, 3, [\n  781  			{\n  782  				type: \"POST\",\n  ...\n  810  		]);\n  811  \n  812: 		ajaxTest( \"jQuery.ajax() - JSONP\" + label, 3, [\n  813  			{\n  814  				url: \"data/jsonp.php\",\n  ...\n  842  	});\n  843  \n  844: 	ajaxTest( \"jQuery.ajax() - script, Remote\", 2, {\n  845  		setup: function() {\n  846  			Globals.register(\"testBar\");\n  ...\n  853  	});\n  854  \n  855: 	ajaxTest( \"jQuery.ajax() - script, Remote with POST\", 3, {\n  856  		setup: function() {\n  857  			Globals.register(\"testBar\");\n  ...\n  866  	});\n  867  \n  868: 	ajaxTest( \"jQuery.ajax() - script, Remote with scheme-less URL\", 2, {\n  869  		setup: function() {\n  870  			Globals.register(\"testBar\");\n  ...\n  877  	});\n  878  \n  879: 	ajaxTest( \"jQuery.ajax() - malformed JSON\", 2, {\n  880  		url: \"data/badjson.js\",\n  881  		dataType: \"json\",\n  ...\n  886  	});\n  887  \n  888: 	ajaxTest( \"jQuery.ajax() - script by content-type\", 2, [\n  889  		{\n  890  			url: \"data/script.php\",\n  ...\n  903  	]);\n  904  \n  905: 	ajaxTest( \"jQuery.ajax() - JSON by content-type\", 5, {\n  906  		url: \"data/json.php\",\n  907  		data: {\n  ...\n  918  	});\n  919  \n  920: 	ajaxTest( \"jQuery.ajax() - JSON by content-type disabled with options\", 6, {\n  921  		url: url(\"data/json.php\"),\n  922  		data: {\n  ...\n  938  	});\n  939  \n  940: 	ajaxTest( \"jQuery.ajax() - simple get\", 1, {\n  941  		type: \"GET\",\n  942  		url: url(\"data/name.php?name=foo\"),\n  ...\n  946  	});\n  947  \n  948: 	ajaxTest( \"jQuery.ajax() - simple post\", 1, {\n  949  		type: \"POST\",\n  950  		url: url(\"data/name.php\"),\n  ...\n  955  	});\n  956  \n  957: 	ajaxTest( \"jQuery.ajax() - data option - empty bodies for non-GET requests\", 1, {\n  958  		url: \"data/echoData.php\",\n  959  		data: undefined,\n  ...\n 1018  	);\n 1019  \n 1020: 	ajaxTest( \"jQuery.ajax() - failing cross-domain (non-existing)\", 1, {\n 1021  		// see RFC 2606\n 1022  		url: \"http://example.invalid\",\n ....\n 1026  	});\n 1027  \n 1028: 	ajaxTest( \"jQuery.ajax() - failing cross-domain\", 1, {\n 1029  		url: \"http://\" + externalHost,\n 1030  		error: function( xhr, _, e ) {\n ....\n 1033  	});\n 1034  \n 1035: 	ajaxTest( \"jQuery.ajax() - atom+xml\", 1, {\n 1036  		url: url(\"data/atom+xml.php\"),\n 1037  		success: function() {\n ....\n 1154  	});\n 1155  \n 1156: 	ajaxTest( \"jQuery.ajax() - transitive conversions\", 8, [\n 1157  		{\n 1158  			url: url(\"data/json.php\"),\n ....\n 1188  	]);\n 1189  \n 1190: 	ajaxTest( \"jQuery.ajax() - overrideMimeType\", 2, [\n 1191  		{\n 1192  			url: url(\"data/json.php\"),\n ....\n 1207  	]);\n 1208  \n 1209: 	ajaxTest( \"jQuery.ajax() - empty json gets to error callback instead of success callback.\", 1, {\n 1210  		url: url(\"data/echoData.php\"),\n 1211  		error: function( _, __, error ) {\n ....\n 1215  	});\n 1216  \n 1217: 	ajaxTest( \"#2688 - jQuery.ajax() - beforeSend, cancel request\", 2, {\n 1218  		create: function() {\n 1219  			return jQuery.ajax({\n ....\n 1239  	});\n 1240  \n 1241: 	ajaxTest( \"#2806 - jQuery.ajax() - data option - evaluate function values\", 1, {\n 1242  		url: \"data/echoQuery.php\",\n 1243  		data: {\n ....\n 1266  \n 1267  	jQuery.each( [ \" - Same Domain\", \" - Cross Domain\" ], function( crossDomain, label ) {\n 1268: 		ajaxTest( \"#7578 - jQuery.ajax() - JSONP - default for cache option\" + label, 1, {\n 1269  			url: \"data/jsonp.php\",\n 1270  			dataType: \"jsonp\",\n ....\n 1278  	});\n 1279  \n 1280: 	ajaxTest( \"#8107 - jQuery.ajax() - multiple method signatures introduced in 1.5\", 4, [\n 1281  		{\n 1282  			create: function() {\n ....\n 1315  \n 1316  	jQuery.each( [ \" - Same Domain\", \" - Cross Domain\" ], function( crossDomain, label ) {\n 1317: 		ajaxTest( \"#8205 - jQuery.ajax() - JSONP - re-use callbacks name\" + label, 2, {\n 1318  			url: \"data/jsonp.php\",\n 1319  			dataType: \"jsonp\",\n ....\n 1370  		}\n 1371  \n 1372: 		ajaxTest( \"#10093 - jQuery.ajax() - falsy url \" + title, 4, [\n 1373  			request( \"\", \"empty string\" ),\n 1374  			request( false ),\n ....\n 1379  	});\n 1380  \n 1381: 	ajaxTest( \"#11426 - jQuery.ajax() - loading binary data shouldn't throw an exception in IE\", 1, {\n 1382  		url: url(\"data/1x1.jpg\"),\n 1383  		success: function( data ) {\n ....\n 1427  		}\n 1428  \n 1429: 		ajaxTest( \"#12004 - jQuery.ajax() - method is an alias of type - \" + globalOption + \" set globally\", 3, {\n 1430  			setup: function() {\n 1431  				var options = {};\n ....\n 1442  	});\n 1443  \n 1444: 	ajaxTest( \"#13276 - jQuery.ajax() - compatibility between XML documents from ajax requests and parsed string\", 1, {\n 1445  		url: \"data/dashboard.xml\",\n 1446  		dataType: \"xml\",\n ....\n 1460  //----------- jQuery.ajaxPrefilter()\n 1461  \n 1462: 	ajaxTest( \"jQuery.ajaxPrefilter() - abort\", 1, {\n 1463  		setup: function() {\n 1464  			jQuery.ajaxPrefilter(function( options, _, jqXHR ) {\n\n65 matches across 3 files\n",
+			"settings":
+			{
+				"buffer_size": 12328,
+				"line_ending": "Unix",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "/Users/mattdean/dev/forks/jquery/test/data/testinit.js",
+			"settings":
+			{
+				"buffer_size": 6942,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/mattdean/dev/backbone/titanium-backbone-ks/src/ks/views/main.coffee",
+			"settings":
+			{
+				"buffer_size": 595,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/mattdean/dev/backbone/titanium-backbone-ks/src/ks/views/template.jade",
+			"settings":
+			{
+				"buffer_size": 138,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/mattdean/dev/backbone/titanium-backbone-ks/styles/ks/index.styl",
+			"settings":
+			{
+				"buffer_size": 341,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/mattdean/dev/backbone/titanium-backbone-dev/styles/tb/index.styl",
+			"settings":
+			{
+				"buffer_size": 79,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/mattdean/dev/backbone/titanium-backbone-dev/styles/tb/mixins.styl",
+			"settings":
+			{
+				"buffer_size": 270,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/mattdean/dev/backbone/titanium-backbone-dev/styles/tb/labels.styl",
+			"settings":
+			{
+				"buffer_size": 277,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/mattdean/dev/backbone/titanium-backbone-dev/test/tb/lib/ti/ajax_test.coffee",
+			"settings":
+			{
+				"buffer_size": 1750,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "module.exports = ($) ->\n\n  _.extend $,\n\n    ajaxSettings:\n      type: 'GET'\n      converters:\n        json: JSON.parse\n        text: _.identity\n\n    ajaxConvert: (type, text) ->\n      converter = @ajaxSettings.converters[type] or _.identity\n      converter? text\n\n    ajax: (url, options = {}) ->\n\n      xhr = {}\n\n      deferred = new Deferred()\n\n      _(xhr).extend deferred.promise()\n\n      xhr.done ->\n        options.success?.apply @, arguments\n\n      s = @ajaxSettings\n\n      dataType = options.dataType ? 'text'\n      method = options.method ? s.type\n\n      client = Ti.Network.createHttpClient\n\n        onload: (e) ->\n          data = $.ajaxConvert dataType, @responseText\n          deferred.resolve data, null, @\n\n      client.open 'GET', url\n\n      client.send()\n\n      xhr\n\n    $.ajax('/url', { success: -> alert 'done'}).done ->\n      # do something\n",
+			"file": "/Users/mattdean/dev/backbone/titanium-backbone-dev/src/tb/lib/ti/ajax.coffee",
+			"file_size": 783,
+			"file_write_time": 1358945578000000,
+			"settings":
+			{
+				"buffer_size": 861,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/mattdean/dev/backbone/titanium-backbone-dev/ti/src/network/index.coffee",
+			"settings":
+			{
+				"buffer_size": 617,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/mattdean/dev/forks/jquery/src/ajax.js",
+			"settings":
+			{
+				"buffer_size": 22809,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/mattdean/dev/backbone/titanium-backbone-dev/package.json",
+			"settings":
+			{
+				"buffer_size": 1937,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 375.0,
+		"selected_items":
+		[
+			[
+				"jav",
+				"Coffee: Display JavaScript"
+			],
+			[
+				"rename",
+				"File: Rename"
+			],
+			[
+				"delete",
+				"File: Delete"
+			],
+			[
+				"private",
+				"GitHub: Private Gist from Selection"
+			],
+			[
+				"gist",
+				"GitHub: Private Gist from Selection"
+			],
+			[
+				"chan",
+				"ChangeQuotes"
+			],
+			[
+				"quote",
+				"ChangeQuotes"
+			],
+			[
+				"java",
+				"Coffee: Display JavaScript"
+			],
+			[
+				"renam",
+				"File: Rename"
+			],
+			[
+				"publi",
+				"GitHub: Public Gist from Selection"
+			],
+			[
+				"coffee",
+				"Set Syntax: CoffeeScript"
+			],
+			[
+				"duplic",
+				"File: Duplicate"
+			],
+			[
+				"change",
+				"Git: Change Branch"
+			],
+			[
+				"dupli",
+				"File: Duplicate"
+			],
+			[
+				"duplicate",
+				"File: Duplicate"
+			],
+			[
+				"duplicat",
+				"File: Duplicate"
+			],
+			[
+				"npm",
+				"NPM::Edit Package"
+			],
+			[
+				"ruby",
+				"Set Syntax: Ruby"
+			],
+			[
+				"wrap",
+				"Word Wrap: Toggle"
+			],
+			[
+				"check",
+				"Git: Checkout Current File"
+			],
+			[
+				"diff",
+				"Git: Diff Current File"
+			],
+			[
+				"edit",
+				"NPM::Edit Package"
+			],
+			[
+				"package",
+				"Package Control: List Packages"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"bran",
+				"Git: Change Branch"
+			],
+			[
+				"chang",
+				"Git: Change Branch"
+			],
+			[
+				"stash",
+				"Git: Stash Changes"
+			],
+			[
+				"branch",
+				"Git: Change Branch"
+			],
+			[
+				"chag",
+				"ChangeQuotes"
+			],
+			[
+				"loan",
+				"SublimeLinter: Load-Save Linting"
+			],
+			[
+				"pcka",
+				"Package Control: List Packages"
+			],
+			[
+				"git",
+				"Git: Change Branch"
+			],
+			[
+				"packag",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: List Packages"
+			],
+			[
+				"hide",
+				"Guard: Hide Guard Output"
+			],
+			[
+				"stop",
+				"Guard: Stop Guard"
+			],
+			[
+				"guard",
+				"Guard: Start Guard"
+			],
+			[
+				"start",
+				"Guard: Start Guard"
+			],
+			[
+				"gitx",
+				"GitX: Open GitX"
+			],
+			[
+				"guard star",
+				"Guard: Start Guard"
+			],
+			[
+				"guard stop",
+				"Guard: Stop Guard"
+			],
+			[
+				"git add",
+				"Git: Add Current File"
+			],
+			[
+				"star",
+				"Guard: Start Guard"
+			],
+			[
+				"git file",
+				"Git: Add Current File"
+			],
+			[
+				"packac",
+				"Package Control: Install Package"
+			],
+			[
+				"git add cu",
+				"Git: Add Current File"
+			],
+			[
+				"show",
+				"Guard: Show Guard Output"
+			],
+			[
+				"synt cof",
+				"Set Syntax: CoffeeScript"
+			],
+			[
+				"cha q",
+				"ChangeQuotes"
+			],
+			[
+				"coffe",
+				"Set Syntax: CoffeeScript"
+			],
+			[
+				"git change",
+				"Git: Change Branch"
+			],
+			[
+				"git show",
+				"Git: Show Current File"
+			],
+			[
+				"log",
+				"Git: Log Current File"
+			],
+			[
+				"git log",
+				"Git: Log Current File"
+			],
+			[
+				"git open",
+				"Git: Open..."
+			],
+			[
+				"git merge",
+				"Git: Merge Branch"
+			],
+			[
+				"search",
+				"Titanium API: Search Selection"
+			],
+			[
+				"tit",
+				"Titanium API: Search Selection"
+			],
+			[
+				"delet",
+				"File: Delete"
+			],
+			[
+				"git new b",
+				"Git: New Branch"
+			],
+			[
+				"git bran",
+				"Git: Change Branch"
+			],
+			[
+				"synta coff",
+				"Set Syntax: CoffeeScript"
+			],
+			[
+				"git status",
+				"Git: Status"
+			],
+			[
+				"git stats",
+				"Git: Status"
+			],
+			[
+				"guard ",
+				"Guard: Start Guard"
+			],
+			[
+				"git sho",
+				"Git: Show Current File"
+			],
+			[
+				"quotes",
+				"ChangeQuotes"
+			],
+			[
+				"tita",
+				"Titanium API: Search Selection"
+			],
+			[
+				"syntjs",
+				"Set Syntax: JSON"
+			],
+			[
+				"prett",
+				"Pretty JSON: Reformat (Pretty Print) JSON"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"list",
+				"Package Control: List Packages"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"instl",
+				"Package Control: Install Package"
+			],
+			[
+				"quo",
+				"ChangeQuotes"
+			],
+			[
+				"case",
+				"Convert Case: camelCase"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"snak",
+				"Convert Case: snake_case"
+			],
+			[
+				"sna",
+				"Snippet: Array Comprehension"
+			],
+			[
+				"snake",
+				"Convert Case: snake_case"
+			],
+			[
+				"snap",
+				"Snippet: Array Comprehension"
+			],
+			[
+				"con sn",
+				"Convert Case: snake_case"
+			],
+			[
+				"con pas",
+				"Convert Case: PascalCase"
+			],
+			[
+				"git re",
+				"Git: Reset (unstage) Current File"
+			],
+			[
+				"guard st",
+				"Guard: Start Guard"
+			],
+			[
+				"gst",
+				"Git: Status"
+			],
+			[
+				"sublie",
+				"Sublime Files: Open Navigator"
+			],
+			[
+				":func",
+				"Snippet: Function (bound)"
+			],
+			[
+				":fu",
+				"Snippet: Function"
+			],
+			[
+				":0",
+				":0 - BOF"
+			],
+			[
+				"trailin",
+				"Trailing Spaces: Delete Trailing Spaces"
+			],
+			[
+				"show ",
+				"SublimeLinter: Show Error List"
+			],
+			[
+				"packa",
+				"Package Control: Install Package"
+			],
+			[
+				"package ",
+				"Package Control: Install Package"
+			],
+			[
+				"brose pac",
+				"Preferences: Browse Packages"
+			]
+		],
+		"width": 579.0
+	},
+	"console":
+	{
+		"height": 125.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/lib/styles/converter.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/Resources/generated/styles.js",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/Resources/generated/app-impl.js",
+		"/Users/mattdean/dev/forks/jquery/test/unit/ajax.js",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/test/tb/lib/ti/ajax_test.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/src/tb/lib/ti/extend.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/src_old/lib/network.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/ti/Makefile",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/ti/src/network/http_client.coffee",
+		"/Users/mattdean/dev/forks/jquery/src/ajax/xhr.js",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/package.json",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/.gitignore",
+		"/Users/mattdean/dev/backbone/titanium-backbone-ks/src/ks/views/template.jade",
+		"/Users/mattdean/dev/backbone/titanium-backbone-ks/src/ks/views/main.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/lib/generator/index.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/lib/generator/_template/src/app.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-ks/package.json",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/test/lib/stylus_converter_test.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/styles/tb/index.styl",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/lib/generator/_template/Resources/generated/app-impl.js",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/lib/generator/_template/styles/main.styl",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/lib/generator/_template/Cakefile",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/lib/styles/index.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/lib/generator/_template/Resources/app.js",
+		"/Users/mattdean/dev/backbone/titanium-backbone-ks/src/ks/index.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/lib/generator/_template/.gitignore",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/styles/main.styl",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/Resources/app.js",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/lib/generator/_template/Resources/generated/.gitkeep",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/Resources/styles.js",
+		"/Users/mattdean/dev/backbone/titanium-backbone-ks/styles/ks/index.styl",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/styles/tb/labels.styl",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/styles/tb/forms.styl",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/styles/mixins/common.styl",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/styles/tb/layout.styl",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/node_modules/stitch-up/lib/index.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/node_modules/titanium-backbone-ks/styles/ks/index.styl",
+		"/Users/mattdean/dev/backbone/titanium-backbone-ks/index.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/node_modules/stitch-up/lib/utils/merge.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/lib/index.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/Cakefile",
+		"/Users/mattdean/dev/backbone/titanium-backbone-ks/styles/ks/main.styl",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/src/tb/lib/ti/helpers/values.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/lib/converter/stylus.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/src/tb/lib/ti/attributes.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/src/tb/lib/ti/index.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/node_modules/stitch-up/node_modules/stitch/src/stitch.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/src/tb/lib/ti/helpers/matchers.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/scratch.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/test/tb/lib/ti/styles_test.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/node_modules/stitch-up/node_modules/stitch/lib/stitch.js",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/test/tb/lib/ti/attributes_test.coffee",
+		"/Users/mattdean/dev/forks/stylus/lib/visitor/compiler.js",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/Resources/app-impl.js",
+		"/Users/mattdean/dev/backbone/titanium-backbone-ks/styles/main.styl",
+		"/Users/mattdean/dev/backbone/titanium-backbone-ks/src/ks/styles/index.styl",
+		"/Users/mattdean/dev/backbone/titanium-backbone-ks/src/ks/styles/labels.styl",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/test/src/fixtures/styles.styl",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/styles/mixins/labels.styl",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/styles/labels.styl",
+		"/Users/mattdean/dev/backbone/titanium-backbone-ks/src/ks/styles.styl",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/ti/src/ui/index.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/test.js",
+		"/Users/mattdean/dev/forks/stylus/lib/stylus.js",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/test/tb/lib/ti/manipulation_test.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/testem.json",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/test/tb/views/base/index_test.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/test/tb/views/base/binding_test.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/test/helpers/index.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/test/lib/jade_converter_test.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/src/tb/lib/ti/helpers/mini.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/src/tb/lib/ti/builder.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/src/tb/lib/styler.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/test/tb/lib/ti/traversal_test.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/src/tb/lib/ti/traversal.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/src/tb/lib/ti/manipulation/index.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/src/tb/lib/ti/styles.coffee",
+		"/Users/mattdean/dev/forks/zepto/src/zepto.js",
+		"/Users/mattdean/dev/forks/zepto/src/stack.js",
+		"/Users/mattdean/dev/banking/modules/core/web/vendor/jquery.js",
+		"/Users/mattdean/dev/forks/zepto/src/touch.js",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/test/src/fixtures/template.jade",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/src/tb/index.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/test/tb/lib/ti/extend_test.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/src/tb/lib/ti/style.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/ti/src/ui/views/search_bar.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/ti/src/ui/views/switch.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/src/tb/lib/stickit.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/src/tb/lib/styles.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/ti/src/ui/views/slider.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/node_modules/backbone.stickit/backbone.stickit.js",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/node_modules/backbone.stickit/test/bindData.js",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/node_modules/backbone.stickit/test/vendor/backbone.js",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/node_modules/backbone.stickit/test/modelBinding.js",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/vendor/backbone.stickit.js",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/node_modules/backbone/backbone.js",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/src/scratch.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/ti/src/ui/views/text_area.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/ti/src/ui/views/text_field.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/ti/src/ui/views/base.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/ti/src/xml/index.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/src/tb/lib/ti/README.md",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/test/src/test/fixtures/template.jade",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/test/tb/lib/ti/fixtures/template.jade",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/test/tb/mock_tests/xml_test.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/ti/src/ui/ios/ad_view.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/vendor/backbone.js",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/src/tb/lib/backbone-extensions/index.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/vendor/jade.js",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/src/tb/lib/helpers/jade.js",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/src/tb/lib/ti/helpers/jade.js",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/tiapp.xml",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/ti/src/ui/views/activity_indicator.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/src/scratch",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/ti/xml2json.js",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/test/tb/lib/ti/special_containers_test.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/ti/dist.js",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/src/tb/lib/ti/utilities.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/test/tb/lib/ti/xml_test.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/ti/src/ui/views/progress_bar.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/ti/src/ui/views/image_view.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/ti/src/ui/views/web_view.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/src/tb/lib/ti/manipulation/view_handlers.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/ti/src/ui/views/tab_group.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/ti/src/ui/views/picker.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/ti/src/ui/views/scroll_view.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/ti/src/ui/ipad/split_window.coffee",
+		"/Users/mattdean/dev/backbone/titanium-backbone-dev/ti/src/ui/iphone/navigation_group.coffee"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 94.0,
+		"where_history":
+		[
+			"*.js",
+			"*.coffee",
+			"",
+			"*.coffee",
+			"*.sass",
+			".sass",
+			"",
+			"*.coffee",
+			"",
+			"*.coffee",
+			"*",
+			"*.coffee",
+			"*",
+			"*.js",
+			"*.coffee",
+			"Vantage",
+			"",
+			"*.coffee",
+			"",
+			"*.coffee",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"template",
+			"converters",
+			"dataType",
+			"ajaxTest",
+			"iphone",
+			"styles",
+			"console",
+			"styles",
+			"Fixtures/styles",
+			"compilers",
+			"concat",
+			"add",
+			"andSelf",
+			"someGrandparent",
+			"filterParents",
+			"buildView",
+			"createView",
+			"off",
+			"model",
+			"_callbacks",
+			"unstickModel",
+			"keys",
+			"unstickModel",
+			"getElVal",
+			"getElVa",
+			"getElVal",
+			"updateView",
+			"setVal",
+			"isContent",
+			"getElVal",
+			"isFormEl",
+			"isContentEdit",
+			"type",
+			"getElVal",
+			"updateViewBindEl",
+			"setVal",
+			"console",
+			"isFormEl",
+			"events",
+			"isTextArea",
+			"events",
+			"self.events",
+			"isContent",
+			"isFormEl",
+			"getElVal",
+			"isInput",
+			"change",
+			"isContenteditable",
+			"updateView",
+			"window",
+			"backbone-extensions",
+			"createView",
+			"tagName",
+			"_",
+			"attr: function",
+			"attr",
+			"parseXML",
+			"underscor",
+			"underscore",
+			"table",
+			"Switch",
+			"ImageView",
+			"SearchBar",
+			"ImageView",
+			"ProgressBar",
+			"coffee",
+			"titaniumPath",
+			"runSimulator",
+			"basic",
+			"with",
+			"node-uuid",
+			"_matches",
+			"each",
+			"\n          ",
+			".closest",
+			"trigger",
+			"Events",
+			"trigger",
+			"foundPac",
+			"connected",
+			"client",
+			"titaniumPath",
+			"console",
+			"compile",
+			"proxy",
+			"copyT",
+			"payment",
+			"payments",
+			"format",
+			"payment",
+			"documents",
+			"p.hint",
+			"payment-date",
+			"isValidPer",
+			"isValidPersonal",
+			"member",
+			"payment-details",
+			"toSent",
+			"choosePay",
+			"protection",
+			"_s ",
+			"_s",
+			"Payment",
+			"debouncedChangeVehicleType",
+			"confirmation-message",
+			"controls",
+			"control-label",
+			"autopay",
+			"due-",
+			"amount",
+			"debouncedChangePersonalLoan",
+			"calcpayment",
+			"sortBy",
+			"comparator",
+			"SenderName",
+			"has_unread",
+			"most_recent_message",
+			"filter",
+			"payment",
+			"acceptance",
+			"format",
+			"first_due_date",
+			"add-new",
+			"card",
+			"external",
+			"moment",
+			"amount",
+			"signature"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"WebView",
+			"TextArea",
+			"Switch",
+			"Slider",
+			"SearchBar",
+			"ImageView",
+			"height: Ti.UI.SIZE",
+			"height: 'Ti.UI.SIZE'",
+			"Ti.UI.SIZE",
+			"height: 'Ti.UI.SIZE'",
+			"Vantage",
+			""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 4,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"settings":
+					{
+						"buffer_size": 12328,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										1142,
+										1150
+									],
+									[
+										1360,
+										1368
+									],
+									[
+										1484,
+										1492
+									],
+									[
+										1599,
+										1607
+									],
+									[
+										1944,
+										1952
+									],
+									[
+										1974,
+										1982
+									],
+									[
+										2139,
+										2147
+									],
+									[
+										2351,
+										2359
+									],
+									[
+										2589,
+										2597
+									],
+									[
+										2816,
+										2824
+									],
+									[
+										3049,
+										3057
+									],
+									[
+										3263,
+										3271
+									],
+									[
+										3420,
+										3428
+									],
+									[
+										3589,
+										3597
+									],
+									[
+										3755,
+										3763
+									],
+									[
+										3908,
+										3916
+									],
+									[
+										4057,
+										4065
+									],
+									[
+										4227,
+										4235
+									],
+									[
+										4348,
+										4356
+									],
+									[
+										4548,
+										4556
+									],
+									[
+										4752,
+										4760
+									],
+									[
+										4914,
+										4922
+									],
+									[
+										5084,
+										5092
+									],
+									[
+										5232,
+										5240
+									],
+									[
+										5391,
+										5399
+									],
+									[
+										5537,
+										5545
+									],
+									[
+										5728,
+										5736
+									],
+									[
+										5949,
+										5957
+									],
+									[
+										6080,
+										6088
+									],
+									[
+										6235,
+										6243
+									],
+									[
+										6400,
+										6408
+									],
+									[
+										6550,
+										6558
+									],
+									[
+										6704,
+										6712
+									],
+									[
+										6869,
+										6877
+									],
+									[
+										7082,
+										7090
+									],
+									[
+										7243,
+										7251
+									],
+									[
+										7433,
+										7441
+									],
+									[
+										7577,
+										7585
+									],
+									[
+										7705,
+										7713
+									],
+									[
+										7833,
+										7841
+									],
+									[
+										7984,
+										7992
+									],
+									[
+										8145,
+										8153
+									],
+									[
+										8317,
+										8325
+									],
+									[
+										8460,
+										8468
+									],
+									[
+										8596,
+										8604
+									],
+									[
+										8733,
+										8741
+									],
+									[
+										8897,
+										8905
+									],
+									[
+										9043,
+										9051
+									],
+									[
+										9182,
+										9190
+									],
+									[
+										9358,
+										9366
+									],
+									[
+										9527,
+										9535
+									],
+									[
+										9696,
+										9704
+									],
+									[
+										9844,
+										9852
+									],
+									[
+										9983,
+										9991
+									],
+									[
+										10116,
+										10124
+									],
+									[
+										10330,
+										10338
+									],
+									[
+										10494,
+										10502
+									],
+									[
+										10746,
+										10754
+									],
+									[
+										10925,
+										10933
+									],
+									[
+										11172,
+										11180
+									],
+									[
+										11348,
+										11356
+									],
+									[
+										11513,
+										11521
+									],
+									[
+										11717,
+										11725
+									],
+									[
+										11916,
+										11924
+									],
+									[
+										12160,
+										12168
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								1152,
+								1152
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/Color Scheme - Default/Solarized (Dark).tmTheme",
+							"detect_indentation": false,
+							"output_tag": 1,
+							"result_base_dir": "",
+							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/Users/mattdean/dev/forks/jquery/test/data/testinit.js",
+					"settings":
+					{
+						"buffer_size": 6942,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4167,
+								4167
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"color_scheme": "Packages/Color Scheme - Default/Solarized (Dark).tmTheme",
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3028.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/Users/mattdean/dev/backbone/titanium-backbone-ks/src/ks/views/main.coffee",
+					"settings":
+					{
+						"buffer_size": 595,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								420,
+								420
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"color_scheme": "Packages/Color Scheme - Default/Solarized (Dark).tmTheme",
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/CoffeeScript/CoffeeScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/Users/mattdean/dev/backbone/titanium-backbone-ks/src/ks/views/template.jade",
+					"settings":
+					{
+						"buffer_size": 138,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								28,
+								28
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"color_scheme": "Packages/Color Scheme - Default/Solarized (Dark).tmTheme",
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/Users/mattdean/dev/backbone/titanium-backbone-ks/styles/ks/index.styl",
+					"settings":
+					{
+						"buffer_size": 341,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								137,
+								137
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"color_scheme": "Packages/Color Scheme - Default/Solarized (Dark).tmTheme",
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Stylus/Stylus.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "/Users/mattdean/dev/backbone/titanium-backbone-dev/styles/tb/index.styl",
+					"settings":
+					{
+						"buffer_size": 79,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"color_scheme": "Packages/Color Scheme - Default/Solarized (Dark).tmTheme",
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Stylus/Stylus.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "/Users/mattdean/dev/backbone/titanium-backbone-dev/styles/tb/mixins.styl",
+					"settings":
+					{
+						"buffer_size": 270,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								262,
+								262
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"color_scheme": "Packages/Color Scheme - Default/Solarized (Dark).tmTheme",
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Stylus/Stylus.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "/Users/mattdean/dev/backbone/titanium-backbone-dev/styles/tb/labels.styl",
+					"settings":
+					{
+						"buffer_size": 277,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								143,
+								143
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"color_scheme": "Packages/Color Scheme - Default/Solarized (Dark).tmTheme",
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Stylus/Stylus.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "/Users/mattdean/dev/backbone/titanium-backbone-dev/test/tb/lib/ti/ajax_test.coffee",
+					"settings":
+					{
+						"buffer_size": 1750,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								189,
+								189
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"color_scheme": "Packages/Color Scheme - Default/Solarized (Dark).tmTheme",
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/CoffeeScript/CoffeeScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 9,
+					"file": "/Users/mattdean/dev/backbone/titanium-backbone-dev/src/tb/lib/ti/ajax.coffee",
+					"settings":
+					{
+						"buffer_size": 861,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								557,
+								557
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"color_scheme": "Packages/Color Scheme - Default/Solarized (Dark).tmTheme",
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/CoffeeScript/CoffeeScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "/Users/mattdean/dev/backbone/titanium-backbone-dev/ti/src/network/index.coffee",
+					"settings":
+					{
+						"buffer_size": 617,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								174,
+								174
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"color_scheme": "Packages/Color Scheme - Default/Solarized (Dark).tmTheme",
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/CoffeeScript/CoffeeScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "/Users/mattdean/dev/forks/jquery/src/ajax.js",
+					"settings":
+					{
+						"buffer_size": 22809,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								18370,
+								18370
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"color_scheme": "Packages/Color Scheme - Default/Solarized (Dark).tmTheme",
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 9387.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "/Users/mattdean/dev/backbone/titanium-backbone-dev/package.json",
+					"settings":
+					{
+						"buffer_size": 1937,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1623,
+								1623
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"color_scheme": "Packages/Color Scheme - Default/Solarized (Dark).tmTheme",
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/JavaScript/JSON.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 110.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 34.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.33,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 100.0
+	},
+	"output.git":
+	{
+		"height": 100.0
+	},
+	"output.guard":
+	{
+		"height": 65.0
+	},
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"app-impl",
+				"titanium-backbone-dev/Resources/app-impl.js"
+			],
+			[
+				"matchers",
+				"titanium-backbone-dev/src/tb/lib/ti/helpers/matchers.coffee"
+			],
+			[
+				"jquery",
+				"core/web/vendor/jquery.js"
+			],
+			[
+				"bacbkone.stickit",
+				"titanium-backbone-dev/node_modules/backbone.stickit/backbone.stickit.js"
+			],
+			[
+				"backbone.stick",
+				"titanium-backbone-dev/vendor/backbone.stickit.js"
+			],
+			[
+				"ti/text_area",
+				"titanium-backbone-dev/ti/src/ui/views/text_area.coffee"
+			],
+			[
+				"ti/text_field",
+				"titanium-backbone-dev/ti/src/ui/views/text_field.coffee"
+			],
+			[
+				"stickit",
+				"titanium-backbone-dev/vendor/backbone.stickit.js"
+			],
+			[
+				"xml_test",
+				"titanium-backbone-dev/test/tb/mock_tests/xml_test.coffee"
+			],
+			[
+				"backbone.js",
+				"titanium-backbone-dev/vendor/backbone.js"
+			],
+			[
+				"app-impl.js",
+				"titanium-backbone-dev/Resources/app-impl.js"
+			],
+			[
+				"backbone",
+				"titanium-backbone/vendor/backbone.js"
+			],
+			[
+				"string",
+				"client/node_modules/underscore.string/test/strings.js"
+			],
+			[
+				"sync",
+				"client/app/lib/sync.js"
+			],
+			[
+				"i18n",
+				"coffee/properties/i18n.coffee"
+			],
+			[
+				"re/ap",
+				"Resources/app.js"
+			],
+			[
+				"app-ios",
+				"Resources/app-ios.js"
+			],
+			[
+				"confirm",
+				"build/iphone/Classes/TiAppiOSLocalNotificationProxy.m"
+			],
+			[
+				"main.cof",
+				"coffee/shared/main.coffee"
+			],
+			[
+				"app",
+				"Resources/app.js"
+			],
+			[
+				"f",
+				"coffee/shared/helpers/formats.coffee"
+			],
+			[
+				"custom",
+				"coffee/shared/views/ui/form/editors/custom.coffee"
+			],
+			[
+				"network",
+				"coffee/shared/helpers/network.coffee"
+			],
+			[
+				"netwo",
+				"coffee/shared/helpers/network.coffee"
+			],
+			[
+				"unders",
+				"Resources/lib/underscore.js"
+			],
+			[
+				"app.js",
+				"Resources/app.js"
+			],
+			[
+				"urls",
+				"coffee/shared/helpers/urls.coffee"
+			],
+			[
+				"tiapp.xml",
+				"tiapp.xml"
+			],
+			[
+				"picker",
+				"coffee/shared/views/ui/picker.coffee"
+			],
+			[
+				"properties-ios",
+				"Resources/properties-ios.js"
+			],
+			[
+				"styles/auth",
+				"coffee/properties/styles/authentication.coffee"
+			],
+			[
+				"rake",
+				"Rakefile"
+			],
+			[
+				"r/a",
+				"Resources/app.js"
+			],
+			[
+				"a-i",
+				"Resources/app-ios.js"
+			],
+			[
+				"payment",
+				"coffee/shared/models/billpay/payment.coffee"
+			],
+			[
+				"formats",
+				"coffee/shared/helpers/formats.coffee"
+			],
+			[
+				"format",
+				"coffee/shared/helpers/formats.coffee"
+			],
+			[
+				"forma",
+				"coffee/shared/helpers/formats.coffee"
+			],
+			[
+				"ra",
+				"Rakefile"
+			],
+			[
+				"app-android",
+				"Resources/app-android.js"
+			],
+			[
+				"backbone-tit",
+				"Resources/lib/backbone-titanium.js"
+			],
+			[
+				"tiapp",
+				"tiapp.xml"
+			],
+			[
+				"styles/billpay",
+				"coffee/properties/styles/billpay.coffee"
+			],
+			[
+				"billpay/payment",
+				"coffee/shared/models/billpay/payment.coffee"
+			],
+			[
+				"resou/ap",
+				"Resources/app.js"
+			],
+			[
+				"present/form",
+				"coffee/shared/presenters/form/index.coffee"
+			],
+			[
+				"pres/form",
+				"coffee/properties/styles/ui/form.coffee"
+			],
+			[
+				"dates",
+				"Resources/lib/date.js"
+			],
+			[
+				"field",
+				"coffee/shared/presenters/form/field.coffee"
+			],
+			[
+				"session.coff",
+				"coffee/shared/models/oauth/session.coffee"
+			],
+			[
+				"billpay/form",
+				"coffee/shared/views/billpay/form.coffee"
+			],
+			[
+				"app-andr",
+				"Resources/app-android.js"
+			],
+			[
+				"co/sha/mo",
+				"coffee/shared/models/lib/model.coffee"
+			],
+			[
+				"app-and",
+				"Resources/app-android.js"
+			],
+			[
+				"ap",
+				"Resources/app.js"
+			],
+			[
+				".sample",
+				".sample_member_numbers"
+			],
+			[
+				"oauth/sessio",
+				"coffee/shared/models/oauth/session.coffee"
+			],
+			[
+				"tiapp.",
+				"tiapp.xml"
+			],
+			[
+				"",
+				"coffee/shared/helpers/network.coffee"
+			],
+			[
+				".sapm",
+				".sample_member_numbers"
+			],
+			[
+				"colors",
+				"coffee/properties/styles/shared/colors.coffee"
+			],
+			[
+				"otp/index",
+				"coffee/shared/views/authentication/otp/index.coffee"
+			],
+			[
+				"locationsear",
+				"coffee/shared/models/location_search.coffee"
+			],
+			[
+				"locationdetail",
+				"coffee/shared/views/locations/list/detail.coffee"
+			],
+			[
+				"model/locat",
+				"coffee/shared/models/location.coffee"
+			],
+			[
+				"main",
+				"coffee/shared/main.coffee"
+			],
+			[
+				"app.j",
+				"Resources/app.js"
+			],
+			[
+				"style/au",
+				"coffee/properties/styles/authentication.coffee"
+			],
+			[
+				"otp/for",
+				"coffee/shared/views/authentication/otp/form.coffee"
+			],
+			[
+				"standalon",
+				"coffee/android/views/ui/form/editors/standalone_string.coffee"
+			],
+			[
+				"stan",
+				"node_modules/jade/benchmarks/haml-js/test/standard.haml"
+			],
+			[
+				"unde",
+				"Resources/lib/underscore.js"
+			],
+			[
+				"app-an",
+				"Resources/app-android.js"
+			],
+			[
+				"under",
+				"Resources/lib/underscore.js"
+			],
+			[
+				"device_styles/ios/au",
+				"coffee/properties/device_styles/ios/authentication.coffee"
+			],
+			[
+				"views/app/index",
+				"client/src/views/loans/app/index.coffee"
+			],
+			[
+				"loan/app/ini",
+				"client/src/views/loans/app/applicant/index.coffee"
+			],
+			[
+				"member",
+				"client/src/models/member.coffee"
+			],
+			[
+				"test/model",
+				"api/node_modules/trabian-api-docs/node_modules/backbone/test/model.coffee"
+			],
+			[
+				"model/conv",
+				"client/src/models/conversation.coffee"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+			[
+				"vantag",
+				"/Users/mattdean/dev/projects/vantage.sublime-project"
+			],
+			[
+				"lao",
+				"/Users/mattdean/dev/sffcu/loan_app/loanapp.sublime-project"
+			],
+			[
+				"loan",
+				"/Users/mattdean/dev/sffcu/loan_app/loanapp.sublime-project"
+			],
+			[
+				"mobile",
+				"/Users/mattdean/dev/projects/mobile.sublime-project"
+			],
+			[
+				"vant",
+				"/Users/mattdean/dev/projects/vantage.sublime-project"
+			],
+			[
+				"van",
+				"/Users/mattdean/dev/projects/vantage.sublime-project"
+			],
+			[
+				"sffire",
+				"/Users/mattdean/dev/projects/sffcu-scheduling.sublime-project"
+			],
+			[
+				"",
+				"/Users/mattdean/dev/projects/sffcu-loanapp.sublime-project"
+			],
+			[
+				"chap",
+				"/Users/mattdean/dev/projects/chaplin.sublime-project"
+			],
+			[
+				"chapi",
+				"/Users/mattdean/dev/projects/chaplin.sublime-project"
+			],
+			[
+				"proj",
+				"/Users/mattdean/dev/projects/projects.sublime-project"
+			],
+			[
+				"sf",
+				"/Users/mattdean/dev/projects/sffcu-loanapp.sublime-project"
+			],
+			[
+				"oa",
+				"/Users/mattdean/dev/projects/sffcu-loanapp.sublime-project"
+			],
+			[
+				"projec",
+				"/Users/mattdean/dev/projects/projects.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 274.0,
+	"status_bar_visible": true
+}
