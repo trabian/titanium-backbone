@@ -6,6 +6,8 @@ ActionView = require './action'
 
 module.exports = class ActionsView extends CollectionView
 
+  name: 'actions'
+
   attributes: viewStyles.view
 
   itemView: ActionView

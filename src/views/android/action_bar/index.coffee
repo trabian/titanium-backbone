@@ -8,6 +8,8 @@ module.exports = class ActionBar extends View
 
   attributes: viewStyles.view
 
+  name: 'action_bar'
+
   render: ->
 
     @wrap (view) =>
