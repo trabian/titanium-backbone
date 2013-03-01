@@ -9,20 +9,16 @@ module.exports = class ActionView extends BaseView
   events: { 'click' }
 
   click: =>
-    @model.get('click')?() unless @model.get 'disabled'
+    @model.get('click')?() if @model.get 'enabled'
 
   initialize: ->
 
     super
 
-    @bindToAndTrigger @model, 'change:disabled', =>
+    @bindToAndTrigger @model, 'change:enabled', =>
+      @view.opacity = if @model.get('enabled') then 1 else 0.5
 
-      if @model.get 'disabled'
-        @view.opacity = 0.5
-      else
-        @view.opacity = 1
-
-    @modelBind 'change:title change:icon', @render
+    @modelBind 'change:text change:icon', @render
 
   render: =>
 
@@ -35,10 +31,9 @@ module.exports = class ActionView extends BaseView
       @view.remove @iconView if @iconView
       @iconView = null
 
-    if label = @model.get 'label'
+    if text = @model.get 'text'
 
-      @view.add @labelView = @make 'Label', viewStyles.label,
-        text: label
+      @view.add @labelView = @make 'Label', viewStyles.label, { text }
 
     else
       @view.remove @labelView if @labelView
