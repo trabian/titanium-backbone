@@ -1,13 +1,8 @@
 styles = require('styles/ui').window
 
-{ ActionBarPresenter } = require 'core/presenters/action_bar'
-
 environment = require 'environment'
 
 mediator = require 'chaplin/mediator'
-
-if environment.android
-  ActionBar = require 'views/android/action_bar'
 
 View = require 'views/base'
 
@@ -38,6 +33,9 @@ module.exports = class Window extends View
       @view.title = _.result @, 'title'
 
       if environment.android
+
+        { ActionBarPresenter } = require 'core/presenters/action_bar'
+        ActionBar = require 'views/android/action_bar'
 
         @barPresenter = new ActionBarPresenter
           title: @view.title
