@@ -65,6 +65,8 @@ TitaniumView = (function() {
     return this.children;
   };
 
+  TitaniumView.prototype.animate = function() {};
+
   return TitaniumView;
 
 })();
@@ -137,6 +139,14 @@ TitaniumButton = (function(_super) {
   function TitaniumButton() {
     return TitaniumButton.__super__.constructor.apply(this, arguments);
   }
+
+  TitaniumButton.prototype.setTitle = function(title) {
+    this.title = title;
+  };
+
+  TitaniumButton.prototype.setEnabled = function(enabled) {
+    this.enabled = enabled;
+  };
 
   return TitaniumButton;
 
@@ -378,6 +388,10 @@ TitaniumTextField = (function(_super) {
     return this.trigger('change', {
       value: this.value
     });
+  };
+
+  TitaniumTextField.prototype.setEnabled = function(enabled) {
+    this.enabled = enabled;
   };
 
   return TitaniumTextField;

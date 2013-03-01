@@ -1,5 +1,9 @@
 class TitaniumButton extends TitaniumView
 
+  setTitle: (@title) ->
+
+  setEnabled: (@enabled) ->
+
 Ti.UI.createButton = (attributes) ->
 
   new TitaniumButton attributes

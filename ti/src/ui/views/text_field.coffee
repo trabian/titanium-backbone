@@ -5,6 +5,8 @@ class TitaniumTextField extends TitaniumView
     @trigger 'change',
       value: @value
 
+  setEnabled: (@enabled) ->
+
 Ti.UI.createTextField = (attributes) ->
 
   new TitaniumTextField attributes

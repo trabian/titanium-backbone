@@ -19,6 +19,8 @@ class TitaniumView
 
   getChildren: -> @children
 
+  animate: ->
+
 Ti.UI.createView = (attributes) ->
   new TitaniumView attributes
 
