@@ -7,6 +7,8 @@ module.exports =
     view:
       width: Ti.UI.FILL
       color: colors.form.value
+      backgroundColor: 'transparent'
+      borderColor: 'transparent'
       font:
         fontSize: 14
   standalone:

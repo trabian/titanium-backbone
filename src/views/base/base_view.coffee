@@ -286,7 +286,8 @@ module.exports = class View
 
     @view.remove @wrapper if @wrapper?
 
-    @wrapper = @make 'View', style
+    @wrapper = @make 'View', style,
+      touchEnabled: false
 
     callback @wrapper
 

@@ -55,11 +55,17 @@ module.exports =
 
   details:
     styled:
-      borderColor: colors.table.border
-      borderRadius: 11
-      scrollable: false
-      height: Ti.UI.SIZE
-      separatorColor: colors.table.border
+      helpers.deviceStyles
+        default:
+          borderColor: colors.table.border
+          scrollable: false
+          height: Ti.UI.SIZE
+          separatorColor: colors.table.border
+        ios:
+          borderRadius: 11
+        android:
+          borderWidth: 1
+          backgroundColor: '#fff'
     plain:
       height: Ti.UI.FILL
       separatorColor: colors.table.border

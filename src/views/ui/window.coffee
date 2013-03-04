@@ -122,9 +122,17 @@ module.exports = class Window extends View
       options = {}
 
     if callback
-      @view.addEventListener 'close', ->
-        callback()
-        return
+
+      if environment.android
+
+        _.defer ->
+          callback()
+          return
+
+      else
+        @view.addEventListener 'close', ->
+          callback()
+          return
 
     @view?.close options
 
