@@ -20,6 +20,7 @@ module.exports =
     background: '#eee'
 
   bar: '#333'
+  barHighlight: '#000'
 
   search: '#333'
 
