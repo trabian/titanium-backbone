@@ -11,3 +11,13 @@ module.exports = class ActionsView extends CollectionView
   attributes: viewStyles.view
 
   itemView: ActionView
+
+  renderAllItems: =>
+
+    for own cid, view of @viewsByCid
+
+      @view.remove view.view
+
+      @removeView cid, view
+
+    super
