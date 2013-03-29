@@ -27,6 +27,7 @@ module.exports =
     options.type ?= 'GET'
     options.data ?= null
     options.contentType ?= 'application/json'
+    options.accept ?= null
 
     client = Ti.Network.createHTTPClient
 
@@ -34,7 +35,7 @@ module.exports =
 
       onload: ->
 
-        data = if options.contentType is 'application/json'
+        data = if (options.contentType is 'application/json') or (options.accept is 'application/json')
           JSON.parse @responseText
         else
           @responseData
@@ -63,6 +64,9 @@ module.exports =
 
     if options.contentType
       client.setRequestHeader 'Content-Type', options.contentType
+
+    if options.accept
+      client.setRequestHeader 'Accept', options.accept
 
     if headers = options.headers
       for name, value of headers

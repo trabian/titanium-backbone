@@ -40,9 +40,11 @@ module.exports = class Sync
     if data
       contentType ?= 'application/json'
 
+    method = options.method ? methodMap[method]
+
     network.request url,
 
-      type: methodMap[method]
+      type: method
 
       data: data
 
@@ -51,6 +53,8 @@ module.exports = class Sync
       headers: options.headers ? {}
 
       timeout: options.timeout
+
+      accept: options.accept
 
       beforeSend: @options.beforeSend
 
