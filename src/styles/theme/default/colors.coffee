@@ -28,3 +28,7 @@ module.exports =
     base: '#333'
     positive: '#060'
     subtle: '#999'
+
+  actionBar:
+    background: '#333'
+    text: '#fff'

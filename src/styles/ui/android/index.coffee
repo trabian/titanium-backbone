@@ -1,5 +1,7 @@
 labels = require 'styles/ui/labels'
 
+colors = require('styles/theme').colors
+
 module.exports =
 
   actionBar:
@@ -7,11 +9,11 @@ module.exports =
     view:
       top: 0
       height: 45
-      backgroundColor: '#333'
+      backgroundColor: colors.actionBar.background
 
     title:
       labels.heading 17,
-        color: '#fff'
+        color: colors.actionBar.text
         top: null
         bottom: null
         left: 10
