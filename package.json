@@ -27,6 +27,9 @@
     "url": "https://github.com/trabian/titanium-backbone/issues",
     "email": "matt@trabian.com"
   },
+  "scripts": {
+    "preinstall": "cd node_modules/stitch-up && npm install"
+  },
   "main": "./lib/index.coffee",
   "stitch": {
     "paths": [
