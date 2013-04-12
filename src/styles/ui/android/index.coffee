@@ -1,6 +1,7 @@
 labels = require 'styles/ui/labels'
 
-colors = require('styles/theme').colors
+theme = require('styles/theme')
+colors = theme.colors
 
 module.exports =
 
@@ -11,15 +12,26 @@ module.exports =
       height: 45
       backgroundColor: colors.actionBar.background
 
+    icon:
+      left: 6
+      top: 6
+      height: 32
+      width: 32
+      image: theme.images?.actionBar.icon
+
+    titleWrapper:
+      left: 45
+      right: 0
+
     title:
       labels.heading 17,
         color: colors.actionBar.text
         top: null
         bottom: null
-        left: 10
-        right: 50
+        left: 0
+        right: 0
         ellipsize: true
-        wordWrap: false
+        # wordWrap: false # broken in 3.1.0 beta
         # height: 30
 
     actions:

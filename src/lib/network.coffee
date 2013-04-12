@@ -49,8 +49,9 @@ module.exports =
 
       onerror: (e) ->
 
-        errorHandled = errorHandler.handleError @responseText, @status, =>
+        errorHandled = errorHandler.handleError @responseText, @status, ->
           module.exports.request url, options, xhr, deferred
+          return
 
         deferred.reject e, @responseText, @status unless errorHandled
 

@@ -9,13 +9,14 @@ module.exports = class ActionView extends BaseView
   events: { 'click' }
 
   click: =>
-    @model.get('click')?() if @model.get 'enabled'
+    @model.get('click')?(@model) if @model.get 'enabled'
 
   initialize: ->
 
     super
 
     @bindToAndTrigger @model, 'change:enabled', =>
+      # @view.opacity = 1.0
       @view.opacity = if @model.get('enabled') then 1 else 0.5
 
     @modelBind 'change:text change:icon', @render

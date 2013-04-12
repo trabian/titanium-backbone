@@ -82,6 +82,7 @@ module.exports =
           primary:
             helpers.deviceStyles
               default:
+                left: 0
                 font:
                   fontWeight: 'bold'
                   fontSize: 14
@@ -92,6 +93,8 @@ module.exports =
                 height: 17
           meta:
             helpers.deviceStyles
+              default:
+                left: 0
               ios:
                 height: 15
               android:
@@ -105,6 +108,7 @@ module.exports =
             helpers.deviceStyles
               default:
                 textAlign: 'right'
+                right: 0
                 font:
                   fontWeight: 'bold'
                   fontSize: 14
@@ -116,6 +120,7 @@ module.exports =
           meta:
             helpers.deviceStyles
               default:
+                right: 0
                 textAlign: 'right'
               ios:
                 height: 15

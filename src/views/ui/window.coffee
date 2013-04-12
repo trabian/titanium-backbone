@@ -54,6 +54,7 @@ module.exports = class Window extends View
     @delegateEvents
       open: => @resolve?() if @resolveOnOpen
       close: =>
+        @closed = true
         mediator.publish 'activity'
         @destroy?()
 
@@ -137,6 +138,7 @@ module.exports = class Window extends View
     @view?.close options
 
   destroy: ->
+
     @trigger 'destroy'
     super
     @dispose?()
@@ -144,3 +146,12 @@ module.exports = class Window extends View
   _bindControllerEvents: =>
     @controller?.context ?= @
     super
+
+  dispose: ->
+
+    return if @disposed
+
+    @view.close() unless @closed
+
+    super
+

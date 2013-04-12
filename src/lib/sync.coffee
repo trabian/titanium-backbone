@@ -59,8 +59,16 @@ module.exports = class Sync
       beforeSend: @options.beforeSend
 
       error: (e, responseText, status) =>
-        @options.error e, responseText, status
-        options.error? e, responseText, status
+
+        if options.error?
+
+          unless options.error(e, responseText, status) is false
+            @options.error e, responseText, status
+
+        else
+          @options.error e, responseText, status
+
+        return
 
       progress: @options.progress
 

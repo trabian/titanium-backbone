@@ -14,8 +14,14 @@ module.exports = class ActionBar extends View
 
     @wrap (view) =>
 
-      view.add title = @make 'Label', viewStyles.title,
+      view.add @make 'ImageView', viewStyles.icon
+
+      view.add titleWrapper = @make 'View', viewStyles.titleWrapper
+
+      titleWrapper.add title = @make 'Label', viewStyles.title,
         text: @presenter.get 'title'
+
+      title.setWordWrap false
 
       @presenterBind 'change:title', =>
         title.text = @presenter.get 'title'
@@ -27,7 +33,8 @@ module.exports = class ActionBar extends View
       @bindToAndTrigger @presenter, 'add:actions remove:actions', =>
 
         _.defer ->
-          title.right = actionsView.view.size.width + 10
+          titleWrapper.setRight actionsView.view.size.width + 10
+          super
 
     @
 
