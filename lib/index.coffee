@@ -64,20 +64,31 @@ module.exports =
 
     buildTasks = require('stitch-up').load(root, pkg).tasks
 
-    runSimulator = (platform, callback) ->
+    runBuild = (platform, device, callback) ->
 
-      simulator = spawn titaniumPath(), [
+      options = [
         'run'
         "--platform=#{platform}"
       ]
 
-      simulator.stdout.on 'data', printIt
-      simulator.stderr.on 'data', printIt
+      if device
+        options.push "--device"
 
-      simulator.on 'exit', (code, signal) ->
-        simulator.stdin.end()
+      runner = spawn titaniumPath(), options
 
-      callback simulator
+      runner.stdout.on 'data', printIt
+      runner.stderr.on 'data', printIt
+
+      runner.on 'exit', (code, signal) ->
+        runner.stdin.end()
+
+      callback runner
+
+    runSimulator = (platform, callback) ->
+      runBuild platform, false, callback
+
+    runDevice = (platform, callback) ->
+      runBuild platform, true, callback
 
     tasks:
 
@@ -104,3 +115,9 @@ module.exports =
         copyTiappIfNeeded ->
           runAndWatch (callback) ->
             buildTasks.stitch -> runSimulator 'android', callback
+
+      "android:run:device": ->
+
+        copyTiappIfNeeded ->
+          runAndWatch (callback) ->
+            buildTasks.stitch -> runDevice 'android', callback
