@@ -11,14 +11,18 @@ module.exports =
         fontSize: 14
   standalone:
     view:
-      height: 44
-      width: Ti.UI.FILL
-      bottom: 11
-      color: colors.form.value
-      borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
-      textAlign: 'left'
-      font:
-        fontSize: 22
+      helpers.deviceStyles
+        default:
+          height: 44
+          width: Ti.UI.FILL
+          bottom: 11
+          color: colors.form.value
+          borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
+          textAlign: 'left'
+          font:
+            fontSize: 22
+        android:
+          softKeyboardOnFocus: Ti.UI.Android?.SOFT_KEYBOARD_SHOW_ON_FOCUS
     button:
       helpers.deviceStyles
         default:
