@@ -37,7 +37,7 @@ module.exports = class Sync
 
       data = JSON.stringify model.toJSON()
 
-    if data
+    if data and not options.multipart
       contentType ?= 'application/json'
 
     method = options.method ? methodMap[method]
@@ -47,6 +47,8 @@ module.exports = class Sync
       type: method
 
       data: data
+
+      multipart: options.multipart
 
       contentType: contentType
 
