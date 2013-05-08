@@ -6,3 +6,15 @@ html(lang='en')
     meta(name='viewport', content='initial-scale=1, maximum-scale=1')
   body
     #container !{text}
+    script
+      var links = document.querySelectorAll('a');
+      for (var i = 0; i < links.length; i++) {
+        
+        var link = links[i];
+        
+        link.addEventListener('click', function(event) {
+          event.preventDefault()
+          Ti.App.fireEvent('browse', { url: link.href });
+        }, false);
+        
+      }
