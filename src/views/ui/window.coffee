@@ -4,6 +4,8 @@ mediator = require 'chaplin/mediator'
 
 View = require 'views/base'
 
+environment = require 'environment'
+
 module.exports = class Window extends View
 
   viewName: 'Window'
@@ -52,7 +54,12 @@ module.exports = class Window extends View
 
     @wrap { height: Ti.UI.FILL }, (view) =>
 
-      layout = @make 'View', options.style or styles.layouts.default
+      layoutStyle = options.style or styles.layouts.default
+
+      if environment.ipad
+        layoutStyle.bottom = 50
+
+      layout = @make 'View', layoutStyle
 
       if options.scroll
 
