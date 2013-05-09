@@ -29,6 +29,9 @@ module.exports = class Window extends View
     else if @title
       @view.title = _.result @, 'title'
 
+    if @options.resolveOnOpen?
+      @resolveOnOpen = @options.resolveOnOpen
+
     super
 
     # This introduces a dependence on the 'trabian-banking-core-mobile',
