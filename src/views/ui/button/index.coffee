@@ -31,4 +31,6 @@ module.exports = class Button extends View
     @
 
   click: =>
-    @options.click()
+
+    @options.click
+      source: @view
