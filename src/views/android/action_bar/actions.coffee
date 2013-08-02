@@ -12,6 +12,8 @@ module.exports = class ActionsView extends CollectionView
 
   itemView: ActionView
 
+  events: { 'postlayout' }
+
   renderAllItems: =>
 
     for own cid, view of @viewsByCid
@@ -21,3 +23,6 @@ module.exports = class ActionsView extends CollectionView
       @removeView cid, view
 
     super
+
+  postlayout: =>
+    @trigger 'changeWidth', @view.size.width

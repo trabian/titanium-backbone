@@ -19,7 +19,14 @@ module.exports = class ActionView extends BaseView
       # @view.opacity = 1.0
       @view.opacity = if @model.get('enabled') then 1 else 0.5
 
-    @modelBind 'change:text change:icon', @render
+    @modelBind 'change:text', =>
+
+      if @labelView
+        @labelView.text = @model.get 'text'
+      else
+        @render()
+
+    @modelBind 'change:icon', @render
 
   render: =>
 

@@ -39,6 +39,7 @@ module.exports = class Window extends View
 
         @barPresenter = new ActionBarPresenter
           title: @view.title
+          actionsWidth: @actionsWidth
 
         @add bar = new ActionBar
           presenter: @barPresenter
@@ -115,6 +116,8 @@ module.exports = class Window extends View
   close: (options = {}, callback) =>
 
     return if @disposed
+
+    # @view.hide()
 
     @trigger 'close'
 

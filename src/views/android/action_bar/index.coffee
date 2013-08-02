@@ -4,6 +4,8 @@ View = require 'views/base'
 
 ActionsView = require './actions'
 
+TITLE_RIGHT_MARGIN = 10
+
 module.exports = class ActionBar extends View
 
   attributes: viewStyles.view
@@ -16,7 +18,14 @@ module.exports = class ActionBar extends View
 
       view.add @make 'ImageView', viewStyles.icon
 
-      view.add titleWrapper = @make 'View', viewStyles.titleWrapper
+      titleRight = if actionsWidth = @presenter.get 'actionsWidth'
+        console.warn 'ACTIONS WIDTH', actionsWidth
+        actionsWidth + TITLE_RIGHT_MARGIN
+      else
+        0
+
+      view.add titleWrapper = @make 'View', viewStyles.titleWrapper,
+        right: titleRight
 
       titleWrapper.add title = @make 'Label', viewStyles.title,
         text: @presenter.get 'title'
@@ -30,11 +39,20 @@ module.exports = class ActionBar extends View
         collection: @presenter.get 'actions'
       ), view
 
-      @bindToAndTrigger @presenter, 'add:actions remove:actions', =>
+      @bindTo actionsView, 'changeWidth', (width) ->
+        titleWrapper.setRight width + TITLE_RIGHT_MARGIN
 
-        _.defer ->
-          titleWrapper.setRight actionsView.view.size.width + 10
-          super
+      # updateTitleWidth = ->
+      #   console.warn 'set title width'
+      #   titleWrapper.setRight actionsView.view.size.width + 10
+
+      # @bindToAndTrigger @presenter, 'add:actions remove:actions', =>
+
+      #   _.defer ->
+      #     updateTitleWidth()
+      #     super
+
+      # updateTitleWidth()
 
     @
 
