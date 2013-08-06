@@ -1,3 +1,4 @@
 node_modules/*
+!node_modules/stitch-up
 .DS_Store
 build
