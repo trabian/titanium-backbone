@@ -37,10 +37,7 @@
     ],
     "dependencies": [
       "deps/console.coffee",
-      "jade:runtime.js",
-      "vendor/underscore.js",
-      "vendor/backbone.js",
-      "vendor/Deferred.js"
+      "jade:runtime.js"
     ],
     "images": "vendor/images"
   }
