@@ -23,7 +23,7 @@ Visit the [Titanium download page](http://www.appcelerator.com/products/download
 #### Clone the project to your development machine:
 
 ```console
-$ git clone git@github.com:trabian/titanium-backbone.git
+$ git clone https://github.com/trabian/titanium-backbone.git
 $ cd titanium-backbone
 ```
 
