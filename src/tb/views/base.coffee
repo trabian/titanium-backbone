@@ -9,6 +9,15 @@ module.exports = class BaseView extends Chaplin.View
   delegateNewEvents: (events) ->
     @_delegateEvents events
 
+  render: ->
+
+    super
+
+    if @bindings
+      @stickit()
+
+    @
+
   # This is different from Chaplin.View::dispose in that it doesn't try to
   # remove the el on disposal.
   dispose: ->
