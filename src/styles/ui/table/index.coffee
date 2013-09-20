@@ -55,7 +55,7 @@ module.exports =
   details:
     styled:
       borderColor: colors.table.border
-      borderRadius: 11
+      borderRadius: 0
       scrollable: false
       height: Ti.UI.SIZE
       separatorColor: colors.table.border

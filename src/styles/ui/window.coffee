@@ -12,10 +12,13 @@ module.exports =
   view:
     backgroundColor: colors.window.background
     barColor: colors.bar
+    tintColor: '#900'
+    navTintColor: '#900'
+    translucent: true
 
   layouts:
 
-    default: layout 11
+    default: layout 0
 
     noPadding: layout 0
 
