@@ -15,10 +15,12 @@ module.exports = class Window extends View
   publishActivityOnClick: true
 
   attributes: (extensions) ->
-    if extensions
+    _styles = if extensions
       _.extend {}, styles.view, extensions
     else
       styles.view
+
+    _styles
 
   initialize: ->
 
