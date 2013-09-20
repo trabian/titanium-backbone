@@ -56,7 +56,7 @@ module.exports =
         return
 
       onreadystatechange: (e) ->
-        client.onload() if @readyState is Ti.Network.HTTPClient.DONE
+        client.onload() if @readyState is client.DONE
         return
 
     client.open options.type, url, true
