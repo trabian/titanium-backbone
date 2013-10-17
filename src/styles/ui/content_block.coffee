@@ -11,9 +11,8 @@ module.exports =
 
   view:
     height: Ti.UI.SIZE
-    borderWidth: 1
+    borderWidth: '1px'
     borderColor: colors.border.default
-    borderRadius: 11
     backgroundColor: '#fff'
     top: 11
   html:

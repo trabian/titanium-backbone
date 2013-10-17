@@ -1,4 +1,4 @@
-colors = require('styles/theme').colors
+{ colors, fonts } = require 'styles/theme'
 labels = require 'styles/ui/labels'
 
 sectionLabel = _({}).extend labels.label(13),
@@ -28,11 +28,13 @@ module.exports =
             height: 17
             font:
               fontSize: 13
+              fontFamily: fonts.base
           meta:
             color: colors.table.sectionLabel
             height: 13
             font:
               fontSize: 12
+              fontFamily: fonts.base
       subtitle:
         view:
           top: 3
@@ -44,6 +46,7 @@ module.exports =
             height: 17
             textAlign: 'right'
             font:
+              fontFamily: fonts.base
               fontSize: 13
           meta:
             color: colors.table.sectionLabel
@@ -51,6 +54,7 @@ module.exports =
             textAlign: 'right'
             font:
               fontSize: 12
+              fontFamily: fonts.base
 
   details:
     styled:
@@ -69,14 +73,15 @@ module.exports =
         top: 0
       title:
         view:
-          left: 11
+          left: 15
           width: '60%'
         label:
           primary:
-            height: 17
+            height: 19
             font:
-              fontWeight: 'bold'
+              # fontWeight: 'bold'
               fontSize: 14
+              fontFamily: fonts.base
           meta:
             height: 15
       subtitle:
@@ -85,11 +90,12 @@ module.exports =
           width: '40%'
         label:
           primary:
-            height: 17
+            height: 19
             textAlign: 'right'
             font:
-              fontWeight: 'bold'
+              # fontWeight: 'bold'
               fontSize: 14
+              fontFamily: fonts.base
           meta:
             height: 15
             textAlign: 'right'

@@ -1,14 +1,17 @@
-colors = require('styles/theme').colors.text
+{ colors, fonts } = require 'styles/theme'
+
+textColors = colors.text
 
 label = (fontSize, options = {}) ->
 
   options.font = _.extend {}, options.font or {},
     fontSize: fontSize
+    fontFamily: fonts.base
 
   _.extend {},
     height: Ti.UI.SIZE
     width: Ti.UI.FILL
-    color: colors.base
+    color: textColors.base
     bottom: options.font.fontSize * 0.5 # Similar to bottom margin of 0.5em
   , options
 
@@ -17,6 +20,7 @@ heading = (fontSize, options = {}) ->
     _({}).extend options,
       font:
         fontWeight: 'bold'
+        fontFamily: fonts.heading
 
 module.exports =
 
@@ -48,7 +52,7 @@ module.exports =
       top: 0
       height: Ti.UI.SIZE
       width: Ti.UI.FILL
-      color: colors.base
+      color: textColors.base
       font:
         fontSize: 15
 
@@ -56,6 +60,6 @@ module.exports =
       bottom: 0
       height: Ti.UI.SIZE
       width: Ti.UI.FILL
-      color: colors.subtle
+      color: textColors.subtle
       font:
         fontSize: 11

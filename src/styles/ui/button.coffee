@@ -1,21 +1,20 @@
-colors = require('styles/theme').colors
+{ colors, fonts } = require 'styles/theme'
+
+buttonStyles =
+  height: 33
+  width: Ti.UI.FILL
+  left: "-2px"
+  right: "-2px"
+  backgroundColor: "#fff"
+  borderColor: colors.table.border
+  borderWidth: "1px"
+  font:
+    fontFamily: fonts.base
 
 module.exports =
 
-  default:
-    height: 44
-    width: Ti.UI.FILL
-    left: 0
-    right: 0
-    backgroundImage: '/images/core/buttons/default.png'
-    backgroundSelectedImage: '/images/core/buttons/default_active.png'
+  default: buttonStyles
 
-  delete:
-    height: 44
-    width: Ti.UI.FILL
-    left: 0
-    right: 0
-    backgroundImage: '/images/core/buttons/delete.png'
-    backgroundSelectedImage: '/images/core/buttons/delete_active.png'
+  delete: _({}).extend buttonStyles, {}
 
   nav: null

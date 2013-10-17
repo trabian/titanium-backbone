@@ -7,6 +7,7 @@ module.exports =
     view:
       width: Ti.UI.FILL
       color: colors.form.value
+      height: 44
       font:
         fontSize: 14
   standalone:
@@ -15,10 +16,15 @@ module.exports =
       width: Ti.UI.FILL
       bottom: 11
       color: colors.form.value
+      # backgroundColor: "#fff"
+      # borderColor: colors.table.border
+      # borderWidth: '1px'
+      left: 10
+      right: 10
       borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
       textAlign: 'left'
-      font:
-        fontSize: 22
+      # font:
+      #   fontSize: 22
     button:
       helpers.deviceStyles
         default:

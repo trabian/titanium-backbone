@@ -19,19 +19,22 @@ module.exports =
       title:
         view:
           bottom: 4
-          left: 4
+          left: 14
         label:
           primary:
             font:
               fontSize: 14
-              fontWeight: 'bold'
+              # fontWeight: 'bold'
 
   table:
 
     view:
+      borderWidth: "1px"
+      left: '-2px'
+      right: '-2px'
       borderColor: colors.table.border
-      borderRadius: 11
       scrollable: false
+      top: 33
       bottom: 11
       height: Ti.UI.SIZE
 
@@ -47,14 +50,14 @@ module.exports =
         right: 0
       label:
         view:
-          left: 13
+          left: 15
           width: '40%'
         label:
           primary:
             height: 19
             color: colors.form.label
             font:
-              fontWeight: 'bold'
+              # fontWeight: 'bold'
               fontSize: 14
 
   editors: require './editors'
