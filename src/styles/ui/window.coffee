@@ -12,8 +12,8 @@ module.exports =
   view:
     backgroundColor: colors.window.background
     barColor: colors.bar
-    tintColor: '#900'
-    navTintColor: '#900'
+    tintColor: colors.window.tintColor
+    navTintColor: colors.window.navTintColor
     translucent: true
 
   layouts:

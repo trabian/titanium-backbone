@@ -17,6 +17,8 @@ module.exports =
 
   window:
     background: '#eee'
+    tintColor: '#900'
+    navTintColor: '#900'
 
   bar: '#333'
 
