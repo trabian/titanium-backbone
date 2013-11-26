@@ -50,12 +50,14 @@ module.exports =
         right: 0
       label:
         view:
-          left: 15
-          width: '40%'
+          left: 12
+          width: '30%'
         label:
           primary:
+            left: 3
             height: 19
             color: colors.form.label
+            width: Ti.UI.FILL
             font:
               # fontWeight: 'bold'
               fontSize: 14
