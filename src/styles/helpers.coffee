@@ -6,7 +6,7 @@ module.exports =
 
     mergedStyles = _({}).extend styles.default or {}
 
-    for device in ['ios', 'android']
+    for device in ['ios', 'android', 'ios7', 'ios6']
       if (deviceStyles = styles[device]) and environment[device]
         _(mergedStyles).extend deviceStyles
 
