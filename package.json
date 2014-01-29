@@ -19,6 +19,9 @@
   "bin": {
     "titanium-backbone": "./bin/titanium-backbone"
   },
+  "scripts": {
+    "preinstall": "cd node_modules/stitch-up && npm install"
+  },
   "author": {
     "name": "Matt Dean",
     "email": "matt@trabian.com"
